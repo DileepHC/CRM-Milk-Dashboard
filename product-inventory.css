@@ -1,0 +1,682 @@
+/* Enhanced Global Styles for Full View - Dairy Inventory CRM */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif; /* Modern and clean font */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+  background-color: #f3f7f9; /* Light, fresh background */
+  color: #555e6c; /* Professional, readable text */
+  line-height: 1.6;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+  min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.container {
+  display: flex;
+  width: 100vw; /* Full viewport width */
+  margin-top: 0;
+}
+/* Navigation */
+.qc-navigation {
+    display: flex;
+    gap: 8px; /* Slightly reduced gap */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0; /* More visible border */
+    padding-bottom: 15px;
+    overflow-x: auto; /* Keep horizontal scrolling for smaller screens */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    justify-content: flex-start; /* Align buttons to the start */
+  }
+  
+  @media (min-width: 769px) { /* Apply these styles for larger screens */
+    .qc-navigation {
+      overflow-x: auto; /* Keep horizontal scrolling even on larger screens if needed */
+      justify-content: center; /* Center the buttons if they all fit */
+    }
+  }
+  .qc-navigation .nav-button {
+    background-color: #f0f0f0; /* Light background for buttons */
+    color: #34495e; /* Dark text color */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex; /* Use flexbox for icon alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); /* Subtle shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  .qc-navigation .nav-button:hover {
+    background-color: #3498db; /* Blue on hover */
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  }
+  
+  .qc-navigation .nav-button:active {
+    background-color: #2980b9; /* Darker blue on active */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .qc-navigation .nav-button .material-symbols-outlined {
+    font-size: 1.2em; /* Icon size */
+  }
+  
+  /* Style for the active/selected button */
+  .qc-navigation .nav-button.active {
+    background-color: #2c3e50; /* Darker background for active state */
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+.content {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 40px 60px; /* Comfortable padding */
+  min-height: 100vh;
+  margin-left: 0;
+  margin-top: 0;
+  border-radius: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Subtle, modern shadow */
+  transition: transform 0.2s ease-in-out;
+  width: 100vw;
+}
+
+.content:hover,
+.content:focus-within {
+  transform: scale(1.002); /* Gentle interaction feedback */
+}
+
+h2,
+h3,
+h4 {
+  color: #34495e; /* Strong heading color */
+  margin-bottom: 25px;
+  border-bottom: 3px solid #e6e9ed; /* Light, clean divider */
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+h2 .material-symbols-outlined {
+  font-size: 2.6em; /* Slightly larger main heading icon */
+  color: #2980b9; /* Professional blue */
+}
+
+h3 .material-symbols-outlined {
+  font-size: 2em;
+  color: #3498db; /* Brighter blue for subheadings */
+}
+
+h2 {
+  font-size: 3em;
+}
+
+h3 {
+  font-size: 2.2em;
+}
+
+h4 {
+  font-size: 1.4em;
+  color: #7f8c8d; /* Secondary heading color */
+  margin-bottom: 20px;
+}
+
+/* Controls Section - General */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.controls h4 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+  color: #555e6c;
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls h4 .material-symbols-outlined {
+  font-size: 1.3em;
+  color: #95a5a6;
+  transition: transform 0.2s ease-in-out;
+}
+
+.controls h4:hover .material-symbols-outlined {
+  transform: translateX(5px);
+}
+
+.inline-add-button {
+  background-color: #2ecc71; /* Positive green */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inline-add-button:hover {
+  background-color: #27ae60;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.inline-add-button .material-symbols-outlined {
+  font-size: 1.2em;
+}
+
+/* Data Table - General */
+.data-table-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+  border: 1px solid #e6e9ed;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  color: #555e6c;
+}
+
+.data-table thead th {
+  background-color: #f9f9f9;
+  color: #34495e;
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e6e9ed;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.data-table thead th .arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  color: #95a5a6;
+  opacity: 0.6;
+}
+
+.data-table thead th:hover {
+  background-color: #eee;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid #e6e9ed;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.data-table tbody td {
+  padding: 15px 20px;
+}
+
+.data-table .filter-row td {
+  padding: 10px 20px;
+}
+
+.data-table .filter-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d2d6de;
+  border-radius: 6px;
+  font-size: 0.9em;
+  box-sizing: border-box;
+}
+
+.data-table .filter-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.data-table .action-button-container {
+  display: flex;
+  gap: 5px;
+}
+
+.data-table .action-button {
+  background-color: #3498db; /* Primary action blue */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  min-width: 30px;
+  min-height: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  margin-right: 0;
+}
+
+.data-table .action-button.edit-button {
+  background-color: #f39c12; /* Warning/Edit color */
+}
+
+.data-table .action-button.delete-button {
+  background-color: #e74c3c; /* Danger/Delete color */
+}
+
+.data-table .action-button:hover {
+  background-color: #2980b9;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.data-table .action-button .material-symbols-outlined {
+  font-size: 1em;
+  margin-right: 0;
+}
+
+.data-table .action-button.small {
+  padding: 6px;
+  font-size: 0.85em;
+  min-width: 25px;
+  min-height: 25px;
+}
+
+/* Modal - General */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border: 1px solid #888;
+  border-radius: 12px;
+  width: 80%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes slideIn {
+  from {opacity: 0; transform: translateY(-30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal h4 {
+  margin-top: 0;
+  border-bottom: 2px solid #e6e9ed;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #34495e;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d2d6de;
+  border-radius: 8px;
+  font-size: 0.95em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group select[multiple] {
+  height: 150px; /* Adjust as needed */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.form-actions .action-button {
+  padding: 12px 24px;
+  font-size: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  border: none;
+  background-color: #3498db; /* Primary form action */
+  color: white;
+}
+
+.form-actions .action-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+}
+
+/* Stock Management Section - Action Buttons */
+#stock-management-section .action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+#stock-management-section .action-buttons .action-button {
+  background-color: #8e44ad; /* Purple for stock actions */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#stock-management-section .action-buttons .action-button:hover {
+  background-color: #7a3c9d;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#stock-management-section .action-buttons .action-button .material-symbols-outlined {
+  font-size: 1.2em;
+}
+
+/* Reporting & Valuation Section - Charts */
+.chart-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e6e9ed;
+}
+
+.chart-container h4 {
+  border-bottom: 2px solid #e6e9ed;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-container canvas {
+  height: 250px !important;
+  width: 100% !important;
+}
+
+/* Integration Section - Links */
+.integration-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.integration-links .action-button {
+  background-color: #27ae60; /* Success green for integrations */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.integration-links .action-button:hover {
+  background-color: #219653;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.integration-links .action-button .material-symbols-outlined {
+  font-size: 1.2em;
+}
+
+  /* Floating Action Button (FAB) - Optional, requires JS for functionality */
+  .fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+  }
+  
+  .fab-button {
+    background-color: #e67e22; /* Orange FAB */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .fab-button:hover {
+    background-color: #d35400;
+    transform: translateY(-2px);
+  }
+  
+  .fab-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(20px);
+  }
+  
+  .fab-options.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .fab-options li {
+    margin-bottom: 10px;
+    text-align: right;
+  }
+  
+  .fab-options button {
+    background-color: #34495e; /* Darker button color for options */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .fab-options button:hover {
+    background-color: #2c3e50;
+    transform: translateX(5px);
+  }
+  
+  .fab-options button .material-symbols-outlined {
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  
+  /* Responsive Adjustments for smaller screens */
+  @media (max-width: 1024px) {
+    .content {
+      padding: 30px;
+    }
+  
+    h2 {
+      font-size: 2.5em;
+    }
+  
+    h3 {
+      font-size: 1.9em;
+    }
+  
+    .data-table thead th,
+    .data-table tbody td {
+      padding: 12px 15px;
+      font-size: 0.9em;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 2em;
+    }
+  
+    h3 {
+      font-size: 1.6em;
+    }
+  
+    .controls {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .inline-add-button {
+      width: 100%;
+    }
+  
+    .data-table thead th,
+    .data-table tbody td {
+      padding: 10px;
+      font-size: 0.85em;
+    }
+  
+    .modal-content {
+      margin: 15% auto;
+      padding: 25px;
+    }
+  
+    .form-actions {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    #stock-management-section .action-buttons,
+    .integration-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .fab-container {
+      bottom: 20px;
+      right: 20px;
+    }
+  
+    .fab-button {
+      width: 50px;
+      height: 50px;
+      font-size: 1.2em;
+    }
+  
+    .fab-options {
+      bottom: 60px;
+    }
+  }

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Processing Plants Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="processing-plants.css" />
+</head>
+<body>
+    <main class="content">
+        <div id="processing-plants-content">
+            <h2>Processing Plants</h2>
+
+            <div class="plant-navigation">
+                <button class="nav-button active" data-section="overview">Overview</button>
+                <button class="nav-button" data-section="production">Production</button>
+                <button class="nav-button" data-section="quality">Quality Control</button>
+                <button class="nav-button" data-section="inventory">Inventory</button>
+                <button class="nav-button" data-section="maintenance">Maintenance</button>
+            </div>
+
+            <div class="content-display">
+                <section id="overview-section" class="plant-section active">
+                    <h3>Farms Summary</h3>
+                    <div class="plant-cards-grid">
+                        </div>
+                    <div class="overall-metrics">
+                        <div class="metric-card">
+                            <h4>Total Production Today</h4>
+                            <span class="metric-value" id="total-production-today"></span>
+                            <canvas id="daily-production-trend-mini-chart"></canvas>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Average Farm Utilization</h4>
+                            <span class="metric-value" id="average-utilization"></span>
+                            <canvas id="utilization-comparison-mini-chart"></canvas>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Overall Quality Score</h4>
+                            <span class="metric-value" id="overall-quality-score"></span>
+                            <canvas id="quality-score-trend-mini-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="production-section" class="plant-section">
+                    <h3>Production Insights</h3>
+                    <div class="controls">
+                        <button class="inline-add-button" id="add-production-record-button">
+                            <span class="material-symbols-outlined">add</span> Add Record
+                        </button>
+                    </div>
+                    <div class="data-input-section" id="add-production-form" style="display: none;">
+                        <h5>Add New Production Record</h5>
+                        <div class="form-group">
+                            <label for="production-date-add">Date:</label>
+                            <input type="date" id="production-date-add" />
+                            <div class="error-message" id="production-date-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="production-plant-add">Farm:</label>
+                            <select id="production-plant-add">
+                                </select>
+                            <div class="error-message" id="production-plant-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="production-product-add">Product:</label>
+                            <input type="text" id="production-product-add" placeholder="Enter product name" pattern="^[A-Za-z0-9\s\-]{2,50}$" title="Product name should be 2-50 characters" />
+                            <div class="error-message" id="production-product-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="production-volume-add">Volume (Liters):</label>
+                            <input type="number" id="production-volume-add" placeholder="Enter volume e.g. 500" min="1" title="Enter a positive number" />
+                            <div class="error-message" id="production-volume-add-error"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="save-production-button">Save Record</button>
+                        </div>
+                    </div>
+                    <div class="data-display-section" id="view-production-records-table">
+                        <h5>Current Production Records</h5>
+                        <div class="filter-row">
+                            <input type="text" class="filter-input" data-column="date" placeholder="Filter by Date">
+                            <input type="text" class="filter-input" data-column="farm" placeholder="Filter by Farm">
+                            <input type="text" class="filter-input" data-column="product" placeholder="Filter by Product">
+                            <input type="text" class="filter-input" data-column="volume" placeholder="Filter by Volume">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="date" data-type="date">Date <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="farm" data-type="text">Farm <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="product" data-type="text">Product <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="volume" data-type="number">Volume (Liters) <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="production-list-table-body">
+                                </tbody>
+                        </table>
+                        <div class="download-icon">
+                            <span class="material-symbols-outlined" id="download-production-excel" title="Download Production Records (Excel)">download</span>
+                            <span class="material-symbols-outlined" id="download-production-pdf" title="Download Production Records (PDF)">picture_as_pdf</span>
+                        </div>
+                    </div>
+                    <div class="visualizations">
+                        <div class="chart-card">
+                            <h4>Production Volume by Farm</h4>
+                            <canvas id="production-by-plant-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Production Breakdown by Product</h4>
+                            <canvas id="production-by-product-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Production Efficiency Over Time</h4>
+                            <canvas id="production-efficiency-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="quality-section" class="plant-section">
+                    <h3>Quality Control Analysis</h3>
+                    <div class="controls">
+                        <button class="inline-add-button" id="add-quality-check-button">
+                            <span class="material-symbols-outlined">add</span> Add Check
+                        </button>
+                    </div>
+                    <div class="data-input-section" id="add-quality-form" style="display: none;">
+                        <h5>Add New Quality Check</h5>
+                        <div class="form-group">
+                            <label for="quality-date-add">Date:</label>
+                            <input type="date" id="quality-date-add" />
+                            <div class="error-message" id="quality-date-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quality-plant-add">Farm:</label>
+                            <select id="quality-plant-add">
+                                </select>
+                            <div class="error-message" id="quality-plant-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quality-parameter-add">Parameter:</label>
+                            <input type="text" id="quality-parameter-add" placeholder="Enter quality parameter" pattern="^[A-Za-z0-9\s\-]{2,50}$" title="Parameter should be 2-50 characters" />
+                            <div class="error-message" id="quality-parameter-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quality-value-add">Value:</label>
+                            <input type="number" step="0.01" id="quality-value-add" placeholder="Enter value e.g. 95.50" min="0" title="Enter a valid numerical value" />
+                            <div class="error-message" id="quality-value-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quality-status-add">Status:</label>
+                            <select id="quality-status-add">
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                            </select>
+                            <div class="error-message" id="quality-status-add-error"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="save-quality-button">Save Check</button>
+                        </div>
+                    </div>
+                    <div class="data-display-section" id="view-quality-checks-table">
+                        <h5>Current Quality Checks</h5>
+                        <div class="filter-row">
+                            <input type="text" class="filter-input" data-column="date" placeholder="Filter by Date">
+                            <input type="text" class="filter-input" data-column="farm" placeholder="Filter by Farm">
+                            <input type="text" class="filter-input" data-column="parameter" placeholder="Filter by Parameter">
+                            <input type="text" class="filter-input" data-column="value" placeholder="Filter by Value">
+                            <input type="text" class="filter-input" data-column="status" placeholder="Filter by Status">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="date" data-type="date">Date <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="farm" data-type="text">Farm <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="parameter" data-type="text">Parameter <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="value" data-type="number">Value <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="status" data-type="text">Status <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quality-list-table-body">
+                                </tbody>
+                        </table>
+                        <div class="download-icon">
+                            <span class="material-symbols-outlined" id="download-quality-excel" title="Download Quality Checks (Excel)">download</span>
+                            <span class="material-symbols-outlined" id="download-quality-pdf" title="Download Quality Checks (PDF)">picture_as_pdf</span>
+                        </div>
+                    </div>
+                    <div class="visualizations">
+                        <div class="chart-card">
+                            <h4>Overall Pass/Fail Rate</h4>
+                            <canvas id="quality-pass-fail-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Key Quality Parameter Distribution</h4>
+                            <canvas id="quality-parameter-distribution-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Farm-wise Quality Performance</h4>
+                            <canvas id="plant-quality-performance-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="inventory-section" class="plant-section">
+                    <h3>Inventory Management</h3>
+                    <div class="controls">
+                        <button class="inline-add-button" id="add-inventory-item-button">
+                            <span class="material-symbols-outlined">add</span> Add Item
+                        </button>
+                    </div>
+                    <div class="data-input-section" id="add-inventory-form" style="display: none;">
+                        <h5>Add New Inventory Item</h5>
+                        <div class="form-group">
+                            <label for="inventory-type-add">Item Type:</label>
+                            <select id="inventory-type-add">
+                                <option value="raw">Raw Materials</option>
+                                <option value="finished">Finished Goods</option>
+                            </select>
+                            <div class="error-message" id="inventory-type-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-item-add">Item Name:</label>
+                            <input type="text" id="inventory-item-add" placeholder="Enter item name" pattern="^[A-Za-z0-9\s\-]{2,50}$" title="Item name should be 2-50 characters" />
+                            <div class="error-message" id="inventory-item-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-quantity-add">Quantity:</label>
+                            <input type="number" id="inventory-quantity-add" placeholder="Enter quantity" min="1" title="Enter a positive quantity" />
+                            <div class="error-message" id="inventory-quantity-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-unit-add">Unit:</label>
+                            <input type="text" id="inventory-unit-add" placeholder="Enter unit (e.g., kg, L)" pattern="^[A-Za-z]{1,10}$" title="Unit should be 1-10 alphabetic characters" />
+                            <div class="error-message" id="inventory-unit-add-error"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="save-inventory-button">Save Item</button>
+                        </div>
+                    </div>
+                    <div class="data-display-section" id="view-inventory-items-table">
+                        <h5>Current Inventory</h5>
+                        <div class="filter-row">
+                            <input type="text" class="filter-input" data-column="type" placeholder="Filter by Type">
+                            <input type="text" class="filter-input" data-column="name" placeholder="Filter by Name">
+                            <input type="text" class="filter-input" data-column="quantity" placeholder="Filter by Quantity">
+                            <input type="text" class="filter-input" data-column="unit" placeholder="Filter by Unit">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="type" data-type="text">Item Type <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="name" data-type="text">Item Name <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="quantity" data-type="number">Quantity <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="unit" data-type="text">Unit <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-list-table-body">
+                                </tbody>
+                        </table>
+                        <div class="download-icon">
+                            <span class="material-symbols-outlined" id="download-inventory-excel" title="Download Inventory Data (Excel)">download</span>
+                            <span class="material-symbols-outlined" id="download-inventory-pdf" title="Download Inventory Data (PDF)">picture_as_pdf</span>
+                        </div>
+                    </div>
+                    <div class="visualizations">
+                        <div class="chart-card">
+                            <h4>Inventory Levels</h4>
+                            <canvas id="inventory-levels-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Stock Turnover Rate</h4>
+                            <canvas id="stock-turnover-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="maintenance-section" class="plant-section">
+                    <h3>Machinery Maintenance</h3>
+                    <div class="controls">
+                        <button class="inline-add-button" id="add-maintenance-task-button">
+                            <span class="material-symbols-outlined">add</span> Add Task
+                        </button>
+                    </div>
+                    <div class="data-input-section" id="add-maintenance-form" style="display: none;">
+                        <h5>Add New Maintenance Task</h5>
+                        <div class="form-group">
+                            <label for="maintenance-task-add">Task:</label>
+                            <input type="text" id="maintenance-task-add" placeholder="Enter maintenance task description" pattern="^[A-Za-z0-9\s\-,.]{5,100}$" title="Task description should be 5-100 characters and can include letters, numbers, spaces and punctuation" />
+                            <div class="error-message" id="maintenance-task-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenance-plant-add">Farm:</label>
+                            <select id="maintenance-plant-add">
+                                </select>
+                            <div class="error-message" id="maintenance-plant-add-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenance-due-add">Due Date:</label>
+                            <input type="date" id="maintenance-due-add" />
+                            <div class="error-message" id="maintenance-due-add-error"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="save-maintenance-button">Save Task</button>
+                        </div>
+                    </div>
+                    <div class="data-display-section" id="view-maintenance-tasks-table">
+                        <h5>Current Maintenance Tasks</h5>
+                        <div class="filter-row">
+                            <input type="text" class="filter-input" data-column="task" placeholder="Filter by Task">
+                            <input type="text" class="filter-input" data-column="farm" placeholder="Filter by Farm">
+                            <input type="text" class="filter-input" data-column="dueDate" placeholder="Filter by Due Date">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="task" data-type="text">Task <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="farm" data-type="text">Farm <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="dueDate" data-type="date">Due Date <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="maintenance-list-table-body">
+                                </tbody>
+                        </table>
+                        <div class="download-icon">
+                            <span class="material-symbols-outlined" id="download-maintenance-excel" title="Download Maintenance Tasks (Excel)">download</span>
+                            <span class="material-symbols-outlined" id="download-maintenance-pdf" title="Download Maintenance Tasks (PDF)">picture_as_pdf</span>
+                        </div>
+                        <div class="maintenance-summary">
+                            <div class="info-card">
+                                <h4>Upcoming Maintenance</h4>
+                                <ul id="upcoming-maintenance-list">
+                                    </ul>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Maintenance Frequency</h4>
+                                <canvas id="maintenance-frequency-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.1/jspdf.plugin.autotable.min.js"></script>
+    <script src="processing-plants.js"></script>
+</body>
+</html>

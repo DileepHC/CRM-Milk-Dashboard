@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chilling Centers Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="center.css">
+</head>
+<body>
+    <main class="content">
+      <div id="chilling-centers-content">
+        <!-- Center A -->
+        <div class="center-card" data-center-name="Center A - City X">
+          <h2>Center A - City X</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>5000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>4500L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 90%;"></div>
+            </div>
+            <span class="storage-percent">90%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterA-CityX" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Center B -->
+        <div class="center-card" data-center-name="Center B - City Y">
+          <h2>Center B - City Y</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>7000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>6000L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 85%;"></div>
+            </div>
+            <span class="storage-percent">85%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterB-CityY" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Center C -->
+        <div class="center-card" data-center-name="Center C - City Z">
+          <h2>Center C - City Z</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>6000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>3000L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 50%;"></div>
+            </div>
+            <span class="storage-percent">50%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterC-CityZ" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Center D -->
+        <div class="center-card" data-center-name="Center D - Town P">
+          <h2>Center D - Town P</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>8000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>7200L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 90%;"></div>
+            </div>
+            <span class="storage-percent">90%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterD-TownP" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Center E -->
+        <div class="center-card" data-center-name="Center E - Village Q">
+          <h2>Center E - Village Q</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>4000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>3600L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 90%;"></div>
+            </div>
+            <span class="storage-percent">90%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterE-VillageQ" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- Center F -->
+        <div class="center-card" data-center-name="Center F - Area R">
+          <h2>Center F - Area R</h2>
+          <div class="center-details">
+            <div class="detail-item"><strong>Capacity:</strong> <span>8000L</span></div>
+            <div class="detail-item"><strong>Storage:</strong> <span>7800L</span></div>
+          </div>
+          <div class="storage-indicator">
+            <div class="storage-bar">
+              <div class="storage-fill" style="width: 90%;"></div>
+            </div>
+            <span class="storage-percent">90%</span>
+          </div>
+          <div class="chart-container">
+            <div class="chart-card small-chart">
+              <h3>Volume</h3>
+              <canvas id="volumeChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Duration</h3>
+              <canvas id="durationChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Temperature</h3>
+              <canvas id="temperatureChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Test Results</h3>
+              <canvas id="testResultsChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Hygiene</h3>
+              <canvas id="hygieneChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-card small-chart">
+              <h3>Energy</h3>
+              <canvas id="energyChart_CenterF-AreaR" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="center.js"></script>
+</body>
+</html>

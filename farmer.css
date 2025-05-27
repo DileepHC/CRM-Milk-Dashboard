@@ -1,0 +1,790 @@
+/* farmer.css */
+
+/* Enhanced Global Styles for Full View - Dairy Farmer Management */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+body {
+    background-color: #f3f7f9; /* Light, fresh background */
+    color: #555e6c; /* Professional, readable text */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.container {
+    display: flex;
+    width: 100vw; /* Full viewport width */
+    margin-top: 0;
+}
+
+/* Navigation */
+.qc-navigation {
+    display: flex;
+    gap: 8px; /* Slightly reduced gap */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0; /* More visible border */
+    padding-bottom: 15px;
+    overflow-x: auto; /* Keep horizontal scrolling for smaller screens */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    justify-content: flex-start; /* Align buttons to the start */
+}
+
+@media (min-width: 769px) { /* Apply these styles for larger screens */
+    .qc-navigation {
+        overflow-x: auto; /* Keep horizontal scrolling even on larger screens if needed */
+        justify-content: center; /* Center the buttons if they all fit */
+    }
+}
+
+.qc-navigation .nav-button {
+    background-color: #f0f0f0; /* Light background for buttons */
+    color: #34495e; /* Dark text color */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex; /* Use flexbox for icon alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); /* Subtle shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.qc-navigation .nav-button:hover {
+    background-color: #3498db; /* Blue on hover */
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.qc-navigation .nav-button:active {
+    background-color: #2980b9; /* Darker blue on active */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.qc-navigation .nav-button .material-symbols-outlined {
+    font-size: 1.2em; /* Icon size */
+}
+
+/* Style for the active/selected button */
+.qc-navigation .nav-button.active {
+    background-color: #2c3e50; /* Darker background for active state */
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 40px 60px; /* Comfortable padding */
+    min-height: 100vh;
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Subtle, modern shadow */
+    width: 100vw;
+}
+
+.content:hover,
+.content:focus-within {
+    transform: scale(1.002); /* Gentle interaction feedback */
+}
+
+h2,
+h3,
+h4 {
+    color: #34495e; /* Strong heading color */
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e6e9ed; /* Light, clean divider */
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h2 .material-symbols-outlined {
+    font-size: 2.6em; /* Slightly larger main heading icon */
+    color: #2980b9; /* Professional blue */
+}
+
+h3 .material-symbols-outlined {
+    font-size: 2em;
+    color: #3498db; /* Brighter blue for subheadings */
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.2em;
+}
+
+h4 {
+    font-size: 1.4em;
+    color: #7f8c8d; /* Secondary heading color */
+    margin-bottom: 20px;
+}
+
+/* Controls Section - General */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.controls h4 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: #555e6c;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls h4 .material-symbols-outlined {
+    font-size: 1.3em;
+    color: #95a5a6;
+}
+
+.controls h4:hover .material-symbols-outlined {
+    transform: translateX(5px);
+}
+
+.inline-add-button {
+    background-color: #2ecc71; /* Positive green */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inline-add-button:hover {
+    background-color: #27ae60;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.inline-add-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Data Table - General */
+.data-table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+    border: 1px solid #e6e9ed;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: #555e6c;
+}
+
+.data-table thead th {
+    background-color: #f9f9f9;
+    color: #34495e;
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #e6e9ed;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.data-table thead th .arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #95a5a6;
+    opacity: 0.6;
+}
+
+.data-table thead th:hover {
+    background-color: #eee;
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.data-table tbody td {
+    padding: 15px 20px;
+}
+
+.data-table .filter-row td {
+    padding: 10px 20px;
+}
+
+.data-table .filter-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d2d6de;
+    border-radius: 6px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.data-table .filter-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+.data-table .action-button-container {
+    display: flex;
+    gap: 5px;
+    align-items: center; /* Vertically align icons */
+}
+
+.data-table .action-button {
+    background-color: #3498db; /* Primary action blue */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-width: 30px;
+    min-height: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    margin-right: 0;
+}
+
+.data-table .action-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.data-table .action-button.edit-button {
+    background-color: #f39c12; /* Warning/Edit color */
+}
+
+.data-table .action-button.edit-button:hover {
+    background-color: #e67e22; /* Darker shade for hover */
+}
+
+.data-table .action-button.delete-button {
+    background-color: #e74c3c; /* Danger/Delete color */
+}
+
+.data-table .action-button.delete-button:hover {
+    background-color: #c0392b; /* Darker shade for hover */
+}
+
+.data-table .action-button .material-symbols-outlined {
+    font-size: 1em;
+    margin-right: 0;
+}
+
+.data-table .action-button.small {
+    padding: 6px;
+    font-size: 0.85em;
+    min-width: 25px;
+    min-height: 25px;
+}
+
+/* Modal - General */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 12px;
+    width: 80%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes slideIn {
+    from {opacity: 0; transform: translateY(-30px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h4 {
+    margin-top: 0;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group select[multiple] {
+    height: 150px; /* Adjust as needed */
+}
+
+.form-section-label {
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1.1em;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.form-actions .action-button {
+    padding: 12px 24px;
+    font-size: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: none;
+    background-color: #3498db; /* Primary form action */
+    color: white;
+}
+
+.form-actions .action-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* Style for the file upload container */
+#receipt-upload-container {
+    margin-bottom: 20px;
+}
+
+#receipt-upload-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+#payment-receipt {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light background for better visibility */
+}
+
+#payment-receipt::-webkit-file-upload-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#payment-receipt::file-selector-button { /* For Firefox and other browsers */
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
+
+.bank-details {
+    padding: 15px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.bank-details legend {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555e6c;
+}
+
+/* Chart Container Styles */
+.chart-container {
+    margin-bottom: 30px;
+    padding:20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+}
+
+.chart-container h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #34495e;
+    font-size: 1.4em;
+}
+
+.chart-container canvas {
+    height: 250px !important;
+    width: 100% !important;
+}
+
+/* Style for the bulk entry container */
+.bulk-entry-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start; /* Align button to the left */
+}
+
+/* Style for the bulk entry button */
+.bulk-entry-button {
+    background-color: #4CAF50; /* Green color for emphasis */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.bulk-entry-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+.bulk-entry-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Responsive adjustment for smaller screens if needed */
+@media (max-width: 768px) {
+    .bulk-entry-container {
+        justify-content: center; /* Center the button on smaller screens */
+    }
+
+    .bulk-entry-button {
+        width: 100%; /* Make the button full width on smaller screens */
+    }
+}
+
+/* Communication Tools Section */
+.communication-tools {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.communication-tools .action-button {
+    background-color: #8e44ad; /* Purple for communication actions */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.communication-tools .action-button:hover {
+    background-color: #7a3c9d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.communication-tools .action-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Message Log Styles */
+.message-log {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.message-log h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-log ul {
+    list-style: none;
+    padding: 0;
+}
+
+.message-log li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.message-log li:last-child {
+    border-bottom: none;
+}
+
+.message-log .message-sender {
+    font-weight: bold;
+    color: #2980b9;
+    margin-right: 5px;
+}
+
+.message-log .message-timestamp {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-left: 5px;
+}
+
+/* Analytics Dashboards */
+.analytics-dashboards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Farmer Leaderboard Table */
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    overflow: hidden;
+}
+
+#heatmap-container {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    color: #777;
+}
+
+/* Responsive Adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .content {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    h3 {
+        font-size: 1.9em;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .inline-add-button {
+        width: 100%;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        margin: 15% auto;
+        padding: 25px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .communication-tools {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .analytics-dashboards {
+        grid-template-columns: 1fr;
+    }
+
+#stock-management-section .action-buttons,
+.integration-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Reports - Advanced CRM Dashboard</title>
+    <link rel="stylesheet" href="financial-reports.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">analytics</span> Financial Reports (Advanced CRM Dashboard)</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="sales-reporting-section">
+                    <span class="material-symbols-outlined">bar_chart</span> Sales Reporting & Trend Analysis
+                </button>
+                <button class="nav-button" data-section="revenue-expense-section">
+                    <span class="material-symbols-outlined">paid</span> Revenue & Expense Tracking
+                </button>
+                <button class="nav-button" data-section="payment-reports-section">
+                    <span class="material-symbols-outlined">payments</span> Payment Reports
+                </button>
+                <button class="nav-button" data-section="financial-statements-section">
+                    <span class="material-symbols-outlined">receipt_long</span> Financial Statements & Integrations
+                </button>
+                <button class="nav-button" data-section="custom-smart-reporting-section">
+                    <span class="material-symbols-outlined">dashboard_customize</span> Custom & Smart Reporting
+                </button>
+                 <button class="nav-button" data-section="module-wide-features-section">
+                    <span class="material-symbols-outlined">vpn_key</span> Module-Wide Features
+                </button>
+            </div>
+
+            <section id="sales-reporting-section" class="active">
+                <h3><span class="material-symbols-outlined">bar_chart</span> Sales Reporting & Trend Analysis</h3>
+                <div class="controls">
+                    <h4>Sales Data</h4>
+                    <button class="action-button inline-add-button" onclick="openAddSalesRecordModal()">
+                        <span class="material-symbols-outlined">add</span> Add Sales Record
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="sales-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="date" data-column="saleDate">Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="productId">Product ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="productName">Product Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="region">Region <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="channel">Channel <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="quantitySold">Quantity Sold <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="revenue">Revenue (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="customerType">Customer Type <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="date" class="filter-input" data-column="saleDate" placeholder="Select Date"></td>
+                                <td><input type="text" class="filter-input" data-column="productId" placeholder="Product ID"></td>
+                                <td><input type="text" class="filter-input" data-column="productName" placeholder="Product Name"></td>
+                                <td><input type="text" class="filter-input" data-column="region" placeholder="Region"></td>
+                                <td><input type="text" class="filter-input" data-column="channel" placeholder="Channel"></td>
+                                <td><input type="number" class="filter-input" data-column="quantitySold" placeholder="Quantity"></td>
+                                <td><input type="number" class="filter-input" data-column="revenue" placeholder="Revenue"></td>
+                                <td><input type="text" class="filter-input" data-column="customerType" placeholder="Customer Type"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Sales Trend Visuals</h4>
+                    <canvas id="sales-trend-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>Sales Breakdown by Channel</h4>
+                    <canvas id="sales-channel-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="revenue-expense-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">paid</span> Revenue & Expense Tracking</h3>
+                <div class="controls">
+                    <h4>Financial Transactions</h4>
+                    <button class="action-button inline-add-button" onclick="openAddTransactionModal('revenue')">
+                        <span class="material-symbols-outlined">add</span> Add Revenue
+                    </button>
+                     <button class="action-button inline-add-button" onclick="openAddTransactionModal('expense')">
+                        <span class="material-symbols-outlined">remove</span> Add Expense
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="transactions-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="date" data-column="transactionDate">Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="type">Type <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="category">Category <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="description">Description <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="amount">Amount (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="proofs">Proofs <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="date" class="filter-input" data-column="transactionDate" placeholder="Select Date"></td>
+                                <td><input type="text" class="filter-input" data-column="type" placeholder="Type"></td>
+                                <td><input type="text" class="filter-input" data-column="category" placeholder="Category"></td>
+                                <td><input type="text" class="filter-input" data-column="description" placeholder="Description"></td>
+                                <td><input type="number" class="filter-input" data-column="amount" placeholder="Amount"></td>
+                                <td><input type="text" class="filter-input" data-column="proofs" placeholder="Proofs"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Cash Flow Dashboard</h4>
+                    <canvas id="cash-flow-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>Profitability by Category</h4>
+                    <canvas id="profitability-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="payment-reports-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">payments</span> Payment Reports (Inbound & Outbound)</h3>
+                <div class="controls">
+                    <h4>Farmer Payments</h4>
+                    <button class="action-button inline-add-button" onclick="openAddFarmerPaymentModal()">
+                        <span class="material-symbols-outlined">add</span> Record Farmer Payment
+                    </button>
+                    <h4>Distributor/Retailer Receivables</h4>
+                    <button class="action-button inline-add-button" onclick="openAddReceivableModal()">
+                        <span class="material-symbols-outlined">add</span> Add Receivable
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <h4>Farmer Payments Summary</h4>
+                    <table id="farmer-payments-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="farmerId">Farmer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="paymentDate">Payment Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="amountPaid">Amount Paid (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="pendingAmount">Pending Amount (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="paymentMode">Mode <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="bonusesDeductions">Bonuses/Deductions <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="farmerId" placeholder="Farmer ID"></td>
+                                <td><input type="date" class="filter-input" data-column="paymentDate" placeholder="Select Date"></td>
+                                <td><input type="number" class="filter-input" data-column="amountPaid" placeholder="Amount Paid"></td>
+                                <td><input type="number" class="filter-input" data-column="pendingAmount" placeholder="Pending Amount"></td>
+                                <td><input type="text" class="filter-input" data-column="paymentMode" placeholder="Mode"></td>
+                                <td><input type="text" class="filter-input" data-column="bonusesDeductions" placeholder="Bonuses/Deductions"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="farmer-payments-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="data-table-container">
+                    <h4>Distributor/Retailer Receivables</h4>
+                    <table id="receivables-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="invoiceId">Invoice ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="partyName">Party Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="invoiceDate">Invoice Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="dueDate">Due Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="totalAmount">Total Amount (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="amountReceived">Amount Received (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="status">Status <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="daysOverdue">Days Overdue <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="invoiceId" placeholder="Invoice ID"></td>
+                                <td><input type="text" class="filter-input" data-column="partyName" placeholder="Party Name"></td>
+                                <td><input type="date" class="filter-input" data-column="invoiceDate" placeholder="Invoice Date"></td>
+                                <td><input type="date" class="filter-input" data-column="dueDate" placeholder="Due Date"></td>
+                                <td><input type="number" class="filter-input" data-column="totalAmount" placeholder="Total Amount"></td>
+                                <td><input type="number" class="filter-input" data-column="amountReceived" placeholder="Amount Received"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Status"></td>
+                                <td><input type="number" class="filter-input" data-column="daysOverdue" placeholder="Days Overdue"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="receivables-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Payment Mode Distribution (Farmer)</h4>
+                    <canvas id="farmer-payment-mode-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="financial-statements-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">receipt_long</span> Financial Statements & Integrations</h3>
+                <div class="controls">
+                    <h4>Generate Statements</h4>
+                    <button class="action-button" onclick="generateStatement('balance-sheet')">
+                        <span class="material-symbols-outlined">account_balance</span> Balance Sheet
+                    </button>
+                    <button class="action-button" onclick="generateStatement('pnl')">
+                        <span class="material-symbols-outlined">trending_up</span> Profit & Loss
+                    </button>
+                    <button class="action-button" onclick="generateStatement('cash-flow')">
+                        <span class="material-symbols-outlined">money</span> Cash Flow
+                    </button>
+                </div>
+                <div class="integration-options">
+                    <h4>Integrations</h4>
+                    <button class="action-button" onclick="openIntegrationModal('tally')">
+                        <span class="material-symbols-outlined">sync</span> Sync with Tally
+                    </button>
+                    <button class="action-button" onclick="openIntegrationModal('zoho')">
+                        <span class="material-symbols-outlined">sync</span> Sync with Zoho Books
+                    </button>
+                    <button class="action-button" onclick="openIntegrationModal('quickbooks')">
+                        <span class="material-symbols-outlined">sync</span> Sync with QuickBooks
+                    </button>
+                </div>
+                <div class="audit-trail-container">
+                    <h4>Audit Trail</h4>
+                    <table id="audit-trail-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="date" data-column="timestamp">Timestamp <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="userName">User <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="action">Action <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="details">Details <span class="arrow">▼</span></th>
+                            </tr>
+                             <tr class="filter-row hidden">
+                                <td><input type="date" class="filter-input" data-column="timestamp" placeholder="Timestamp"></td>
+                                <td><input type="text" class="filter-input" data-column="userName" placeholder="User Name"></td>
+                                <td><input type="text" class="filter-input" data-column="action" placeholder="Action"></td>
+                                <td><input type="text" class="filter-input" data-column="details" placeholder="Details"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-trail-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="custom-smart-reporting-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">dashboard_customize</span> Custom & Smart Reporting</h3>
+                <div class="controls">
+                    <h4>Report Builder</h4>
+                    <button class="action-button" onclick="openCustomReportBuilder()">
+                        <span class="material-symbols-outlined">build</span> Build New Custom Report
+                    </button>
+                    <button class="action-button" onclick="openScheduledReportsModal()">
+                        <span class="material-symbols-outlined">schedule</span> Scheduled Reports
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <h4>Saved Report Templates</h4>
+                    <table id="report-templates-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="templateName">Template Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="createdBy">Created By <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="lastModified">Last Modified <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="visualizationType">Visualization <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="templateName" placeholder="Template Name"></td>
+                                <td><input type="text" class="filter-input" data-column="createdBy" placeholder="Created By"></td>
+                                <td><input type="date" class="filter-input" data-column="lastModified" placeholder="Last Modified"></td>
+                                <td><input type="text" class="filter-input" data-column="visualizationType" placeholder="Visualization"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="report-templates-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Forecasting Engine (Sample)</h4>
+                    <canvas id="forecasting-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="module-wide-features-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">vpn_key</span> Module-Wide Features</h3>
+                <div class="crm-wide-options">
+                    <h4>Global Financial Settings</h4>
+                    <button class="action-button" onclick="openAccessControlModal()">
+                        <span class="material-symbols-outlined">lock</span> Role-Based Permissions
+                    </button>
+                    <button class="action-button" onclick="openCurrencySettingsModal()">
+                        <span class="material-symbols-outlined">currency_exchange</span> Multi-Currency Support
+                    </button>
+                    <button class="action-button" onclick="openExportLogsModal()">
+                        <span class="material-symbols-outlined">history</span> Export Logs
+                    </button>
+                    <button class="action-button" onclick="openEmailIntegrationModal()">
+                        <span class="material-symbols-outlined">mail</span> Smart Email Integration
+                    </button>
+                </div>
+                 <div class="chart-container">
+                    <h4>AI Red Flags (Placeholder)</h4>
+                    <div class="ai-red-flags-placeholder">
+                        <p>This section would display AI-driven alerts for suspicious financial activities or anomalies.</p>
+                        <ul>
+                            <li>Unusual expense spikes detected.</li>
+                            <li>Potential unbalanced journal entries.</li>
+                            <li>Tax compliance anomaly identified.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div id="add-sales-record-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddSalesRecordModal()">&times;</span>
+                    <h4>Add New Sales Record</h4>
+                    <form id="add-sales-record-form">
+                        <div class="form-group">
+                            <label for="sales-date">Date:</label>
+                            <input type="date" id="sales-date" name="sales-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-product-id">Product ID:</label>
+                            <input type="text" id="sales-product-id" name="product-id" required pattern="^[A-Za-z0-9]{5,10}$" maxlength="10" placeholder="Enter Product ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-product-name">Product Name:</label>
+                            <input type="text" id="sales-product-name" name="product-name" required maxlength="100" placeholder="Enter Product Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-region">Region:</label>
+                            <input type="text" id="sales-region" name="region" required maxlength="50" placeholder="Enter Region"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-channel">Channel:</label>
+                            <select id="sales-channel" name="channel" required>
+                                <option value="" disabled selected hidden>Select Channel</option>
+                                <option value="Retail">Retail</option>
+                                <option value="Franchise">Franchise</option>
+                                <option value="Distributor">Distributor</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-quantity">Quantity Sold:</label>
+                            <input type="number" id="sales-quantity" name="quantity-sold" required min="0" step="1" placeholder="Enter Quantity"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-revenue">Revenue (₹):</label>
+                            <input type="number" id="sales-revenue" name="revenue" required min="0" step="0.01" placeholder="Enter Revenue"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="sales-customer-type">Customer Type:</label>
+                            <input type="text" id="sales-customer-type" name="customer-type" placeholder="e.g., Individual, Business"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Sales Record</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-transaction-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddTransactionModal()">&times;</span>
+                    <h4 id="transaction-modal-title">Add Financial Transaction</h4>
+                    <form id="add-transaction-form">
+                        <input type="hidden" id="transaction-type-hidden" name="type"/>
+                        <div class="form-group">
+                            <label for="transaction-date">Date:</label>
+                            <input type="date" id="transaction-date" name="transaction-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-category">Category:</label>
+                            <input type="text" id="transaction-category" name="category" required maxlength="100" placeholder="e.g., Product Sales, Raw Materials"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-description">Description:</label>
+                            <textarea id="transaction-description" name="description" rows="3" placeholder="Detailed description of transaction"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-amount">Amount (₹):</label>
+                            <input type="number" id="transaction-amount" name="amount" required step="0.01" placeholder="Enter Amount"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-proofs">Attach Proofs (Optional):</label>
+                            <input type="file" id="transaction-proofs" name="proofs" accept="image/*,.pdf" multiple>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-farmer-payment-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddFarmerPaymentModal()">&times;</span>
+                    <h4>Record Farmer Payment</h4>
+                    <form id="add-farmer-payment-form">
+                        <div class="form-group">
+                            <label for="farmer-payment-id">Farmer ID:</label>
+                            <input type="text" id="farmer-payment-id" name="farmer-id" required pattern="[A-Za-z0-9]{5}" title="Farmer ID must be 5 alphanumeric characters" maxlength="5" placeholder="Enter Farmer ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-payment-date">Payment Date:</label>
+                            <input type="date" id="farmer-payment-date" name="payment-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-payment-amount-paid">Amount Paid (₹):</label>
+                            <input type="number" id="farmer-payment-amount-paid" name="amount-paid" required min="0" step="0.01" placeholder="Enter Amount Paid"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-payment-pending-amount">Pending Amount (₹):</label>
+                            <input type="number" id="farmer-payment-pending-amount" name="pending-amount" min="0" step="0.01" placeholder="Enter Pending Amount (if any)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-payment-mode">Payment Mode:</label>
+                            <select id="farmer-payment-mode" name="payment-mode" required>
+                                <option value="" disabled selected hidden>Select Mode</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-payment-bonuses-deductions">Bonuses/Deductions:</label>
+                            <textarea id="farmer-payment-bonuses-deductions" name="bonuses-deductions" rows="2" placeholder="e.g., Bonus for quality, Deduction for advance"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Record Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-receivable-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddReceivableModal()">&times;</span>
+                    <h4>Add Distributor/Retailer Receivable</h4>
+                    <form id="add-receivable-form">
+                        <div class="form-group">
+                            <label for="receivable-invoice-id">Invoice ID:</label>
+                            <input type="text" id="receivable-invoice-id" name="invoice-id" required pattern="^[A-Za-z0-9]{8,15}$" maxlength="15" placeholder="Enter Invoice ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="receivable-party-name">Party Name:</label>
+                            <input type="text" id="receivable-party-name" name="party-name" required maxlength="100" placeholder="Enter Party Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="receivable-invoice-date">Invoice Date:</label>
+                            <input type="date" id="receivable-invoice-date" name="invoice-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="receivable-due-date">Due Date:</label>
+                            <input type="date" id="receivable-due-date" name="due-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="receivable-total-amount">Total Amount (₹):</label>
+                            <input type="number" id="receivable-total-amount" name="total-amount" required min="0" step="0.01" placeholder="Enter Total Amount"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="receivable-amount-received">Amount Received (₹):</label>
+                            <input type="number" id="receivable-amount-received" name="amount-received" min="0" step="0.01" placeholder="Enter Amount Received (if any)"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Receivable</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="integration-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeIntegrationModal()">&times;</span>
+                    <h4 id="integration-modal-title">Integration Details</h4>
+                    <p id="integration-modal-content">Details for integration with selected accounting software.</p>
+                </div>
+            </div>
+
+            <div id="custom-report-builder-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeCustomReportBuilder()">&times;</span>
+                    <h4>Custom Report Builder</h4>
+                    <p>Drag-and-drop interface for building custom financial reports would be here.</p>
+                    <div class="form-group">
+                        <label for="report-name">Report Name:</label>
+                        <input type="text" id="report-name" name="report-name" required maxlength="100" placeholder="e.g., Q1 Sales by Product Line"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-fields">Select Fields:</label>
+                        <select id="report-fields" name="report-fields" multiple size="5">
+                            <option value="saleDate">Date</option>
+                            <option value="productName">Product Name</option>
+                            <option value="region">Region</option>
+                            <option value="revenue">Revenue</option>
+                            <option value="quantitySold">Quantity Sold</option>
+                            <option value="transactionDate">Transaction Date</option>
+                            <option value="amount">Amount</option>
+                            <option value="category">Category</option>
+                            <option value="farmerId">Farmer ID</option>
+                            <option value="amountPaid">Amount Paid</option>
+                            <option value="invoiceId">Invoice ID</option>
+                            <option value="totalAmount">Total Amount</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-visualization">Preferred Visualization:</label>
+                        <select id="report-visualization" name="report-visualization">
+                            <option value="table">Table</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="line">Line Chart</option>
+                            <option value="pie">Pie Chart</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="report-filters">Add Filters:</label>
+                        <textarea id="report-filters" name="report-filters" rows="3" placeholder="e.g., Region = 'North', Revenue > 1000"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="action-button">Save Report Template</button>
+                        <button type="button" class="action-button">Generate Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="scheduled-reports-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeScheduledReportsModal()">&times;</span>
+                    <h4>Scheduled Reports</h4>
+                    <p>Configure auto-sending of reports to stakeholders.</p>
+                    <form id="scheduled-reports-form">
+                        <div class="form-group">
+                            <label for="scheduled-report-template">Select Report Template:</label>
+                            <select id="scheduled-report-template" name="report-template" required>
+                                <option value="" disabled selected hidden>Select Template</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scheduled-frequency">Frequency:</label>
+                            <select id="scheduled-frequency" name="frequency" required>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scheduled-recipients">Recipients (Email, comma-separated):</label>
+                            <input type="email" id="scheduled-recipients" name="recipients" multiple placeholder="email1@example.com, email2@example.com" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Schedule Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="access-control-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAccessControlModal()">&times;</span>
+                    <h4>Role-Based Permissions</h4>
+                    <p>Manage user roles and permissions for financial data access.</p>
+                </div>
+            </div>
+
+            <div id="currency-settings-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeCurrencySettingsModal()">&times;</span>
+                    <h4>Multi-Currency Support</h4>
+                    <p>Configure base currency and exchange rates for multi-currency transactions.</p>
+                </div>
+            </div>
+
+            <div id="export-logs-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeExportLogsModal()">&times;</span>
+                    <h4>Export Logs</h4>
+                    <p>View a log of all data export activities (who downloaded, what, and when).</p>
+                </div>
+            </div>
+
+            <div id="email-integration-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeEmailIntegrationModal()">&times;</span>
+                    <h4>Smart Email Integration</h4>
+                    <p>Configure email templates and triggers for sending financial reports and alerts.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="financial-reports.js"></script>
+</body>
+</html>

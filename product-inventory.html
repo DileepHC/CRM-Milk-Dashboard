@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inventory</title>
+    <link rel="stylesheet" href="product-inventory.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">inventory_2</span> Product Inventory</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="inventory-tracking-section">
+                    <span class="material-symbols-outlined">monitoring</span> Inventory Tracking
+                </button>
+                <button class="nav-button" data-section="stock-management-section">
+                    <span class="material-symbols-outlined">warehouse</span> Stock Management
+                </button>
+                <button class="nav-button" data-section="reporting-valuation-section">
+                    <span class="material-symbols-outlined">insights</span> Reporting & Valuation
+                </button>
+                <button class="nav-button" data-section="integration-section">
+                    <span class="material-symbols-outlined">link</span> Integration
+                </button>
+            </div>
+
+            <section id="inventory-tracking-section" class="active">
+                <h3><span class="material-symbols-outlined">monitoring</span> Inventory Tracking</h3>
+                <div class="controls">
+                    <h4>Live Inventory</h4>
+                    <button class="action-button inline-add-button" onclick="openAddInventoryModal()">
+                        <span class="material-symbols-outlined">add</span>
+                        Add Inventory
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="inventory-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="product">Product <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="select" data-column="location">Location <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="stock">Stock <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="status">Status <span class="arrow">▼</span></th>
+                                <th data-type="chart">Distribution</th> <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="product" placeholder="Product"></td>
+                                <td><input type="text" class="filter-input" data-column="location" placeholder="Location"></td>
+                                <td><input type="number" class="filter-input" data-column="stock" placeholder="Stock"></td>
+                                <td>
+                                    <select class="filter-input" data-column="status">
+                                        <option value="">All</option>
+                                        <option value="sufficient">Sufficient</option>
+                                        <option value="low">Low</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="stock-management-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">warehouse</span> Stock Management</h3>
+                 <div class="controls">
+                     <h4>Stock Actions</h4>
+                     <button class="action-button inline-add-button" onclick="openAdjustStockModal()">
+                         <span class="material-symbols-outlined">add</span>
+                         Adjust Stock
+                     </button>
+                 </div>
+                 <div class="action-buttons">
+                     <button class="action-button" id="transfer-button" onclick="openTransferModal()">
+                         <span class="material-symbols-outlined">swap_horiz</span> Transfer Stock
+                     </button>
+                     <button class="action-button" id="reorder-button">
+                         <span class="material-symbols-outlined">shopping_cart</span> Reorder Stock
+                     </button>
+                     <button class="action-button" id="sync-production-button">
+                         <span class="material-symbols-outlined">factory</span> Sync with Production
+                     </button>
+                     <button class="action-button" id="sync-sales-button">
+                         <span class="material-symbols-outlined">local_shipping</span> Sync with Sales
+                     </button>
+                 </div>
+            </section>
+
+            <section id="reporting-valuation-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">insights</span> Reporting & Valuation</h3>
+                <div class="controls">
+                    <h4>Inventory Reports</h4>
+                     <button class="action-button inline-add-button" onclick="generateReport()">
+                         <span class="material-symbols-outlined">summarize</span>
+                         Generate Report
+                     </button>
+                </div>
+                <div class="chart-container">
+                    <h4>Stock Balance Over Time</h4>
+                    <canvas id="stock-balance-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>Inventory Ageing</h4>
+                    <canvas id="inventory-ageing-chart"></canvas>
+                </div>
+                <div class="data-table-container">
+                    <table id="valuation-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="product">Product <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="quantity">Quantity <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="unitValue">Unit Value <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="totalValue">Total Value <span class="arrow">▼</span></th>
+                            </tr>
+                             <tr class="filter-row hidden">
+                                 <td><input type="text" class="filter-input" data-column="product" placeholder="Product"></td>
+                                 <td><input type="number" class="filter-input" data-column="quantity" placeholder="Quantity"></td>
+                                 <td><input type="number" class="filter-input" data-column="unitValue" placeholder="Unit Value"></td>
+                                 <td><input type="number" class="filter-input" data-column="totalValue" placeholder="Total Value"></td>
+                             </tr>
+                        </thead>
+                        <tbody id="valuation-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="integration-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">link</span> Integration</h3>
+                <p>Seamless data flow with production, sales, and external systems.</p>
+                <div class="integration-links">
+                    <button class="action-button" id="production-link">
+                        <span class="material-symbols-outlined">factory</span> Production Module
+                    </button>
+                    <button class="action-button" id="sales-link">
+                        <span class="material-symbols-outlined">local_shipping</span> Sales Module
+                    </button>
+                    <button class="action-button" id="erp-link">
+                        <span class="material-symbols-outlined">settings_remote</span> External ERP
+                    </button>
+                </div>
+            </section>
+
+             <div id="transfer-modal" class="modal content-display" style="display: none;">
+                 <div class="modal-content">
+                     <span class="close-button" onclick="closeTransferModal()">&times;</span>
+                     <h4>Transfer Stock</h4>
+                     <form id="transfer-form">
+                         <div class="form-group">
+                             <label for="transfer-product">Product:</label>
+                             <select id="transfer-product" required>
+                                  <option value="">-- Select Product --</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label for="transfer-from">From Location:</label>
+                             <select id="transfer-from" required>
+                                 <option value="">-- Select Location --</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label for="transfer-to">To Location:</label>
+                             <select id="transfer-to" required>
+                                  <option value="">-- Select Location --</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label for="transfer-quantity">Quantity:</label>
+                             <input type="number" id="transfer-quantity" min="1" required>
+                         </div>
+                         <div class="form-actions">
+                             <button type="submit" class="action-button">Transfer</button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+
+             <div id="adjust-stock-modal" class="modal content-display" style="display: none;">
+                 <div class="modal-content">
+                     <span class="close-button" onclick="closeAdjustStockModal()">&times;</span>
+                     <h4>Adjust Stock</h4>
+                     <form id="adjust-stock-form">
+                          <input type="hidden" id="adjust-id">
+                         <div class="form-group">
+                             <label for="adjust-product">Product:</label>
+                             <select id="adjust-product" required>
+                                  <option value="">-- Select Product --</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label for="adjust-location">Location:</label>
+                             <select id="adjust-location" required>
+                                 <option value="">-- Select Location --</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label for="adjust-quantity">Quantity:</label>
+                             <input type="number" id="adjust-quantity"  required>
+                         </div>
+                         <div class="form-group">
+                             <label for="adjust-reason">Reason:</label>
+                             <textarea id="adjust-reason" rows="4" required></textarea>
+                         </div>
+                         <div class="form-actions">
+                             <button type="submit" class="action-button">Adjust</button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+
+             <div id="add-inventory-modal" class="modal content-display" style="display: none;">
+                 <div class="modal-content">
+                     <span class="close-button" onclick="closeAddInventoryModal()">&times;</span>
+                     <h4>Add New Inventory</h4>
+                     <form id="add-inventory-form">
+                         <input type="hidden" id="inventory-id">
+                         <div class="form-group">
+                             <label for="inventory-product-name">Product:</label>
+                             <input type="text" id="inventory-product-name" required>
+                         </div>
+                          <div class="form-group">
+                             <label for="inventory-location">Location:</label>
+                             <input type="text" id="inventory-location" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="inventory-stock">Stock:</label>
+                             <input type="number" id="inventory-stock" min="0" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="inventory-status">Status:</label>
+                             <select id="inventory-status">
+                                 <option value="sufficient">Sufficient</option>
+                                 <option value="low">Low</option>
+                                 <option value="critical">Critical</option>
+                             </select>
+                         </div>
+                         <div class="form-actions">
+                             <button type="submit" class="action-button">Add</button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="product-inventory.js"></script>
+</body>
+</html>

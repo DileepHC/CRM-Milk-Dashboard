@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM Dashboard</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap"
+    />
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- External Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-left">
+        <img class="header-logo" src="Ats.png" alt="Logo">
+        <span class="menu-icon material-symbols-outlined">menu</span>
+      <!--  <h1 class="dashboard-title">Admin Dashboard</h1> -->
+      </div>
+      <div class="searchbar">
+        <input type="text" placeholder="Search..." />
+        <span class="search-icon material-symbols-outlined">search</span>
+      </div>
+      <div class="header-right">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="material-symbols-outlined">mail</span>
+        <div class="language-dropdown">
+          <span class="material-symbols-outlined">language</span>
+          <ul class="dropdown-menu">
+            <li>English</li>
+            <li>Kannada</li>
+            <li>Telugu</li>
+            <li>Hindi</li>
+            <li>Tamil</li>
+            <li>Malayalam</li>
+          </ul>
+        </div>
+        <img src="Person.jpg" alt="User Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
+        <span class="user-name">John Doe</span>
+      </div>
+    </header>
+    <div class="container">
+      <aside class="sidebar">
+        <ul>
+          <li class="active">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="menu-text">Dashboard</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">agriculture</span>
+            <span class="menu-text">Farmer Management</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">local_shipping</span>
+            <span class="menu-text">Milk Collection</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">store</span>
+            <span class="menu-text">Milk Storage Unit</span> <!--Before Chilling Centers-->
+          </li>
+          <li>
+            <span class="material-symbols-outlined">factory</span>
+            <span class="menu-text">Processing Plants</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">verified</span>
+            <span class="menu-text">Quality Control</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span class="menu-text">Product Inventory</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">local_grocery_store</span>
+            <span class="menu-text">Distribution Hub</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">shop</span>
+            <span class="menu-text">Retail & Franchise</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">groups</span>
+            <span class="menu-text">Customer Relations</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">account_balance</span>
+            <span class="menu-text">Financial Reports</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">badge</span>
+            <span class="menu-text">Employee Hub</span>
+          </li>
+     <!--     <li>
+            <span class="material-symbols-outlined">airport_shuttle</span>
+            <span class="menu-text">Fleet Management</span>
+          </li> -->
+          <li>
+            <span class="material-symbols-outlined">settings</span>
+            <span class="menu-text">Settings</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined">logout</span>
+            <span class="menu-text">Log Out</span>
+          </li>
+        </ul>
+      </aside>
+      <main class="content">
+        <div id="dashboard-content">
+          <!-- Date Options -->
+          <div class="header-options">
+            <div class="date-options">
+              <button data-range="daily" class="active">Daily</button>
+              <button data-range="weekly">Weekly</button>
+              <button data-range="monthly">Monthly</button>
+              <button data-range="custom">Custom</button>
+            </div>
+            <div class="custom-date-range">
+              <label for="date-range">Date Range:</label>
+              <input type="text" id="date-range" />
+            </div>
+          </div>
+          
+          <!-- KPI Cards (8 cards in 2 rows, 4 per row) -->
+          <div class="kpi-cards">
+            <!-- Card 1: Total Milk Procurement -->
+            <div class="card">
+              <h3>Total Milk Procurement</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="milkProcurementPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #4CAF50;">local_shipping</span>
+                </div>
+                <span class="value">250,000 L</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>12.5%</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2: Total Sales Revenue -->
+            <div class="card">
+              <h3>Total Sales Revenue</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="salesRevenuePie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #FFC107;">store</span>
+                </div>
+                <span class="value">₹1,500,000</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>18.2%</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3: Active Farmers -->
+            <div class="card">
+              <h3>Active Farmers</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="activeFarmersPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #3B82F6;">person</span>
+                </div>
+                <span class="value">5,000+</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>5.7%</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 4: Distributors/Retailers -->
+            <div class="card">
+              <h3>Distributors/Retailers</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="distributorsPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #8B5CF6;">local_grocery_store</span>
+                </div>
+                <span class="value">1,200</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>8.3%</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 5: Customer Growth Rate -->
+            <div class="card">
+              <h3>Customer Growth Rate</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="customerGrowthPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #F59E0B;">trending_up</span>
+                </div>
+                <span class="value">12.0%</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 6: Quality Metrics -->
+            <div class="card">
+              <h3>Quality Metrics</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="qualityMetricsPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #10B981;">verified</span>
+                </div>
+                <span class="value">95%</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 7: Environmental Metrics -->
+            <div class="card">
+              <h3>Environmental Metrics</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="environmentMetricsPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #34D399;">eco</span>
+                </div>
+                <span class="value">78%</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>3.4%</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 8: Employee Engagement -->
+            <div class="card">
+              <h3>Employee Engagement</h3>
+              <div class="metric">
+                <div class="mini-pie-container">
+                  <canvas class="mini-pie" id="employeeEngagementPie"></canvas>
+                  <span class="center-icon material-symbols-outlined" style="color: #1D4ED8;">groups</span>
+                </div>
+                <span class="value">89%</span>
+                <div class="trend up">
+                  <span class="material-symbols-outlined">arrow_upward</span>
+                  <span>2.1%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Additional Visualizations -->
+          <div class="row">
+            <!-- Sales Trend (Line Chart) -->
+            <div class="card" style="flex: 1.5; min-width: 300px;">
+              <h3>Sales Trend</h3>
+              <div class="chart-container">
+                <canvas id="salesTrendChart"></canvas>
+              </div>
+            </div>
+            <!-- Sales Performance (Bar Chart) -->
+            <div class="card" style="flex: 1; min-width: 250px;">
+              <h3>Sales Performance</h3>
+              <div class="chart-container">
+                <canvas id="salesPerformanceChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Profit Breakdown (Donut Chart) -->
+            <div class="card" style="flex: 1; min-width: 250px;">
+              <h3>Profit Breakdown</h3>
+              <div class="chart-container">
+                <canvas id="profitBreakdownChart"></canvas>
+              </div>
+              <div class="chart-labels">
+                <div class="chart-label">
+                  <span class="color-box" style="background-color: #ff6b6b;"></span>
+                  <span>Dairy Products</span>
+                </div>
+                <div class="chart-label">
+                  <span class="color-box" style="background-color: #4ac948;"></span>
+                  <span>Other Products</span>
+                </div>
+                <div class="chart-label">
+                  <span class="color-box" style="background-color: #19a7ce;"></span>
+                  <span>Operational Costs</span>
+                </div>
+              </div>
+            </div>
+            <!-- Procurement & Distribution Map -->
+            <div class="card" style="flex: 1.5; min-width: 300px;">
+              <h3>Procurement & Distribution Map</h3>
+              <div class="map-container">
+                <div id="distributionMap" style="width: 100%; height: 250px; border-radius: 8px;"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div> <!-- End of dashboard-content -->
+
+        <!-- Iframe container for other pages -->
+      <div id="iframe-wrapper" style="display:none; width:100%; height:100%;">
+        <iframe
+          id="iframe-container"
+          src=""
+          style="width:100%; height:100%; border:none;"
+        ></iframe>
+      </div>
+
+      </main>
+    </div>
+    
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="dashboard.js"></script>
+    
+    <!-- Initialize the Leaflet Map with focus on South India -->
+    <script>
+      window.addEventListener("load", () => {
+        const mapContainer = document.getElementById("distributionMap");
+        if (mapContainer) {
+          // Set the map view to a midpoint (approximately average of Hyderabad, Bangalore, Mysore)
+          const map = L.map("distributionMap").setView([14.88, 77.57], 7);
+          
+          // Add OpenStreetMap tile layer
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+          }).addTo(map);
+          
+          // Add markers for Hyderabad, Bangalore, and Mysore
+          L.marker([17.3850, 78.4867]).addTo(map)
+            .bindPopup("Hyderabad, Telangana")
+            .openPopup();
+          L.marker([12.9716, 77.5946]).addTo(map)
+            .bindPopup("Bangalore, Karnataka");
+          L.marker([12.2958, 76.6394]).addTo(map)
+            .bindPopup("Mysore, Karnataka");
+          L.marker([17.684053, 83.238926]).addTo(map) //Lat / Long	17.684053, 83.238926
+            .bindPopup("Visakhapatnam, Andhra Pradesh")
+        }
+      });
+    </script>
+  </body>
+</html>

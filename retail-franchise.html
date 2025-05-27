@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail & Franchise Management</title>
+    <link rel="stylesheet" href="retail-franchise.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sxFliKKxz1azGaWHSNwg==" crossorigin=""/>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">storefront</span> Retail & Franchise Management</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="store-info">
+                    <span class="material-symbols-outlined">info</span> Store Information
+                </button>
+                <button class="nav-button" data-section="sales-tracking">
+                    <span class="material-symbols-outlined">trending_up</span> Sales Tracking
+                </button>
+                <button class="nav-button" data-section="inventory-sync">
+                    <span class="material-symbols-outlined">sync</span> Inventory Sync
+                </button>
+                <button class="nav-button" data-section="performance-comm">
+                    <span class="material-symbols-outlined">insights</span> Performance & Communication
+                </button>
+                <button class="nav-button" data-section="franchise-mgmt">
+                    <span class="material-symbols-outlined">handshake</span> Franchise Management
+                </button>
+            </div>
+
+            <section id="store-info-section" class="module-section active">
+                <h3><span class="material-symbols-outlined">info</span> Store Information & Structure</h3>
+                <div class="dashboard-cards">
+                    <div class="card active-stores">
+                        <h4><span class="material-symbols-outlined">store</span> Active Stores</h4>
+                        <div class="store-count">0</div>
+                    </div>
+                    <div class="card in-setup-stores">
+                        <h4><span class="material-symbols-outlined">build</span> Stores in Setup</h4>
+                        <div class="store-count">0</div>
+                    </div>
+                    <div class="card flagged-stores">
+                        <h4><span class="material-symbols-outlined">flag</span> Flagged Stores</h4>
+                        <div class="store-count">0</div>
+                    </div>
+                    <div class="card owned-stores">
+                        <h4><span class="material-symbols-outlined">home</span> Company Owned</h4>
+                        <div class="store-count">0</div>
+                    </div>
+                    <div class="card franchise-stores">
+                        <h4><span class="material-symbols-outlined">storefront</span> Franchises</h4>
+                        <div class="store-count">0</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">add_business</span> Add New Store/Franchise</h4>
+                    <button class="inline-add-button" onclick="openModal('add-store-modal')"><span class="material-symbols-outlined">add</span> Add Outlet</button>
+                </div>
+
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="name">Name <span class="arrow"></span></th>
+                                <th class="filterable" data-column="type">Type <span class="arrow"></span></th>
+                                <th class="filterable" data-column="manager">Manager <span class="arrow"></span></th>
+                                <th class="filterable" data-column="location">Location <span class="arrow"></span></th>
+                                <th class="filterable" data-column="status">Status <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                <td><input type="text" class="filter-input" data-column="name" placeholder="Filter Name" title="Filter by Store Name" pattern="[A-Za-z0-9\s]+" maxlength="100"></td>
+                                <td><input type="text" class="filter-input" data-column="type" placeholder="Filter Type" title="Filter by Store Type (Owned/Franchise)" pattern="^(Company-Owned|Franchise|Active|In Setup|Flagged|Closed)$"></td>
+                                <td><input type="text" class="filter-input" data-column="manager" placeholder="Filter Manager" title="Filter by Manager Name" pattern="[A-Za-z\s]+" maxlength="50"></td>
+                                <td><input type="text" class="filter-input" data-column="location" placeholder="Filter Location" title="Filter by Store Location" pattern="[A-Za-z0-9\s,.-]+" maxlength="200"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Filter Status" title="Filter by Store Status (Active/In Setup/Flagged/Closed)" pattern="^(Active|In Setup|Flagged|Closed)$"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="store-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="sales-tracking-section" class="module-section">
+                <h3><span class="material-symbols-outlined">trending_up</span> Sales Tracking & Insights</h3>
+
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">add_chart</span> Add Sales Entry</h4>
+                    <button class="inline-add-button" onclick="openModal('add-sales-modal')"><span class="material-symbols-outlined">add</span> Add Sale</button>
+                </div>
+
+                <div class="chart-container">
+                    <h4><span class="material-symbols-outlined">insert_chart</span> Sales Overview</h4>
+                    <canvas id="sales-overview-chart"></canvas>
+                </div>
+                <div class="data-table-container">
+                    <h4><span class="material-symbols-outlined">grid_view</span> Sales Details</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="product">Product <span class="arrow"></span></th>
+                                <th class="filterable" data-column="quantity" data-type="number">Quantity Sold <span class="arrow"></span></th>
+                                <th class="filterable" data-column="unitPrice" data-type="number">Unit Price <span class="arrow"></span></th>
+                                <th class="filterable" data-column="totalAmount" data-type="number">Total Amount <span class="arrow"></span></th>
+                                <th class="filterable" data-column="saleDate">Sale Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="saleTime">Sale Time <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                <td><input type="text" class="filter-input" data-column="product" placeholder="Filter Product" title="Filter by Product Name" pattern="[A-Za-z0-9\s]+" maxlength="100"></td>
+                                <td><input type="text" class="filter-input" data-column="quantity" placeholder="Filter Quantity" title="Filter by Quantity Sold" pattern="[0-9]+" maxlength="5"></td>
+                                <td><input type="text" class="filter-input" data-column="unitPrice" placeholder="Filter Price" title="Filter by Unit Price" pattern="[0-9.]+" maxlength="10"></td>
+                                <td><input type="text" class="filter-input" data-column="totalAmount" placeholder="Filter Amount" title="Filter by Total Sale Amount" pattern="[0-9.]+" maxlength="10"></td>
+                                <td><input type="text" class="filter-input" data-column="saleDate" placeholder="Filter Date" title="Filter by Sale Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"></td>
+                                <td><input type="text" class="filter-input" data-column="saleTime" placeholder="Filter Time" title="Filter by Sale Time (HH:MM)" pattern="\d{2}:\d{2}"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="inventory-sync-section" class="module-section">
+                <h3><span class="material-symbols-outlined">sync</span> Inventory Sync & Management</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">add_box</span> Update Inventory / Report Shrinkage</h4>
+                    <button class="inline-add-button" onclick="openModal('update-inventory-modal')"><span class="material-symbols-outlined">edit_note</span> Update Inventory</button>
+                    <button class="inline-add-button" onclick="openModal('report-shrinkage-modal')"><span class="material-symbols-outlined">warning</span> Report Shrinkage</button>
+                    <button class="inline-add-button" onclick="openModal('upload-inventory-sheet-modal')"><span class="material-symbols-outlined">upload_file</span> Upload Inventory Sheet</button>
+                </div>
+
+
+                <div class="data-table-container">
+                    <h4><span class="material-symbols-outlined">inventory_2</span> Store Inventory Levels</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="product">Product <span class="arrow"></span></th>
+                                <th class="filterable" data-column="currentStock" data-type="number">Current Stock <span class="arrow"></span></th>
+                                <th class="filterable" data-column="reorderLevel" data-type="number">Reorder Level <span class="arrow"></span></th>
+                                <th class="filterable" data-column="expiryDate">Expiry Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="lastSynced">Last Synced <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                <td><input type="text" class="filter-input" data-column="product" placeholder="Filter Product" title="Filter by Product Name" pattern="[A-Za-z0-9\s]+" maxlength="100"></td>
+                                <td><input type="text" class="filter-input" data-column="currentStock" placeholder="Filter Stock" title="Filter by Current Stock Level" pattern="[0-9]+" maxlength="5"></td>
+                                <td><input type="text" class="filter-input" data-column="reorderLevel" placeholder="Filter Level" title="Filter by Reorder Level" pattern="[0-9]+" maxlength="5"></td>
+                                <td><input type="text" class="filter-input" data-column="expiryDate" placeholder="Filter Date" title="Filter by Expiry Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"></td>
+                                <td><input type="text" class="filter-input" data-column="lastSynced" placeholder="Filter Date/Time" title="Filter by Last Synced Date/Time (YYYY-MM-DD HH:MM)" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="store-inventory-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ai-suggestions">
+                    <h4><span class="material-symbols-outlined">lightbulb</span> AI Reorder Suggestions</h4>
+                    <ul id="reorder-suggestions-list">
+                        <li>Store #101: Reorder Milk (Low Stock)</li>
+                        <li>Store #105: Reorder Cheese (Approaching Reorder Level)</li>
+                    </ul>
+                </div>
+                <div class="shrinkage-reports">
+                    <h4><span class="material-symbols-outlined">report</span> Shrinkage Reports</h4>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="product">Product <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="quantityLost" data-type="number">Quantity Lost <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="lossReason">Reason <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="reportDate">Report Date <span class="arrow"></span></th>
+                                </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                    <td><input type="text" class="filter-input" data-column="product" placeholder="Filter Product" title="Filter by Product Name" pattern="[A-Za-z0-9\s]+" maxlength="100"></td>
+                                    <td><input type="text" class="filter-input" data-column="quantityLost" placeholder="Filter Quantity" title="Filter by Quantity Lost" pattern="[0-9]+" maxlength="5"></td>
+                                    <td><input type="text" class="filter-input" data-column="lossReason" placeholder="Filter Reason" title="Filter by Reason (Theft/Expired/Damage/Others)" pattern="^(Theft|Expired|Damage|Others)$"></td>
+                                    <td><input type="text" class="filter-input" data-column="reportDate" placeholder="Filter Date" title="Filter by Report Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"></td>
+                                </tr>
+                            </thead>
+                            <tbody id="shrinkage-report-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performance-comm-section" class="module-section">
+                <h3><span class="material-symbols-outlined">insights</span> Performance & Communication</h3>
+                <div class="performance-index">
+                    <h4><span class="material-symbols-outlined">leaderboard</span> Franchise Performance Index (FPI)</h4>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="name">Store Name <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="fpiScore" data-type="number">FPI Score <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="salesRank" data-type="number">Sales Rank <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="complianceScore" data-type="number">Compliance <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="attendance" data-type="number">Attendance (%) <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="timelinessRating" data-type="number">Timeliness Rating <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="cleanlinessRating" data-type="number">Cleanliness Rating <span class="arrow"></span></th>
+                                </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                    <td><input type="text" class="filter-input" data-column="name" placeholder="Filter Name" title="Filter by Store Name" pattern="[A-Za-z0-9\s]+" maxlength="100"></td>
+                                    <td><input type="text" class="filter-input" data-column="fpiScore" placeholder="Filter Score" title="Filter by FPI Score" pattern="[0-9]+" maxlength="3"></td>
+                                    <td><input type="text" class="filter-input" data-column="salesRank" placeholder="Filter Rank" title="Filter by Sales Rank" pattern="[0-9]+" maxlength="3"></td>
+                                    <td><input type="text" class="filter-input" data-column="complianceScore" placeholder="Filter Score" title="Filter by Compliance Score" pattern="[0-9]+" maxlength="3"></td>
+                                    <td><input type="text" class="filter-input" data-column="attendance" placeholder="Filter %" title="Filter by Attendance Percentage" pattern="[0-9.]+" maxlength="5"></td>
+                                    <td><input type="text" class="filter-input" data-column="timelinessRating" placeholder="Filter Rating" title="Filter by Timeliness Rating (1-5)" pattern="[1-5]" maxlength="1"></td>
+                                    <td><input type="text" class="filter-input" data-column="cleanlinessRating" placeholder="Filter Rating" title="Filter by Cleanliness Rating (1-5)" pattern="[1-5]" maxlength="1"></td>
+                                </tr>
+                            </thead>
+                            <tbody id="fpi-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="communication-hub">
+                    <h4><span class="material-symbols-outlined">chat</span> Communication Hub</h4>
+                    <div class="message-input">
+                        <select id="message-type" title="Select message type">
+                            <option value="Direct">Direct</option>
+                            <option value="Broadcast">Broadcast</option>
+                        </select>
+                        <select id="recipient-store" title="Select recipient store(s)">
+                            <option value="">Select Store(s)</option>
+                        </select>
+                        <input type="text" id="message-subject" placeholder="Message Subject" title="Enter the subject of your message" maxlength="100">
+                        <input type="datetime-local" id="message-schedule-time" title="Schedule message delivery time (optional)">
+                        <textarea id="message-text" placeholder="Enter your message" title="Enter your message to store manager(s)" maxlength="500"></textarea>
+                        <input type="file" id="message-attachment" accept=".pdf, image/*" title="Attach file (PDF/Image, max 5MB)">
+                        <select id="message-language" title="Select message language (for auto-translate)">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="kn">Kannada</option>
+                            <option value="ta">Tamil</option>
+                            <option value="te">Telugu</option>
+                            <option value="mr">Marathi</option>
+                            <option value="bn">Bengali</option>
+                            </select>
+                        <button class="action-button"><span class="material-symbols-outlined">send</span> Send Message</button>
+                    </div>
+                    <div class="message-log" id="message-log">
+                    </div>
+                </div>
+            </section>
+
+            <section id="franchise-mgmt-section" class="module-section">
+                <h3><span class="material-symbols-outlined">handshake</span> Franchise Management</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">add_box</span> Add New Franchise Agreement</h4>
+                    <button class="inline-add-button" onclick="openModal('add-franchise-modal')"><span class="material-symbols-outlined">add</span> Add Agreement</button>
+                </div>
+                <div class="data-table-container">
+                    <h4><span class="material-symbols-outlined">assignment</span> Franchise Agreements</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="agreementId" data-type="number">Agreement ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="franchiseeName">Franchisee Name <span class="arrow"></span></th>
+                                <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="startDate">Start Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="endDate">End Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="status">Status <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="agreementId" placeholder="Filter ID" title="Filter by Agreement ID"></td>
+                                <td><input type="text" class="filter-input" data-column="franchiseeName" placeholder="Filter Name" title="Filter by Franchisee Name" pattern="[A-Za-z\s]+" maxlength="100"></td>
+                                <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                <td><input type="text" class="filter-input" data-column="startDate" placeholder="Filter Date" title="Filter by Start Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"></td>
+                                <td><input type="text" class="filter-input" data-column="endDate" placeholder="Filter Date" title="Filter by End Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Filter Status" title="Filter by Agreement Status (Active/Pending/Expired)" pattern="^(Active|Pending|Expired)$"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="franchise-agreement-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="franchisee-performance">
+                    <h4><span class="material-symbols-outlined">grading</span> Franchisee Performance Dashboard</h4>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="storeId" data-type="number">Store ID <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="franchiseeName">Franchisee Name <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="salesPerformance" data-type="number">Sales (%) <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="complianceScore" data-type="number">Compliance <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="customerFeedback" data-type="number">Customer Feedback (%) <span class="arrow"></span></th>
+                                </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="storeId" placeholder="Filter ID" title="Filter by Store ID"></td>
+                                    <td><input type="text" class="filter-input" data-column="franchiseeName" placeholder="Filter Name" title="Filter by Franchisee Name" pattern="[A-Za-z\s]+" maxlength="100"></td>
+                                    <td><input type="text" class="filter-input" data-column="salesPerformance" placeholder="Filter (%)" title="Filter by Sales Performance Percentage" pattern="[0-9.]+" maxlength="5"></td>
+                                    <td><input type="text" class="filter-input" data-column="complianceScore" placeholder="Filter Score" title="Filter by Compliance Score" pattern="[0-9]+" maxlength="3"></td>
+                                    <td><input type="text" class="filter-input" data-column="customerFeedback" placeholder="Filter (%)" title="Filter by Customer Feedback Percentage" pattern="[0-9.]+" maxlength="5"></td>
+                                </tr>
+                            </thead>
+                            <tbody id="franchisee-performance-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="add-store-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">add_business</span> Add New Store/Franchise</h4>
+            <form id="add-store-form">
+                <div class="form-group">
+                    <label for="store-name">Store Name<span class="required">*</span></label>
+                    <input type="text" id="store-name" name="storeName" required pattern="[A-Za-z0-9\s]+" title="Enter the store name (alphanumeric characters and spaces only)" placeholder="e.g., Main Street Dairy" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="store-type">Store Type<span class="required">*</span></label>
+                    <select id="store-type" name="storeType" required title="Select the store type">
+                        <option value="Company-Owned">Company Owned</option>
+                        <option value="Franchise">Franchise</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="store-status">Store Status<span class="required">*</span></label>
+                    <select id="store-status" name="storeStatus" required title="Select the current status of the store">
+                        <option value="Active">Active</option>
+                        <option value="In Setup">In Setup</option>
+                        <option value="Flagged">Flagged</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="store-address">Address<span class="required">*</span></label>
+                    <input type="text" id="store-address" name="storeAddress" required pattern="[A-Za-z0-9\s,.-]+" title="Enter the street address" placeholder="e.g., 123 Main St" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="store-city">City<span class="required">*</span></label>
+                    <input type="text" id="store-city" name="storeCity" required pattern="[A-Za-z\s]+" title="Enter the city" placeholder="e.g., Bengaluru" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="store-state">State<span class="required">*</span></label>
+                    <input type="text" id="store-state" name="storeState" required pattern="[A-Za-z\s]+" title="Enter the state" placeholder="e.g., Karnataka" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="store-pincode">Pincode<span class="required">*</span></label>
+                    <input type="text" id="store-pincode" name="storePincode" required pattern="[0-9]{6}" title="Enter a 6-digit Indian pincode" placeholder="e.g., 560001" maxlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="store-gps">GPS Coordinates (Optional)</label>
+                    <input type="text" id="store-gps" name="storeGps" pattern="^-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+$" title="Enter latitude and longitude (e.g., 12.9716, 77.5946)" placeholder="e.g., 12.9716, 77.5946" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="store-manager-name">Manager Name<span class="required">*</span></label>
+                    <input type="text" id="store-manager-name" name="managerName" required pattern="[A-Za-z\s]+" title="Enter the manager's full name" placeholder="e.g., Jane Doe" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="store-manager-phone">Manager Phone<span class="required">*</span></label>
+                    <input type="tel" id="store-manager-phone" name="managerPhone" required pattern="[0-9]{10}" title="Enter a 10-digit phone number" placeholder="e.g., 9876543210" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="store-manager-email">Manager Email<span class="required">*</span></label>
+                    <input type="email" id="store-manager-email" name="managerEmail" required title="Enter a valid email address" placeholder="e.g., manager@dairy.com" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="store-opening-date">Opening Date<span class="required">*</span></label>
+                    <input type="date" id="store-opening-date" name="openingDate" required title="Select the store's opening date">
+                </div>
+                <div class="form-group">
+                    <label for="store-working-hours-start">Working Hours Start<span class="required">*</span></label>
+                    <input type="time" id="store-working-hours-start" name="workingHoursStart" required title="Select the store's opening time">
+                </div>
+                <div class="form-group">
+                    <label for="store-working-hours-end">Working Hours End<span class="required">*</span></label>
+                    <input type="time" id="store-working-hours-end" name="workingHoursEnd" required title="Select the store's closing time">
+                </div>
+                <div class="form-group">
+                    <label for="store-photo">Store Photo/Logo (Optional)</label>
+                    <input type="file" id="store-photo" name="storePhoto" accept="image/*" title="Upload a photo or logo for the store">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Add Outlet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-sales-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">add_chart</span> Add New Sales Entry</h4>
+            <form id="add-sales-form">
+                <div class="form-group">
+                    <label for="sales-entry-mode">Sales Entry Mode<span class="required">*</span></label>
+                    <select id="sales-entry-mode" name="salesEntryMode" required title="Select how sales data will be entered">
+                        <option value="Manual">Manual Input</option>
+                        <option value="POS Integration">POS Integration Sync</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sales-store-id">Store ID<span class="required">*</span></label>
+                    <select id="sales-store-id" name="salesStoreId" required title="Select the store for this sales entry">
+                        <option value="">Select Store</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sale-datetime">Date & Time of Sale<span class="required">*</span></label>
+                    <input type="datetime-local" id="sale-datetime" name="saleDatetime" required title="Select the date and time of the sale">
+                </div>
+                <div class="form-group">
+                    <label for="sales-product-sold">Product Sold<span class="required">*</span></label>
+                    <input type="text" id="sales-product-sold" name="productSold" required list="product-suggestions" title="Enter the product sold (will autocomplete from product master)" placeholder="e.g., Full Cream Milk" maxlength="100">
+                    <datalist id="product-suggestions">
+                        </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="sales-units-sold">Units Sold<span class="required">*</span></label>
+                    <input type="number" id="sales-units-sold" name="unitsSold" required min="1" title="Enter the number of units sold" placeholder="e.g., 5">
+                </div>
+                <div class="form-group">
+                    <label for="sales-unit-price">Unit Price</label>
+                    <input type="number" id="sales-unit-price" name="unitPrice" step="0.01" readonly title="Unit price (auto-filled from product catalog)">
+                </div>
+                <div class="form-group">
+                    <label for="sales-total-amount">Total Sale Amount</label>
+                    <input type="number" id="sales-total-amount" name="totalSaleAmount" step="0.01" readonly title="Total sale amount (auto-calculated)">
+                </div>
+                <div class="form-group">
+                    <label for="sales-remarks">Remarks (Optional)</label>
+                    <textarea id="sales-remarks" name="salesRemarks" placeholder="Any additional notes about the sale" maxlength="250"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Add Sale</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="update-inventory-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">edit_note</span> Update Inventory Levels</h4>
+            <form id="update-inventory-form">
+                <div class="form-group">
+                    <label for="inventory-store-id">Store ID<span class="required">*</span></label>
+                    <select id="inventory-store-id" name="inventoryStoreId" required title="Select the store to update inventory for">
+                        <option value="">Select Store</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inventory-product">Product<span class="required">*</span></label>
+                    <input type="text" id="inventory-product" name="inventoryProduct" required list="product-suggestions-inventory" title="Enter the product (will autocomplete from product master)" placeholder="e.g., Fresh Curd" maxlength="100">
+                    <datalist id="product-suggestions-inventory">
+                        </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="inventory-current-stock">Current Stock Level<span class="required">*</span></label>
+                    <input type="number" id="inventory-current-stock" name="currentStockLevel" required min="0" title="Enter the current stock level" placeholder="e.g., 150">
+                </div>
+                <div class="form-group">
+                    <label for="inventory-reorder-level">Minimum Reorder Level<span class="required">*</span></label>
+                    <input type="number" id="inventory-reorder-level" name="minimumReorderLevel" required min="0" title="Enter the minimum stock level before reordering" placeholder="e.g., 50">
+                </div>
+                <div class="form-group">
+                    <label for="inventory-restock-date">Restock Date (if applicable)</label>
+                    <input type="date" id="inventory-restock-date" name="restockDate" title="Select the date of the last restock">
+                </div>
+                <div class="form-group">
+                    <label for="inventory-expiry-date">Expiry Date (Optional, for perishables)</label>
+                    <input type="date" id="inventory-expiry-date" name="expiryDate" title="Select the expiry date of the product batch">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Update Inventory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="report-shrinkage-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">warning</span> Report Shrinkage</h4>
+            <form id="report-shrinkage-form">
+                <div class="form-group">
+                    <label for="shrinkage-store-id">Store ID<span class="required">*</span></label>
+                    <select id="shrinkage-store-id" name="shrinkageStoreId" required title="Select the store reporting shrinkage">
+                        <option value="">Select Store</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="shrinkage-product">Product<span class="required">*</span></label>
+                    <input type="text" id="shrinkage-product" name="shrinkageProduct" required list="product-suggestions-shrinkage" title="Enter the product affected by shrinkage" placeholder="e.g., Butter" maxlength="100">
+                    <datalist id="product-suggestions-shrinkage">
+                        </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="shrinkage-quantity">Shrinkage Quantity<span class="required">*</span></label>
+                    <input type="number" id="shrinkage-quantity" name="shrinkageQuantity" required min="1" title="Enter the quantity of product lost due to shrinkage" placeholder="e.g., 10">
+                </div>
+                <div class="form-group">
+                    <label for="shrinkage-reason">Shrinkage Reason<span class="required">*</span></label>
+                    <select id="shrinkage-reason" name="shrinkageReason" required title="Select the reason for shrinkage">
+                        <option value="">Select Reason</option>
+                        <option value="Theft">Theft</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Damage">Damage</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Report Shrinkage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="upload-inventory-sheet-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">upload_file</span> Upload Inventory Sheet</h4>
+            <form id="upload-inventory-sheet-form">
+                <div class="form-group">
+                    <label for="inventory-sheet-file">Select Excel/CSV File<span class="required">*</span></label>
+                    <input type="file" id="inventory-sheet-file" name="inventorySheetFile" accept=".csv, .xls, .xlsx" required title="Upload an inventory sheet in Excel or CSV format">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Upload Sheet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="add-franchise-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4><span class="material-symbols-outlined">add_box</span> Add New Franchise Agreement</h4>
+            <form id="add-franchise-form">
+                <div class="form-group">
+                    <label for="franchise-name">Franchise Name<span class="required">*</span></label>
+                    <input type="text" id="franchise-name" name="franchiseName" required pattern="[A-Za-z\s]+" title="Enter the name of the franchisee" placeholder="e.g., Global Dairy Franchise" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="linked-store-id">Linked Store ID<span class="required">*</span></label>
+                    <select id="linked-store-id" name="linkedStoreId" required title="Select the store associated with this franchise agreement">
+                        <option value="">Select Store</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="agreement-start-date">Agreement Start Date<span class="required">*</span></label>
+                    <input type="date" id="agreement-start-date" name="agreementStartDate" required title="Select the start date of the agreement">
+                </div>
+                <div class="form-group">
+                    <label for="agreement-end-date">Agreement End Date<span class="required">*</span></label>
+                    <input type="date" id="agreement-end-date" name="agreementEndDate" required title="Select the end date of the agreement">
+                </div>
+                <div class="form-group">
+                    <label for="contract-copy">Upload Contract Copy<span class="required">*</span></label>
+                    <input type="file" id="contract-copy" name="contractCopy" accept=".pdf" required title="Upload the franchise agreement document (PDF, max 5MB)">
+                </div>
+                <div class="form-group">
+                    <label>Compliance Checklist<span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="compliance-brand-guidelines" name="complianceChecklist" value="Brand Guidelines Followed" required>
+                        <label for="compliance-brand-guidelines">Brand Guidelines Followed</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="compliance-pricing-adherence" name="complianceChecklist" value="Pricing Adherence" required>
+                        <label for="compliance-pricing-adherence">Pricing Adherence</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="compliance-cleanliness" name="complianceChecklist" value="Cleanliness Standards Met" required>
+                        <label for="compliance-cleanliness">Cleanliness Standards Met</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="compliance-staff-trained" name="complianceChecklist" value="Staff Trained" required>
+                        <label for="compliance-staff-trained">Staff Trained</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="monthly-sales-target">Monthly Sales Target Met (%)<span class="required">*</span></label>
+                    <input type="number" id="monthly-sales-target" name="monthlySalesTarget" required min="0" max="100" title="Enter the percentage of monthly sales target met (0-100)" placeholder="e.g., 95">
+                </div>
+                <div class="form-group">
+                    <label for="customer-complaint-count">Customer Complaint Count<span class="required">*</span></label>
+                    <input type="number" id="customer-complaint-count" name="customerComplaintCount" required min="0" title="Enter the number of customer complaints" placeholder="e.g., 2">
+                </div>
+                <div class="form-group">
+                    <label for="quality-audit-score">Quality Audit Score (%)<span class="required">*</span></label>
+                    <input type="number" id="quality-audit-score" name="qualityAuditScore" required min="0" max="100" title="Enter the quality audit score (0-100)" placeholder="e.g., 88">
+                </div>
+                <div class="form-group">
+                    <label for="supply-consistency-rating">Supply Consistency Rating (1-5)<span class="required">*</span></label>
+                    <input type="number" id="supply-consistency-rating" name="supplyConsistencyRating" required min="1" max="5" title="Rate supply consistency from 1 (poor) to 5 (excellent)" placeholder="e.g., 4">
+                </div>
+                <div class="form-group">
+                    <label for="agreement-status">Agreement Status<span class="required">*</span></label>
+                    <select id="agreement-status" name="agreementStatus" required title="Select the current status of the agreement">
+                        <option value="Active">Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Expired">Expired</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="action-button primary">Add Agreement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+<script src="retail-franchise.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYM81nZPfIfCJVeUYeVvP0MXdooD8jD4JI/zjvGYiax1MqEoBRYHxjym1bhZUwCcCNJGmgCLxXVjfGHnrCw==" crossorigin=""></script>
+</body>
+</html>

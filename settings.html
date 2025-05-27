@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Module - Advanced CRM Configuration Center</title>
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">settings</span> Settings Module (Advanced CRM Configuration Center)</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="user-role-management-section">
+                    <span class="material-symbols-outlined">group</span> User & Role Management
+                </button>
+                <button class="nav-button" data-section="system-configuration-section">
+                    <span class="material-symbols-outlined">tune</span> System Configuration
+                </button>
+                <button class="nav-button" data-section="notification-settings-section">
+                    <span class="material-symbols-outlined">notifications</span> Notification Settings
+                </button>
+                <button class="nav-button" data-section="data-management-security-section">
+                    <span class="material-symbols-outlined">security</span> Data Management & Security
+                </button>
+                <button class="nav-button" data-section="integrations-hub-section">
+                    <span class="material-symbols-outlined">link</span> Integrations Hub
+                </button>
+                 <button class="nav-button" data-section="global-admin-features-section">
+                    <span class="material-symbols-outlined">admin_panel_settings</span> Global Admin Features
+                </button>
+            </div>
+
+            <section id="user-role-management-section" class="active">
+                <h3><span class="material-symbols-outlined">group</span> User & Role Management</h3>
+                <div class="controls">
+                    <h4>User Accounts</h4>
+                    <button class="action-button inline-add-button" onclick="openAddUserModal()">
+                        <span class="material-symbols-outlined">person_add</span> Create New User
+                    </button>
+                    <button class="action-button inline-add-button" onclick="openManageRolesModal()">
+                        <span class="material-symbols-outlined">assignment_ind</span> Manage Roles
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="user-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="userId">User ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="name">Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="email">Email <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="department">Department <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="designation">Designation <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="role">Role <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="status">Status <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="boolean" data-column="2faEnabled">2FA Enabled <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="userId" placeholder="User ID"></td>
+                                <td><input type="text" class="filter-input" data-column="name" placeholder="Name"></td>
+                                <td><input type="text" class="filter-input" data-column="email" placeholder="Email"></td>
+                                <td><input type="text" class="filter-input" data-column="department" placeholder="Department"></td>
+                                <td><input type="text" class="filter-input" data-column="designation" placeholder="Designation"></td>
+                                <td><input type="text" class="filter-input" data-column="role" placeholder="Role"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Status"></td>
+                                <td><select class="filter-input" data-column="2faEnabled"><option value="">All</option><option value="true">Yes</option><option value="false">No</option></select></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="session-monitoring">
+                    <h4>Session Monitoring</h4>
+                    <ul id="active-sessions-list">
+                        </ul>
+                </div>
+            </section>
+
+            <section id="system-configuration-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">tune</span> System Configuration</h3>
+                <div class="config-options">
+                    <button class="action-button" onclick="openCustomFieldsModal()">
+                        <span class="material-symbols-outlined">add_field</span> Custom Fields & Layouts
+                    </button>
+                    <button class="action-button" onclick="openWorkflowAutomationModal()">
+                        <span class="material-symbols-outlined">auto_awesome</span> Workflow Automation
+                    </button>
+                    <button class="action-button" onclick="openFormBuilderModal()">
+                        <span class="material-symbols-outlined">edit_note</span> Form Builders
+                    </button>
+                    <button class="action-button" onclick="openBrandingOptionsModal()">
+                        <span class="material-symbols-outlined">branding_watermark</span> Branding Options
+                    </button>
+                    <div class="form-group">
+                        <label for="ui-language-toggle">Default UI Language:</label>
+                        <select id="ui-language-toggle">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="kn">Kannada</option>
+                            </select>
+                    </div>
+                </div>
+            </section>
+
+            <section id="notification-settings-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">notifications</span> Notification Settings</h3>
+                <div class="controls">
+                    <h4>Notification Rules</h4>
+                    <button class="action-button inline-add-button" onclick="openAddNotificationRuleModal()">
+                        <span class="material-symbols-outlined">add_alert</span> Add Notification Rule
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="notification-rules-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="ruleName">Rule Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="triggerEvent">Trigger Event <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="channel">Channel <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="recipient">Recipient <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="priority">Priority <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="ruleName" placeholder="Rule Name"></td>
+                                <td><input type="text" class="filter-input" data-column="triggerEvent" placeholder="Trigger Event"></td>
+                                <td><input type="text" class="filter-input" data-column="channel" placeholder="Channel"></td>
+                                <td><input type="text" class="filter-input" data-column="recipient" placeholder="Recipient"></td>
+                                <td><input type="text" class="filter-input" data-column="priority" placeholder="Priority"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="notification-rules-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="reminder-settings">
+                    <h4>Reminder Rules</h4>
+                    <p>Configure recurring reminders for various operational events.</p>
+                    <button class="action-button" onclick="openReminderRulesModal()">
+                        <span class="material-symbols-outlined">alarm</span> Manage Reminders
+                    </button>
+                </div>
+            </section>
+
+            <section id="data-management-security-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">security</span> Data Management & Security</h3>
+                <div class="data-options">
+                    <button class="action-button" onclick="openBackupSchedulerModal()">
+                        <span class="material-symbols-outlined">backup</span> Backup Scheduler
+                    </button>
+                    <button class="action-button" onclick="openImportToolsModal()">
+                        <span class="material-symbols-outlined">upload_file</span> Import Tools
+                    </button>
+                    <button class="action-button" onclick="openExportToolsModal()">
+                        <span class="material-symbols-outlined">download</span> Export Tools
+                    </button>
+                    <button class="action-button" onclick="openRestoreManagerModal()">
+                        <span class="material-symbols-outlined">restore</span> Restore Manager
+                    </button>
+                    <button class="action-button" onclick="openEncryptionSettingsModal()">
+                        <span class="material-symbols-outlined">vpn_key</span> Data Encryption Settings
+                    </button>
+                </div>
+                <div class="audit-trail-section">
+                    <h4>Audit Trail</h4>
+                    <table id="audit-trail-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="date" data-column="timestamp">Timestamp <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="userName">User <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="action">Action <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="details">Details <span class="arrow">▼</span></th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="date" class="filter-input" data-column="timestamp" placeholder="Timestamp"></td>
+                                <td><input type="text" class="filter-input" data-column="userName" placeholder="User Name"></td>
+                                <td><input type="text" class="filter-input" data-column="action" placeholder="Action"></td>
+                                <td><input type="text" class="filter-input" data-column="details" placeholder="Details"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-trail-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="integrations-hub-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">link</span> Integrations Hub</h3>
+                <div class="integration-options">
+                    <h4>External System Linking</h4>
+                    <button class="action-button" onclick="openExternalSystemLinkingModal()">
+                        <span class="material-symbols-outlined">link</span> Manage Connections
+                    </button>
+                    <button class="action-button" onclick="openApiManagementModal()">
+                        <span class="material-symbols-outlined">api</span> API Management
+                    </button>
+                    <button class="action-button" onclick="openWebhookConfigModal()">
+                        <span class="material-symbols-outlined">webhook</span> Webhook Configuration
+                    </button>
+                    <button class="action-button" onclick="openSmartMappingEngineModal()">
+                        <span class="material-symbols-outlined">data_object</span> Smart Mapping Engine
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <h4>Integration Status</h4>
+                    <table id="integration-status-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="integrationName">Integration Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="status">Status <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="lastSync">Last Sync <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="dataFlow">Data Flow <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="integrationName" placeholder="Integration Name"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Status"></td>
+                                <td><input type="date" class="filter-input" data-column="lastSync" placeholder="Last Sync"></td>
+                                <td><input type="text" class="filter-input" data-column="dataFlow" placeholder="Data Flow"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="integration-status-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="global-admin-features-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">admin_panel_settings</span> Global Admin Features</h3>
+                <div class="global-admin-options">
+                    <button class="action-button" onclick="openMultiLocationConfigModal()">
+                        <span class="material-symbols-outlined">location_on</span> Multi-Location Configuration
+                    </button>
+                    <button class="action-button" onclick="openAutoSyncControlsModal()">
+                        <span class="material-symbols-outlined">sync</span> Auto-Sync Controls
+                    </button>
+                    <button class="action-button" onclick="openSystemHealthMonitorModal()">
+                        <span class="material-symbols-outlined">monitor_heart</span> System Health Monitor
+                    </button>
+                    <button class="action-button" onclick="openAlertConsoleModal()">
+                        <span class="material-symbols-outlined">error</span> Alert Console
+                    </button>
+                    <button class="action-button" onclick="openBetaTestEnvironmentModal()">
+                        <span class="material-symbols-outlined">science</span> Beta/Test Environment Toggle
+                    </button>
+                </div>
+            </section>
+
+            <div id="add-user-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddUserModal()">&times;</span>
+                    <h4>Create New User Account</h4>
+                    <form id="add-user-form">
+                        <div class="form-group">
+                            <label for="user-name">Full Name:</label>
+                            <input type="text" id="user-name" name="user-name" required pattern="^[A-Za-z\s\-']+$" maxlength="100" placeholder="Enter Full Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-email">Email:</label>
+                            <input type="email" id="user-email" name="user-email" required placeholder="Enter Email Address"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-department">Department:</label>
+                            <input type="text" id="user-department" name="department" maxlength="50" placeholder="e.g., Sales, HR, Production"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-designation">Designation:</label>
+                            <input type="text" id="user-designation" name="designation" maxlength="50" placeholder="e.g., Manager, Executive, Agent"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-role">Assign Role:</label>
+                            <select id="user-role" name="role" required>
+                                <option value="" disabled selected hidden>Select Role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Staff">Staff</option>
+                                <option value="Field Agent">Field Agent</option>
+                                <option value="Franchise">Franchise</option>
+                                <option value="Distributor">Distributor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-password">Password:</label>
+                            <input type="password" id="user-password" name="password" required minlength="8" title="Password must be at least 8 characters long." placeholder="Enter Password"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-2fa">Enable Two-Factor Authentication (2FA):</label>
+                            <input type="checkbox" id="user-2fa" name="2fa"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Create User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="manage-roles-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeManageRolesModal()">&times;</span>
+                    <h4>Manage Roles & Permissions</h4>
+                    <p>Define and edit granular access permissions for each role.</p>
+                    <div class="role-list">
+                        <ul>
+                            <li><strong>Admin:</strong> Full Access</li>
+                            <li><strong>Manager:</strong> View/Edit in assigned modules</li>
+                            <li><strong>Staff:</strong> View/Add in assigned modules</li>
+                            </ul>
+                    </div>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to edit role permissions would be implemented here.')">Edit Permissions</button>
+                </div>
+            </div>
+
+            <div id="custom-fields-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeCustomFieldsModal()">&times;</span>
+                    <h4>Custom Fields & Layouts</h4>
+                    <p>Add, edit, or reorder custom fields for specific modules (e.g., Farmer Profile, Product Details).</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to add/edit custom fields would be implemented here.')">Add Custom Field</button>
+                </div>
+            </div>
+
+            <div id="workflow-automation-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeWorkflowAutomationModal()">&times;</span>
+                    <h4>Workflow Automation</h4>
+                    <p>Set up automated triggers and actions (e.g., send email when payment status changes to 'Overdue').</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to create workflow rules would be implemented here.')">Create New Workflow</button>
+                </div>
+            </div>
+
+            <div id="form-builder-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeFormBuilderModal()">&times;</span>
+                    <h4>Form Builders</h4>
+                    <p>Customize the layout and fields of data entry forms across the CRM using a drag-and-drop interface.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for form customization would be implemented here.')">Customize Form</button>
+                </div>
+            </div>
+
+            <div id="branding-options-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeBrandingOptionsModal()">&times;</span>
+                    <h4>Branding Options</h4>
+                    <p>Upload your company logo, set color themes, and customize dashboard titles.</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="logo-upload">Upload Logo:</label>
+                            <input type="file" id="logo-upload" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="primary-color">Primary Color:</label>
+                            <input type="color" id="primary-color" value="#4CAF50">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="action-button">Save Branding</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-notification-rule-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddNotificationRuleModal()">&times;</span>
+                    <h4>Add New Notification Rule</h4>
+                    <form id="add-notification-rule-form">
+                        <div class="form-group">
+                            <label for="notification-rule-name">Rule Name:</label>
+                            <input type="text" id="notification-rule-name" name="rule-name" required maxlength="100" placeholder="e.g., Milk Collection Alert"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification-trigger-event">Trigger Event:</label>
+                            <input type="text" id="notification-trigger-event" name="trigger-event" required placeholder="e.g., New Milk Entry, Payment Due"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification-channel">Notification Channel:</label>
+                            <select id="notification-channel" name="channel" required>
+                                <option value="" disabled selected hidden>Select Channel</option>
+                                <option value="Email">Email</option>
+                                <option value="SMS">SMS</option>
+                                <option value="App Push">App Push Notification</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification-recipient">Recipient(s):</label>
+                            <input type="text" id="notification-recipient" name="recipient" required placeholder="e.g., All Managers, specific@email.com"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification-priority">Priority:</label>
+                            <select id="notification-priority" name="priority" required>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Rule</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="reminder-rules-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeReminderRulesModal()">&times;</span>
+                    <h4>Manage Reminder Rules</h4>
+                    <p>Set up recurring reminders for key operational tasks.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to add/manage reminder rules would be implemented here.')">Add Reminder</button>
+                </div>
+            </div>
+
+            <div id="backup-scheduler-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeBackupSchedulerModal()">&times;</span>
+                    <h4>Backup Scheduler</h4>
+                    <p>Configure automatic data backups and manage backup destinations.</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="backup-frequency">Backup Frequency:</label>
+                            <select id="backup-frequency">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="backup-destination">Destination:</label>
+                            <select id="backup-destination">
+                                <option value="cloud">Cloud Storage</option>
+                                <option value="local">Local Server</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="action-button">Save Schedule</button>
+                            <button type="button" class="action-button">Run Manual Backup</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="import-tools-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeImportToolsModal()">&times;</span>
+                    <h4>Import Tools</h4>
+                    <p>Bulk import data from CSV or Excel files with guided field mapping.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for data import would be implemented here.')">Start Import</button>
+                </div>
+            </div>
+
+            <div id="export-tools-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeExportToolsModal()">&times;</span>
+                    <h4>Export Tools</h4>
+                    <p>Export filtered CRM data to various formats (Excel, PDF, JSON) for analysis or compliance.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for data export would be implemented here.')">Start Export</button>
+                </div>
+            </div>
+
+            <div id="restore-manager-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeRestoreManagerModal()">&times;</span>
+                    <h4>Restore Manager</h4>
+                    <p>Restore previous versions of data or the entire system state from backups.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for data restore would be implemented here.')">Browse Backups</button>
+                </div>
+            </div>
+
+            <div id="encryption-settings-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeEncryptionSettingsModal()">&times;</span>
+                    <h4>Data Encryption Settings</h4>
+                    <p>Manage encryption protocols for data in transit and at rest.</p>
+                    <p><em>All data is secured with industry-standard encryption.</em></p>
+                </div>
+            </div>
+
+            <div id="external-system-linking-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeExternalSystemLinkingModal()">&times;</span>
+                    <h4>External System Linking</h4>
+                    <p>Connect with third-party systems like POS, accounting software, SMS gateways.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to add new integrations would be implemented here.')">Add New Integration</button>
+                </div>
+            </div>
+
+            <div id="api-management-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeApiManagementModal()">&times;</span>
+                    <h4>API Management</h4>
+                    <p>Generate and manage API keys for secure programmatic access to CRM data.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to manage API keys would be implemented here.')">Generate API Key</button>
+                </div>
+            </div>
+
+            <div id="webhook-config-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeWebhookConfigModal()">&times;</span>
+                    <h4>Webhook Configuration</h4>
+                    <p>Set up webhooks for real-time data pushes to external systems based on CRM events.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality to configure webhooks would be implemented here.')">Add Webhook</button>
+                </div>
+            </div>
+
+            <div id="smart-mapping-engine-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeSmartMappingEngineModal()">&times;</span>
+                    <h4>Smart Mapping Engine</h4>
+                    <p>Map CRM fields to external system fields dynamically for seamless data exchange.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for smart data mapping would be implemented here.')">Configure Mapping</button>
+                </div>
+            </div>
+
+            <div id="multi-location-config-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeMultiLocationConfigModal()">&times;</span>
+                    <h4>Multi-Location Configuration</h4>
+                    <p>Customize CRM settings for each plant, region, or franchise outlet.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for multi-location setup would be implemented here.')">Add Location</button>
+                </div>
+            </div>
+
+            <div id="auto-sync-controls-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAutoSyncControlsModal()">&times;</span>
+                    <h4>Auto-Sync Controls</h4>
+                    <p>Enable or disable automatic data synchronization between connected modules.</p>
+                    <button class="action-button inline-add-button" onclick="alert('Functionality for auto-sync controls would be implemented here.')">Manage Syncs</button>
+                </div>
+            </div>
+
+            <div id="system-health-monitor-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeSystemHealthMonitorModal()">&times;</span>
+                    <h4>System Health Monitor</h4>
+                    <p>Monitor real-time system performance (CPU, memory, uptime) and integration statuses.</p>
+                    <div class="health-metrics">
+                        <p><strong>CPU Usage:</strong> <span id="cpu-usage">--%</span></p>
+                        <p><strong>Memory Usage:</strong> <span id="memory-usage">--%</span></p>
+                        <p><strong>Uptime:</strong> <span id="uptime">--</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="alert-console-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAlertConsoleModal()">&times;</span>
+                    <h4>Alert Console</h4>
+                    <p>View logs of critical system alerts, such as failed syncs, integration errors, or user lockouts.</p>
+                    <ul id="alert-log-list">
+                        </ul>
+                </div>
+            </div>
+
+            <div id="beta-test-environment-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeBetaTestEnvironmentModal()">&times;</span>
+                    <h4>Beta/Test Environment Toggle</h4>
+                    <p>Switch between the live production environment and a separate staging/test environment for development and testing purposes.</p>
+                    <div class="form-group">
+                        <label for="environment-toggle">Current Environment:</label>
+                        <select id="environment-toggle">
+                            <option value="production">Production</option>
+                            <option value="test">Test / Staging</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="action-button">Switch Environment</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>

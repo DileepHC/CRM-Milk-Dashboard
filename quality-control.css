@@ -1,0 +1,1468 @@
+/* quality-control.css */
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f4f6f8; /* Light gray background for body */
+    color: #333; /* Dark gray text for body */
+    line-height: 1.6;
+}
+
+/* Content Area Styles */
+.content {
+    flex-grow: 1;
+    background-color: white;
+    padding: 30px; /* Increased padding */
+    min-height: 100vh;
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: none;
+    width: 100vw;
+}
+
+h2,
+h3,
+h4 {
+    color: #2c3e50; /* Darker heading color */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h2 .material-symbols-outlined {
+    font-size: 1.5em;
+    color: #3498db;
+}
+
+h3 .material-symbols-outlined {
+    font-size: 1.3em;
+    color: #3498db;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+h3 {
+    font-size: 1.8em;
+}
+
+h4 {
+    font-size: 1.2em;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+/* QC Navigation */
+.qc-navigation {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    overflow-x: auto; /* Enable horizontal scrolling for many buttons */
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+    user-select: none;
+    background-color: white;
+    color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+.nav-button:hover {
+    background-color: #ecf0f1;
+    border-color: #95a5a6;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slightly more shadow on hover */
+}
+
+.nav-button.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #2980b9;
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2); /* More prominent active shadow */
+}
+
+/* QC Sections */
+.qc-section {
+    display: none;
+    animation: fadein 0.5s ease-in-out;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.qc-section.active {
+    display: block;
+}
+
+/* Controls */
+.controls {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.controls > div,
+.controls label,
+.controls select,
+.controls button {
+    flex-grow: 1; /* Distribute space evenly */
+    margin-bottom: 0; /* Reset heading margin */
+}
+
+.controls label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1em;
+    flex-grow: 0.5; /* Less growth for labels */
+}
+
+.controls select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #555;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+    padding-right: 25px;
+}
+
+.controls button.action-button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.controls button.action-button:hover {
+    background-color: #27ae60;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Test Management Section Styles */
+.test-management-grid {
+    display: flex; /* Layout for calendar and sidebar */
+    gap: 20px;
+    margin-bottom: 20px; /* Space below the calendar and suggestions */
+}
+
+.timeline-calendar-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    width: 70%; /* Set the calendar width */
+    display: grid;
+    grid-template-columns: 1fr auto; /* Two columns: for schedule/drag and filter */
+    grid-template-rows: auto 1fr auto; /* Three rows: for heading, calendar, (empty for now) */
+    align-items: start;
+    gap: 15px;
+}
+
+.timeline-calendar-container > h4 {
+    grid-column: 1 / -1; /* Span both columns */
+    grid-row: 1; /* Place at the top */
+    margin-bottom: 15px;
+}
+
+#draggable-tests {
+    grid-column: 1;
+    grid-row: 2;
+    margin-bottom: 15px;
+}
+
+#draggable-tests h4 {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+#timeline-calendar {
+    grid-column: 1 / -1; /* Span both columns below the headings */
+    grid-row: 3;
+    min-height: 300px; /* Adjust as needed */
+    border: 1px dashed #ccc;
+    padding: 10px;
+    text-align: center;
+    color: #777;
+}
+
+.timeline-calendar-container > div:nth-child(4) { /* Test Type Select */
+    grid-column: 2; /* Place in the second column */
+    grid-row: 2; /* Align with "Drag to Schedule" */
+    display: flex; /* Use flexbox */
+    align-items: center; /* Vertically center items */
+    gap: 5px; /* Add some space between label and select */
+    align-self: start; /* Align to the top of its grid cell */
+    margin-left: 10px; /* Add some left margin */
+}
+.test-analysis-sidebar {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Slightly stronger shadow */
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease-in-out; /* Smooth shadow transition */
+}
+
+@media (min-width: 768px) {
+    .test-analysis-sidebar {
+        width: 30%;
+        margin-bottom: 0;
+    }
+}
+
+.test-analysis-sidebar:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow increase on hover */
+}
+
+.test-analysis-sidebar h4 {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0; /* Thicker, lighter border */
+    padding-bottom: 10px;
+    color: #34495e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25em; /* Slightly larger */
+}
+
+.test-analysis-sidebar h4 .material-symbols-outlined {
+    font-size: 1.5em;
+    color: #337ab7; /* Ensure icon color matches */
+}
+
+.suggestion-card {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #f0f0f0; /* Lighter border */
+    border-radius: 6px;
+    font-size: 0.95em;
+    background-color: white; /* Explicitly white background */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* Very subtle shadow */
+    transition: transform 0.2s ease-in-out; /* Smooth transform transition */
+}
+
+.suggestion-card:hover {
+    transform: translateY(-2px); /* Gentle lift on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Slight shadow increase on hover */
+}
+
+.suggestion-card h4 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee; /* Even lighter border */
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1em;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 14px; /* Slightly larger */
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+}
+
+.status-indicator.pass {
+    background-color: #2ecc71;
+}
+
+.status-indicator.fail {
+    background-color: #e74c3c;
+}
+
+.status-indicator.pending {
+    background-color: #f39c12;
+}
+
+.trend-indicator {
+    font-size: 0.9em;
+    margin-left: 10px;
+    color: #777;
+}
+
+.retest-button,
+.compliance-log-button {
+    background-color: #3498db;
+    color: white;
+    border: 1px solid #3498db; /* Add a border for visual consistency */
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95em; /* Slightly larger button text */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    margin-top: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* Very subtle button shadow */
+}
+
+.retest-button:hover,
+.compliance-log-button:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.retest-button {
+    background-color: white;
+    color: #f39c12;
+    border-color: #f39c12;
+}
+
+.retest-button:hover {
+    background-color: #f39c12;
+    color: white;
+}
+
+.compliance-log-button {
+    background-color: white;
+    color: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.compliance-log-button:hover {
+    background-color: #2ecc71;
+    color: white;
+}
+
+/* Animation for suggestion cards (fade in with slight delay) */
+.suggestion-card {
+    opacity: 0;
+    transform: translateY(5px); /* Start slightly lower */
+    animation: fadeInSlideUp 0.3s ease-out forwards;
+    margin-top: 8px;
+}
+
+.suggestion-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.suggestion-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Remove list markers */
+.suggestion-card ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0; /* Remove any top margin on the ul */
+  margin-bottom: 0; /* Remove any bottom margin on the ul */
+}
+
+.suggestion-card ul li {
+  padding: 5px 0; /* Adjust vertical padding as needed */
+  margin-top: 0; /* Ensure no top margin on list items */
+  margin-bottom: 0; /* Ensure no bottom margin on list items */
+}
+/*
+.timeline-calendar-container > button.action-button { 
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+} */
+
+.test-list {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.test-list h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #34495e;
+}
+
+#recent-tests-list {
+    list-style: none;
+    padding: 0;
+}
+
+#recent-tests-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#recent-tests-list li:last-child {
+    border-bottom: none;
+}
+
+.test-info {
+    flex-grow: 1;
+}
+
+.test-info span {
+    display: block;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.test-info strong {
+    color: #333;
+}
+
+.micro-chart {
+    width: 80px;
+    height: 20px;
+    background-color: #eee; /* Placeholder */
+    border-radius: 3px;
+}
+
+.input-tools {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-tools h4 {
+    grid-column: 1 / -1;
+    margin-bottom: 10px;
+}
+
+.input-tools button.voice-input-button,
+.input-tools button.qr-scan-button,
+.input-tools button.action-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-tools button.voice-input-button {
+    background-color: #9b59b6;
+    color: white;
+}
+
+.input-tools button.voice-input-button:hover {
+    background-color: #8e44ad;
+}
+
+.input-tools button.qr-scan-button {
+    background-color: #f39c12;
+    color: white;
+}
+
+.input-tools button.qr-scan-button:hover {
+    background-color: #e67e22;
+}
+
+.input-tools textarea#quick-result-log {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    resize: vertical;
+    min-height: 50px;
+}
+
+/* Test Management Section Styles - Save Result Button */
+.input-tools button.action-button {
+    background-color: #28a745; /* Example green color for save */
+    color: white;
+    padding: 10px 15px; /* Slightly less padding than other action buttons */
+    border-radius: 5px;
+    font-size: 0.95em; /* Slightly smaller font size to fit in the input tools area */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex; /* To align icon and text */
+    align-items: center;
+    gap: 5px;
+}
+
+.input-tools button.action-button:hover {
+    background-color: #1e7e34;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.input-tools button.action-button .material-symbols-outlined {
+    font-size: 1em; /* Style the icon */
+} 
+
+/* quality-control.css */
+
+/* ... (previous CSS remains the same) ... */
+/*Standards and Compliace Section*/
+/*
+#standards-compliance-section {
+    /* Add any specific styling for the main section if needed */
+/*}
+ */
+.compliance-overview {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    margin-bottom: 30px;
+    text-align: left; /* Align text within the overview to the left */
+}
+
+.compliance-overview h4 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #34495e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.compliance-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.compliance-card {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition for hover effect */
+}
+
+.compliance-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.compliance-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.compliance-card .card-title {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.compliance-card .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.compliance-card .status-indicator.compliant {
+    background-color: #2ecc71;
+}
+
+.compliance-card .status-indicator.non-compliant {
+    background-color: #e74c3c;
+    animation: pulse 1.5s infinite alternate; /* Add pulse animation for non-compliant */
+}
+
+.compliance-card .status-indicator.pending {
+    background-color: #f39c12;
+    animation: spin 2s linear infinite; /* Add spin animation for pending */
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.compliance-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.compliance-card .compliance-metric {
+    margin-bottom: 10px;
+}
+
+.compliance-card .compliance-metric .metric-label {
+    font-size: 0.9em;
+    color: #555;
+    margin-right: 5px;
+}
+
+.compliance-card .compliance-metric .metric-value {
+    font-weight: bold;
+    color: #333;
+}
+
+.compliance-card .compliance-details {
+    margin-bottom: 15px;
+}
+
+.compliance-card .detail-item {
+    font-size: 0.85em;
+    color: #777;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+.compliance-card .detail-item.compliant {
+    color: #2ecc71;
+}
+
+.compliance-card .detail-item.non-compliant {
+    color: #e74c3c;
+}
+
+.compliance-card .detail-item.pending {
+    color: #f39c12;
+}
+
+.compliance-card .view-details-button {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start; /* Align button to the start of the card */
+}
+
+.compliance-card .view-details-button:hover {
+    background-color: #2980b9;
+}
+
+.quick-compliance-actions {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.quick-compliance-actions h4 {
+    font-size: 1em;
+    color: #555;
+    width: 100%; /* Make heading span the full width */
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.quick-compliance-actions .action-button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quick-compliance-actions .action-button:hover {
+    background-color: #27ae60;
+}
+
+.standards-overview-charts {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns for charts */
+    gap: 20px;
+}
+
+.standards-overview-charts h4 {
+    font-size: 1.2em;
+    color: #34495e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    grid-column: 1 / -1; /* Span across both charts */
+    margin-bottom: 15px;
+}
+
+.standards-overview-charts .chart-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.standards-overview-charts .chart-container canvas {
+    max-width: 100%;
+    height: 200px !important; /* Adjust chart height as needed */
+    margin-bottom: 10px;
+}
+
+/* Responsive adjustments for Standards and Compliance */
+@media (max-width: 768px) {
+    .compliance-cards-container {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-compliance-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quick-compliance-actions h4 {
+        text-align: left;
+    }
+
+    .standards-overview-charts {
+        grid-template-columns: 1fr; /* Back to 1 column for smaller screens */
+    }
+}
+
+/* Issue Management Section Styles */
+.issue-controls {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.issue-controls label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1em;
+    flex-shrink: 0;
+}
+
+.issue-controls select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #555;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    /* quality-control.css */
+
+    /* Issue Management Section Styles (Continued) */
+    background-position-x: 95%;
+    background-position-y: center;
+    padding-right: 25px;
+}
+
+.issue-controls button.action-button {
+    background-color: #f0ad4e; /* Example issue button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.issue-controls button.action-button:hover {
+    background-color: #eea236;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kanban-column {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.kanban-column h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #34495e;
+    text-align: center;
+}
+
+.issue-list {
+    list-style: none;
+    padding: 0;
+    min-height: 50px; /* Ensure columns have some height */
+}
+
+.issue-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: grab; /* Indicate draggable */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition */
+}
+
+.issue-list li:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.issue-list li:last-child {
+    margin-bottom: 0;
+}
+
+.issue-insights {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+/* Issue Management Section Styles (Continued) */
+
+.issue-list li.status-open {
+    background-color: #ffe0b2; /* Light orange for open */
+    border-color: #ffb300;
+    color: #555;
+}
+
+.issue-list li.status-investigating {
+    background-color: #ffcc80; /* Light orange for investigating */
+    border-color: #ffa726;
+    color: #555;
+    font-style: italic; /* Indicate it's in progress */
+}
+
+.issue-list li.status-resolved {
+    background-color: #a5d6a7; /* Light green for resolved */
+    border-color: #66bb6a;
+    color: #388e3c;
+}
+
+/* Issue Management Section Styles - AI CAPA Recommendations Button */
+.issue-insights button.action-button {
+    background-color: #9c27b0; /* Example deep purple color */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex; /* To align icon and text */
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px; /* Add some space above the button */
+}
+
+.issue-insights button.action-button:hover {
+    background-color: #7b1fa2;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+.issue-insights button.action-button .material-symbols-outlined {
+    font-size: 1.2em; /* Style the icon */
+}
+
+#frequent-issues-heatmap {
+    min-height: 100px; /* Placeholder height */
+    border: 1px dashed #ccc;
+    padding: 10px;
+    color: #777;
+}
+
+#capa-wizard-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Reporting & Analytics Section Styles */
+.analytics-controls {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.analytics-controls label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+/* Reporting & Analytics Section Styles (Continued) */
+.analytics-controls select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #555;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+    padding-right: 25px;
+}
+
+.analytics-controls button.action-button {
+    background-color: #3498db; /* Example analytics button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.analytics-controls button.action-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition */
+}
+
+.stat-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #34495e;
+}
+
+.stat-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2ecc71; /* Example stat value color */
+    display: block;
+    animation: fadeInUp 0.5s ease-in-out; /* Add fadeInUp animation */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.analytics-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.analytics-charts .chart-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the canvas and legend */
+}
+
+.analytics-charts .chart-card h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #34495e;
+}
+
+.analytics-charts .chart-card canvas {
+    max-width: 100%;
+    height: 250px !important;
+    margin-bottom: 10px; /* Space between chart and legend */
+}
+
+.export-button {
+    background-color: #e74c3c; /* Example export button color */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.export-button:hover {
+    background-color: #c0392b;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Supplier Quality Section Styles */
+.supplier-controls {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.supplier-controls label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.supplier-controls select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #555;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center;
+    padding-right: 25px;
+}
+
+.supplier-controls button.action-button {
+    background-color: #27ae60; /* Example supplier button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.supplier-controls button.action-button:hover {
+    background-color: #219653;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.supplier-grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.supplier-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.supplier-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.supplier-card h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    color: #34495e;
+}
+
+.quality-trend-graph {
+    width: 100%;
+    height: 40px;
+    background-color: #f0f0f0; /* Placeholder */
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.supplier-ratings {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.supplier-ratings span {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: white;
+}
+
+.supplier-ratings .excellent {
+    background-color: #5cb85c;
+}
+
+.supplier-ratings .moderate {
+    background-color: #f0ad4e;
+}
+
+.supplier-ratings .poor {
+    background-color: #d9534f;
+}
+
+.last-batches ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.85em;
+    color: #777;
+}
+
+.last-batches ul li {
+    padding: 3px 0;
+}
+
+.supplier-map-view {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+#supplier-quality-map {
+    min-height: 300px; /* Placeholder for the map */
+    border: 1px dashed #ccc;
+    padding: 10px;
+    color: #777;
+}
+
+/* General UI/UX Enhancements */
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #007bff; /* Example FAB color */
+    color: white;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.fab:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.fab .material-symbols-outlined {
+    font-size: 2em;
+}
+
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.notification-toast {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #495057;
+    font-size: 0.9em;
+    animation: slideInRight 0.3s ease-out; /* Add slide-in animation */
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification-toast.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.notification-toast.error {
+    background-color: #f8d7da;
+    /* quality-control.css */
+
+    /* General UI/UX Enhancements (Continued) */
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.notification-toast a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.notification-toast a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .qc-navigation {
+        flex-direction: row; /* Keep horizontal scroll */
+        gap: 10px;
+    }
+
+    .nav-button {
+        width: auto; /* Adjust width for smaller screens */
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .kanban-board,
+    .analytics-charts,
+    .supplier-grid-view {
+        grid-template-columns: 1fr;
+    }
+
+    .controls,
+    .issue-controls,
+    .analytics-controls,
+    .supplier-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .controls > *,
+    .issue-controls > *,
+    .analytics-controls > *,
+    .supplier-controls > * {
+        width: 100%;
+    }
+
+    .quick-stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .fab {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .input-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .input-tools button {
+        width: 100%;
+    }
+}

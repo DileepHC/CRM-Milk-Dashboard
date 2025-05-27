@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Relations - Advanced CRM Dashboard</title>
+    <link rel="stylesheet" href="customer-relations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">support_agent</span> Customer Relations (Advanced CRM Dashboard)</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="customer-database-section">
+                    <span class="material-symbols-outlined">person_search</span> Customer Database & Segmentation
+                </button>
+                <button class="nav-button" data-section="interaction-tracking-section">
+                    <span class="material-symbols-outlined">timeline</span> Customer Interaction Tracking
+                </button>
+                <button class="nav-button" data-section="support-help-desk-section">
+                    <span class="material-symbols-outlined">headset_mic</span> Customer Support & Help Desk
+                </button>
+                <button class="nav-button" data-section="feedback-analytics-section">
+                    <span class="material-symbols-outlined">reviews</span> Feedback & Satisfaction Analytics
+                </button>
+                <button class="nav-button" data-section="loyalty-retention-section">
+                    <span class="material-symbols-outlined">loyalty</span> Loyalty & Retention Programs
+                </button>
+                 <button class="nav-button" data-section="crm-wide-features-section">
+                    <span class="material-symbols-outlined">settings</span> CRM-Wide Features
+                </button>
+            </div>
+
+            <section id="customer-database-section" class="active">
+                <h3><span class="material-symbols-outlined">person_search</span> Customer Database & Segmentation</h3>
+                <div class="controls">
+                    <h4>Customer Profiles</h4>
+                    <button class="action-button inline-add-button" onclick="openAddCustomerModal()">
+                        <span class="material-symbols-outlined">add</span> Add Customer
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="customer-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="customerId">Customer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="name">Name <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="contact">Contact <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="location">Location <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="purchaseHistory">Purchase History <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="preferences">Preferences <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="loyaltyTier">Loyalty Tier <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="feedbackScore">Feedback Score <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="kycUploads">KYC Uploads <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="behavioralSegmentation">Behavioral Segmentation <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="aiTags">AI Tags <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="customerId" placeholder="Customer ID"></td>
+                                <td><input type="text" class="filter-input" data-column="name" placeholder="Name"></td>
+                                <td><input type="text" class="filter-input" data-column="contact" placeholder="Contact"></td>
+                                <td><input type="text" class="filter-input" data-column="location" placeholder="Location"></td>
+                                <td><input type="text" class="filter-input" data-column="purchaseHistory" placeholder="Purchase History"></td>
+                                <td><input type="text" class="filter-input" data-column="preferences" placeholder="Preferences"></td>
+                                <td><input type="text" class="filter-input" data-column="loyaltyTier" placeholder="Loyalty Tier"></td>
+                                <td><input type="text" class="filter-input" data-column="feedbackScore" placeholder="Feedback Score"></td>
+                                <td><input type="text" class="filter-input" data-column="kycUploads" placeholder="KYC Uploads"></td>
+                                <td><input type="text" class="filter-input" data-column="behavioralSegmentation" placeholder="Behavioral Segmentation"></td>
+                                <td><input type="text" class="filter-input" data-column="aiTags" placeholder="AI Tags"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="interaction-tracking-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">timeline</span> Customer Interaction Tracking</h3>
+                <div class="controls">
+                    <h4>Interaction Timeline</h4>
+                    <button class="action-button inline-add-button" onclick="openAddInteractionModal()">
+                        <span class="material-symbols-outlined">add</span> Log Interaction
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="interaction-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="customerId">Customer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="interactionDate">Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="interactionType">Type <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="category">Category <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="description">Description <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="sentiment">Sentiment <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="channel">Channel <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="assignedTo">Assigned To <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="followUpDate">Follow-up Date <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="customerId" placeholder="Customer ID"></td>
+                                <td><input type="date" class="filter-input" data-column="interactionDate" placeholder="Select Date"></td>
+                                <td><input type="text" class="filter-input" data-column="interactionType" placeholder="Type"></td>
+                                <td><input type="text" class="filter-input" data-column="category" placeholder="Category"></td>
+                                <td><input type="text" class="filter-input" data-column="description" placeholder="Description"></td>
+                                <td><input type="text" class="filter-input" data-column="sentiment" placeholder="Sentiment"></td>
+                                <td><input type="text" class="filter-input" data-column="channel" placeholder="Channel"></td>
+                                <td><input type="text" class="filter-input" data-column="assignedTo" placeholder="Assigned To"></td>
+                                <td><input type="date" class="filter-input" data-column="followUpDate" placeholder="Follow-up Date"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="interaction-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="support-help-desk-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">headset_mic</span> Customer Support & Help Desk</h3>
+                <div class="controls">
+                    <h4>Support Tickets</h4>
+                    <button class="action-button inline-add-button" onclick="openCreateTicketModal()">
+                        <span class="material-symbols-outlined">add</span> Create New Ticket
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="support-ticket-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="ticketId">Ticket ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="customerId">Customer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="subject">Subject <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="status">Status <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="priority">Priority <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="assignedTo">Assigned To <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="createdDate">Created Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="slaDueDate">SLA Due Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="resolutionDate">Resolution Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="csatScore">CSAT Score <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="ticketId" placeholder="Ticket ID"></td>
+                                <td><input type="text" class="filter-input" data-column="customerId" placeholder="Customer ID"></td>
+                                <td><input type="text" class="filter-input" data-column="subject" placeholder="Subject"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Status"></td>
+                                <td><input type="text" class="filter-input" data-column="priority" placeholder="Priority"></td>
+                                <td><input type="text" class="filter-input" data-column="assignedTo" placeholder="Assigned To"></td>
+                                <td><input type="date" class="filter-input" data-column="createdDate" placeholder="Created Date"></td>
+                                <td><input type="date" class="filter-input" data-column="slaDueDate" placeholder="SLA Due Date"></td>
+                                <td><input type="date" class="filter-input" data-column="resolutionDate" placeholder="Resolution Date"></td>
+                                <td><input type="number" class="filter-input" data-column="csatScore" placeholder="CSAT Score"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="support-ticket-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Support Metrics</h4>
+                    <canvas id="support-metrics-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="feedback-analytics-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">reviews</span> Feedback & Satisfaction Analytics</h3>
+                <div class="controls">
+                    <h4>Customer Feedback</h4>
+                    <button class="action-button inline-add-button" onclick="openSubmitFeedbackModal()">
+                        <span class="material-symbols-outlined">add</span> Submit Feedback
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="feedback-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="feedbackId">Feedback ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="customerId">Customer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="date" data-column="feedbackDate">Date <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="type">Type <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="message">Message <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="rating">Rating <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="npsScore">NPS Score <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="classifierTags">Classifier Tags <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="feedbackId" placeholder="Feedback ID"></td>
+                                <td><input type="text" class="filter-input" data-column="customerId" placeholder="Customer ID"></td>
+                                <td><input type="date" class="filter-input" data-column="feedbackDate" placeholder="Select Date"></td>
+                                <td><input type="text" class="filter-input" data-column="type" placeholder="Type"></td>
+                                <td><input type="text" class="filter-input" data-column="message" placeholder="Message"></td>
+                                <td><input type="number" class="filter-input" data-column="rating" placeholder="Rating"></td>
+                                <td><input type="text" class="filter-input" data-column="npsScore" placeholder="NPS Score"></td>
+                                <td><input type="text" class="filter-input" data-column="classifierTags" placeholder="Classifier Tags"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="feedback-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Feedback Trends</h4>
+                    <canvas id="feedback-trend-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h4>CSAT Heatmap (Placeholder)</h4>
+                    <div class="heatmap-placeholder"></div>
+                </div>
+            </section>
+
+            <section id="loyalty-retention-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">loyalty</span> Loyalty & Retention Programs</h3>
+                <div class="controls">
+                    <h4>Loyalty Management</h4>
+                    <button class="action-button inline-add-button" onclick="openManageRewardsModal()">
+                        <span class="material-symbols-outlined">add</span> Manage Rewards
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table id="loyalty-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-type="text" data-column="customerId">Customer ID <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="loyaltyTier">Loyalty Tier <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="points">Points <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="lifetimeValue">Lifetime Value (₹) <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="number" data-column="rewardUsage">Reward Usage <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="churnRisk">Churn Risk <span class="arrow">▼</span></th>
+                                <th class="filterable" data-type="text" data-column="personalizedOffers">Personalized Offers <span class="arrow">▼</span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row hidden">
+                                <td><input type="text" class="filter-input" data-column="customerId" placeholder="Customer ID"></td>
+                                <td><input type="text" class="filter-input" data-column="loyaltyTier" placeholder="Loyalty Tier"></td>
+                                <td><input type="number" class="filter-input" data-column="points" placeholder="Points"></td>
+                                <td><input type="number" class="filter-input" data-column="lifetimeValue" placeholder="Lifetime Value"></td>
+                                <td><input type="number" class="filter-input" data-column="rewardUsage" placeholder="Reward Usage"></td>
+                                <td><input type="text" class="filter-input" data-column="churnRisk" placeholder="Churn Risk"></td>
+                                <td><input type="text" class="filter-input" data-column="personalizedOffers" placeholder="Offers"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="loyalty-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <h4>Loyalty Engagement</h4>
+                    <canvas id="loyalty-engagement-chart"></canvas>
+                </div>
+            </section>
+
+            <section id="crm-wide-features-section" style="display: none;">
+                <h3><span class="material-symbols-outlined">settings</span> CRM-Wide Features</h3>
+                <div class="crm-wide-options">
+                    <h4>Global Settings & Reports</h4>
+                    <button class="action-button" onclick="openLanguageSettingsModal()">
+                        <span class="material-symbols-outlined">language</span> Language Settings
+                    </button>
+                    <button class="action-button" onclick="openAccessControlModal()">
+                        <span class="material-symbols-outlined">lock</span> Role-Based Access Control
+                    </button>
+                    <button class="action-button" onclick="openDataImportExportModal()">
+                        <span class="material-symbols-outlined">upload_file</span> Data Import/Export
+                    </button>
+                    <div class="chart-container">
+                        <h4>Real-Time KPI Dashboard</h4>
+                        <canvas id="kpi-dashboard-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+
+            <div id="add-customer-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddCustomerModal()">&times;</span>
+                    <h4>Add New Customer</h4>
+                    <form id="add-customer-form">
+                        <div class="form-group">
+                            <label for="customer-name">Customer Name:</label>
+                            <input type="text" id="customer-name" name="customer-name" required pattern="^[A-Za-z\s\-']+$" maxlength="50" title="Customer Name should not exceed 50 characters" placeholder="Enter Customer Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-contact">Contact:</label>
+                            <input type="tel" id="customer-contact" name="customer-contact" required pattern="^[6-9]{1}[0-9]{9}$" maxlength="10" title="Contact number must start with 6-9 and have 10 digits" placeholder="Enter 10-digit Contact Number" />
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-location">Location:</label>
+                            <input type="text" id="customer-location" name="customer-location" required placeholder="Enter Location" />
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-preferences">Preferences:</label>
+                            <textarea id="customer-preferences" name="customer-preferences" rows="3" placeholder="e.g., Organic milk, low-fat yogurt"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-loyalty-tier">Loyalty Tier:</label>
+                            <select id="customer-loyalty-tier" name="customer-loyalty-tier" required>
+                                <option value="None">None</option>
+                                <option value="Bronze">Bronze</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-kyc-uploads">KYC/Proof Uploads:</label>
+                            <input type="file" id="customer-kyc-uploads" name="customer-kyc-uploads" accept="image/*,.pdf" multiple>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-behavioral-segmentation">Behavioral Segmentation:</label>
+                            <input type="text" id="customer-behavioral-segmentation" name="customer-behavioral-segmentation" placeholder="e.g., Dairy, Bulk Consumer">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Customer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-interaction-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAddInteractionModal()">&times;</span>
+                    <h4>Log Customer Interaction</h4>
+                    <form id="add-interaction-form">
+                        <div class="form-group">
+                            <label for="interaction-customer-id">Customer ID:</label>
+                            <input type="text" id="interaction-customer-id" name="customer-id" required pattern="^[A-Za-z0-9]{12}$" title="Customer ID must be 12 alphanumeric characters" maxlength="12" placeholder="Enter Customer ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-date">Date:</label>
+                            <input type="date" id="interaction-date" name="interaction-date" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-type">Interaction Type:</label>
+                            <select id="interaction-type" name="interaction-type" required>
+                                <option value="" disabled selected hidden>Select Type</option>
+                                <option value="Call">Call</option>
+                                <option value="Email">Email</option>
+                                <option value="In-Store Visit">In-Store Visit</option>
+                                <option value="Online Chat">Online Chat</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-category">Category:</label>
+                            <select id="interaction-category" name="interaction-category" required>
+                                <option value="" disabled selected hidden>Select Category</option>
+                                <option value="Inquiry">Inquiry</option>
+                                <option value="Complaint">Complaint</option>
+                                <option value="Suggestion">Suggestion</option>
+                                <option value="Escalation">Escalation</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-description">Description:</label>
+                            <textarea id="interaction-description" name="interaction-description" rows="5" required placeholder="Describe the interaction"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-sentiment">Sentiment (AI Tag):</label>
+                            <select id="interaction-sentiment" name="interaction-sentiment">
+                                <option value="Positive">Positive</option>
+                                <option value="Neutral">Neutral</option>
+                                <option value="Negative">Negative</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-channel">Channel:</label>
+                            <input type="text" id="interaction-channel" name="interaction-channel" placeholder="e.g., Web Form, Mobile App, WhatsApp"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-assigned-to">Assigned To:</label>
+                            <input type="text" id="interaction-assigned-to" name="interaction-assigned-to" placeholder="Staff Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="interaction-follow-up-date">Follow-up Date:</label>
+                            <input type="date" id="interaction-follow-up-date" name="interaction-follow-up-date"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Log Interaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="create-ticket-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeCreateTicketModal()">&times;</span>
+                    <h4>Create New Support Ticket</h4>
+                    <form id="create-ticket-form">
+                        <div class="form-group">
+                            <label for="ticket-customer-id">Customer ID:</label>
+                            <input type="text" id="ticket-customer-id" name="customer-id" required pattern="^[A-Za-z0-9]{12}$" title="Customer ID must be 12 alphanumeric characters" maxlength="12" placeholder="Enter Customer ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-subject">Subject:</label>
+                            <input type="text" id="ticket-subject" name="subject" required maxlength="100" placeholder="Enter ticket subject"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-description">Description:</label>
+                            <textarea id="ticket-description" name="description" rows="6" required placeholder="Describe the issue or request"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-priority">Priority:</label>
+                            <select id="ticket-priority" name="priority" required>
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-assigned-to">Assign To:</label>
+                            <input type="text" id="ticket-assigned-to" name="assigned-to" placeholder="Staff Name (Optional)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-sla-due-date">SLA Due Date:</label>
+                            <input type="date" id="ticket-sla-due-date" name="sla-due-date"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Create Ticket</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="submit-feedback-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeSubmitFeedbackModal()">&times;</span>
+                    <h4>Submit Customer Feedback</h4>
+                    <form id="submit-feedback-form">
+                        <div class="form-group">
+                            <label for="feedback-customer-id">Customer ID (Optional):</label>
+                            <input type="text" id="feedback-customer-id" name="customer-id" pattern="^[A-Za-z0-9]{12}$" title="Customer ID must be 12 alphanumeric characters" maxlength="12" placeholder="Enter Customer ID (if applicable)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-type">Feedback Type:</label>
+                            <select id="feedback-type" name="feedback-type" required>
+                                <option value="" disabled selected hidden>Select Type</option>
+                                <option value="Product Quality">Product Quality</option>
+                                <option value="Delivery Service">Delivery Service</option>
+                                <option value="Customer Service">Customer Service</option>
+                                <option value="Suggestion">Suggestion</option>
+                                <option value="General">General</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-message">Message:</label>
+                            <textarea id="feedback-message" name="message" rows="5" required placeholder="Enter your feedback"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-rating">Rating (1-5 Stars):</label>
+                            <input type="number" id="feedback-rating" name="rating" min="1" max="5" step="1" placeholder="e.g., 4"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback-nps">NPS (Net Promoter Score) (0-10):</label>
+                            <input type="number" id="feedback-nps" name="nps" min="0" max="10" step="1" placeholder="e.g., 9"/>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="manage-rewards-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeManageRewardsModal()">&times;</span>
+                    <h4>Manage Customer Rewards</h4>
+                    <form id="manage-rewards-form">
+                        <div class="form-group">
+                            <label for="reward-customer-id">Customer ID:</label>
+                            <input type="text" id="reward-customer-id" name="customer-id" required pattern="^[A-Za-z0-9]{12}$" title="Customer ID must be 12 alphanumeric characters" maxlength="12" placeholder="Enter Customer ID"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="reward-type">Reward Type:</label>
+                            <select id="reward-type" name="reward-type" required>
+                                <option value="" disabled selected hidden>Select Type</option>
+                                <option value="Points">Points</option>
+                                <option value="Cashback">Cashback</option>
+                                <option value="Discount">Discount</option>
+                                <option value="Gift">Exclusive Gift</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reward-value">Value:</label>
+                            <input type="number" id="reward-value" name="reward-value" required min="0" step="0.01" placeholder="Enter Value"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="reward-description">Description (Optional):</label>
+                            <textarea id="reward-description" name="reward-description" rows="3" placeholder="e.g., 100 points for referral"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Apply Reward</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="language-settings-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeLanguageSettingsModal()">&times;</span>
+                    <h4>Language Settings</h4>
+                    <p>Language selection and auto-translation configurations would go here.</p>
+                </div>
+            </div>
+
+            <div id="access-control-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeAccessControlModal()">&times;</span>
+                    <h4>Role-Based Access Control</h4>
+                    <p>User roles and permissions management would go here.</p>
+                </div>
+            </div>
+
+            <div id="data-import-export-modal" class="modal content-display" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeDataImportExportModal()">&times;</span>
+                    <h4>Data Import/Export</h4>
+                    <p>Options for importing/exporting CRM data (e.g., Excel, PDF, JSON) would go here.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="customer-relations.js"></script>
+</body>
+</html>

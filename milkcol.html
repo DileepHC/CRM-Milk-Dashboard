@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milk Collection Dashboard</title>
+  <link rel="stylesheet" href="milkcol.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <div class="content">
+    <h2>
+      <span class="material-symbols-outlined">water_drop</span>
+      Milk Collection Dashboard
+    </h2>
+
+    <div class="qc-navigation">
+      <button class="nav-button active" data-section="collection-centers">Collection Centers</button>
+      <button class="nav-button" data-section="route-management">Route Management</button>
+      <button class="nav-button" data-section="milk-tracking">Milk Collection Tracking</button>
+      <button class="nav-button" data-section="vehicle-management">Vehicle Management</button>
+      <button class="nav-button" data-section="driver-management">Driver Management</button>
+      <button class="nav-button" data-section="logistics-tracking">Logistics & Tracking</button>
+      <button class="nav-button" data-section="quality-control">Quality Control</button>
+    </div>
+
+    <!-- Collection Centers Section -->
+    <section id="collection-centers-section" class="qc-section active">
+      <h3>
+        <span class="material-symbols-outlined">store</span>
+        Collection Center Management
+      </h3>
+      <div class="controls">
+        <h4>View Centers</h4>
+        <button class="action-button inline-add-button" onclick="openAddCenterModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Center
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="collection-centers-table-container" style="display: block;">
+        <table id="centers-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="text" data-column="name">Center Name <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="location">Location <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="capacity">Capacity (Liters) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="select" data-column="status">Status <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td><input type="text" class="filter-input" data-column="name" placeholder="Center Name"></td>
+              <td><input type="text" class="filter-input" data-column="location" placeholder="Location"></td>
+              <td><input type="number" class="filter-input" data-column="capacity" placeholder="Capacity"></td>
+              <td>
+                <select class="filter-input" data-column="status">
+                  <option value="">All</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="centers-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-edit-center-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddCenterModal()">&times;</span>
+          <h4 id="center-modal-title">Add New Center</h4>
+          <form id="add-edit-center-form">
+              <input type="hidden" id="center-id">
+              <div class="form-group">
+                  <label for="center-name">Center Name:</label>
+                  <input type="text" id="center-name" maxlength="25" pattern="^[A-Za-z\s\-']+$" title="Center Name should not exceed 25 characters" placeholder="Enter Center Name" required>
+              </div>
+              <div class="form-group">
+                  <label for="center-location">Location:</label>
+                  <input type="text" id="center-location" maxlength="50" title="Location should not exceed 50 characters" placeholder="Enter Location" required>
+              </div>
+              <div class="form-group">
+                  <label for="center-capacity">Capacity (Liters):</label>
+                  <input type="number" id="center-capacity" min="1" placeholder="Enter Capacity in Liters" required>
+              </div>
+              <div class="form-group">
+                  <label for="center-status">Status:</label>
+                  <select id="center-status">
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                  </select>
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      Save Center
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="performance-overview">
+        <h4>Center Performance Overview</h4>
+        <div class="chart-container">
+          <h5>Weekly Collection Trend</h5>
+          <canvas id="center-collection-chart"></canvas>
+        </div>
+        <div class="alerts-container">
+          <h5>Real-time Alerts</h5>
+          <ul id="center-alerts-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Route Management Section -->
+    <section id="route-management-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">directions</span>
+        Route Management
+      </h3>
+      <div class="controls">
+        <h4>View Routes</h4>
+        <button class="action-button inline-add-button" onclick="openAddRouteModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Route
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="route-management-table-container" style="display: block;">
+        <table id="routes-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="text" data-column="name">Route Name <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="centerCount">Center Count <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="select" data-column="assignedVehicle">Assigned Vehicle <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td><input type="text" class="filter-input" data-column="name" placeholder="Route Name"></td>
+              <td><input type="number" class="filter-input" data-column="centerCount" placeholder="Center Count"></td>
+              <td>
+                <select class="filter-input" data-column="assignedVehicle">
+                  <option value="">All</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="routes-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-edit-route-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddRouteModal()">&times;</span>
+          <h4 id="route-modal-title">Add New Route</h4>
+          <form id="add-edit-route-form">
+              <input type="hidden" id="route-id">
+              <div class="form-group">
+                  <label for="route-name">Route Name:</label>
+                  <input type="text" id="route-name" maxlength="50" title="Route Name should not exceed 50 characters" placeholder="Enter Route Name" required>
+              </div>
+              <div class="form-group">
+                  <label for="route-centers">Collection Centers:</label>
+                  <select id="route-centers" multiple required>
+                      </select>
+              </div>
+              <div class="form-group">
+                  <label for="route-assigned-vehicle">Assign Vehicle:</label>
+                  <select id="route-assigned-vehicle">
+                      <option value="">-- Select Vehicle --</option>
+                      </select>
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      Save Route
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="route-insights">
+        <h4>Route Optimization Insights</h4>
+        <button class="action-button">
+          <span class="material-symbols-outlined">route</span>
+          Get Optimized Route Suggestions
+        </button>
+      </div>
+    </section>
+
+    <!-- Milk Collection Tracking Section -->
+    <section id="milk-tracking-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">inventory_2</span>
+        Milk Collection Tracking
+      </h3>
+      <div class="controls">
+        <h4>View Collections</h4>
+        <button class="action-button inline-add-button" onclick="openAddCollectionRecordModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Collection Record
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="collection-records-table-container" style="display: block;">
+        <table id="collection-records-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="select" data-column="centerId">Center <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="date" data-column="collectionDate">Date <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="volume">Volume (Liters) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="fatContent">Fat (%) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="snfValue">SNF (%) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="temperature">Temperature (°C) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="qualityFlags">Quality Flags <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td>
+                <select class="filter-input" data-column="centerId">
+                  <option value="">All</option>
+                </select>
+              </td>
+              <td><input type="date" class="filter-input" data-column="collectionDate"></td>
+              <td><input type="number" class="filter-input" data-column="volume" placeholder="Volume"></td>
+              <td><input type="number" class="filter-input" data-column="fatContent" placeholder="Fat%"></td>
+              <td><input type="number" class="filter-input" data-column="snfValue" placeholder="SNF%"></td>
+              <td><input type="number" class="filter-input" data-column="temperature" placeholder="Temperature(°C)"></td>
+              <td><input type="text" class="filter-input" data-column="qualityFlags" placeholder="Quality Flags"></td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="collection-records-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-collection-record-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddCollectionRecordModal()">&times;</span>
+          <h4>Add New Collection Record</h4>
+          <form id="add-collection-record-form">
+              <input type="hidden" id="record-id">
+              <div class="form-group">
+                  <label for="record-center">Collection Center:</label>
+                  <select id="record-center" required>
+                      <option value="" disabled selected hidden>-- Select Center --</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="record-date">Collection Date:</label>
+                  <input type="date" id="record-date" placeholder="Select Collection Date" required>
+              </div>
+              <div class="form-group">
+                  <label for="record-volume">Volume (Liters):</label>
+                  <input type="number" id="record-volume" min="0" step="0.1" placeholder="Enter Volume in Liters" required>
+              </div>
+              <div class="form-group">
+                  <label for="record-fat">Fat Content (%):</label>
+                  <input type="number" id="record-fat" min="0" step="0.01" placeholder="Enter Fat Content (%)">
+              </div>
+              <div class="form-group">
+                  <label for="record-snf">SNF Value (%):</label>
+                  <input type="number" id="record-snf" min="0" step="0.01" placeholder="Enter SNF Value (%)">
+              </div>
+              <div class="form-group">
+                  <label for="record-temperature">Temperature (°C):</label>
+                  <input type="number" id="record-temperature" step="0.1" placeholder="Enter Temperature (°C)">
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      Add Record
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="chart-view">
+        <h4>Chart View</h4>
+        <div class="chart-container">
+          <h5>Volume Trends Over Time</h5>
+          <canvas id="volume-trend-chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h5>Quality Stability (Fat & SNF)</h5>
+          <canvas id="quality-chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vehicle Management Section -->
+    <section id="vehicle-management-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">local_shipping</span>
+        Vehicle Management
+      </h3>
+      <div class="controls">
+        <h4>View Vehicles</h4>
+        <button class="action-button inline-add-button" onclick="openAddVehicleModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Vehicle
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="vehicle-management-table-container" style="display: block;">
+        <table id="vehicles-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="text" data-column="type">Vehicle Type <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="capacity">Capacity (Liters) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="licensePlate">License Plate <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="select" data-column="assignedRoute">Assignment <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td><input type="text" class="filter-input" data-column="type" placeholder="Vehicle Type"></td>
+              <td><input type="number" class="filter-input" data-column="capacity" placeholder="Capacity(L)"></td>
+              <td><input type="text" class="filter-input" data-column="licensePlate" placeholder="License Plate"></td>
+              <td>
+                <select class="filter-input" data-column="assignedRoute">
+                  <option value="">All</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="vehicles-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-edit-vehicle-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddVehicleModal()">&times;</span>
+          <h4 id="vehicle-modal-title">Add New Vehicle</h4>
+          <form id="add-edit-vehicle-form">
+              <input type="hidden" id="vehicle-id">
+              <div class="form-group">
+                  <label for="vehicle-type">Vehicle Type:</label>
+                  <input type="text" id="vehicle-type" maxlength="50" title="Vehicle Type should not exceed 50 characters" placeholder="Enter Vehicle Type" required>
+              </div>
+              <div class="form-group">
+                  <label for="vehicle-capacity">Capacity (Liters):</label>
+                  <input type="number" id="vehicle-capacity" min="1" placeholder="Enter Capacity in Liters" required>
+              </div>
+              <div class="form-group">
+                  <label for="vehicle-license-plate">License Plate:</label>
+                  <input type="text" id="vehicle-license-plate" maxlength="20" title="License Plate should not exceed 20 characters" placeholder="Enter License Plate" required>
+              </div>
+              <div class="form-group">
+                  <label for="vehicle-assigned-route">Assign to Route:</label>
+                  <select id="vehicle-assigned-route">
+                      <option value="" disabled selected hidden>-- Select Route --</option>
+                  </select>
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      <span class="material-symbols-outlined">save</span>
+                      Save Vehicle
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="utilization-stats">
+        <h4>Utilization Stats</h4>
+        <p>Total Vehicles: <span id="total-vehicles">0</span></p>
+        <p>Assigned Vehicles: <span id="assigned-vehicles">0</span></p>
+        <p>Unassigned Vehicles: <span id="unassigned-vehicles">0</span></p>
+        <button class="action-button">
+          <span class="material-symbols-outlined">insights</span>
+          View Idle Time Reports
+        </button>
+      </div>
+    </section>
+
+    <!-- Driver Management Section -->
+    <section id="driver-management-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">person</span>
+        Driver Management
+      </h3>
+      <div class="controls">
+        <h4>View Drivers</h4>
+        <button class="action-button inline-add-button" onclick="openAddDriverModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Driver
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="driver-management-table-container" style="display: block;">
+        <table id="drivers-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="text" data-column="name">Driver Name <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="licenseId">License ID <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="contactNumber">Contact No. <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="select" data-column="assignedVehicle">Assigned Vehicle <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td><input type="text" class="filter-input" data-column="name" placeholder="Driver Name"></td>
+              <td><input type="text" class="filter-input" data-column="licenseId" placeholder="License ID"></td>
+              <td><input type="text" class="filter-input" data-column="contactNumber" placeholder="Contact No."></td>
+              <td>
+                <select class="filter-input" data-column="assignedVehicle">
+                  <option value="">All</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="drivers-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-edit-driver-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddDriverModal()">&times;</span>
+          <h4 id="driver-modal-title">Add New Driver</h4>
+          <form id="add-edit-driver-form">
+              <input type="hidden" id="driver-id">
+              <div class="form-group">
+                  <label for="driver-name">Driver Name:</label>
+                  <input type="text" id="driver-name" maxlength="25" pattern="^[A-Za-z\s\-']+$" title="Driver Name should not exceed 25 characters" placeholder="Enter Driver Name" required>
+              </div>
+              <div class="form-group">
+                  <label for="driver-license-id">License ID:</label>
+                  <input type="text" id="driver-license-id" maxlength="20" title="License ID should not exceed 20 characters" placeholder="Enter License ID" required>
+              </div>
+              <div class="form-group">
+                  <label for="driver-contact-number">Contact Number:</label>
+                  <input type="tel" id="driver-contact-number" pattern="^[6-9]\d{9}$" maxlength="10" title="Enter a valid 10-digit contact number starting with 6-9" placeholder="Enter 10-digit Contact Number" required>
+              </div>
+              <div class="form-group">
+                  <label for="driver-assigned-vehicle">Assign Vehicle:</label>
+                  <select id="driver-assigned-vehicle">
+                      <option value="" disabled selected hidden>-- Select Vehicle --</option>
+                  </select>
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      Save Driver
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logistics & Tracking Section -->
+    <section id="logistics-tracking-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">navigation</span>
+        Logistics & Tracking
+      </h3>
+      <div class="controls">
+        <h4>View Logistics Data</h4>
+      </div>
+      <div class="logistics-map">
+        <h4>Real-time Vehicle Tracking</h4>
+        <div id="map-container" style="width:100%; height: 300px; border: 1px solid #ccc;">
+          <p>Map integration will be here.</p>
+        </div>
+      </div>
+      <div class="tracking-table-container content-display" id="logistics-tracking-table-container" style="display: block;">
+        <h4>Trip Details</h4>
+        <table id="trips-table" class="data-table">
+          <thead>
+            <tr>
+              <th>Trip ID</th>
+              <th>Vehicle</th>
+              <th>Driver</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="trips-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quality Control Section -->
+    <section id="quality-control-section" class="qc-section">
+      <h3>
+        <span class="material-symbols-outlined">science</span>
+        Quality Control
+      </h3>
+      <div class="controls">
+        <h4>View Quality Checks</h4>
+        <button class="action-button inline-add-button" onclick="openAddQualityCheckModal()">
+          <span class="material-symbols-outlined">add</span>
+          Add Quality Check
+        </button>
+      </div>
+      <div class="data-table-container content-display" id="quality-control-table-container" style="display: block;">
+        <table id="quality-checks-table" class="data-table filter-table">
+          <thead>
+            <tr>
+              <th class="filterable" data-type="select" data-column="centerId">Center <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="sampleId">Sample ID <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="date" data-column="collectionDate">Collection Date <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="fatContent">Fat (%) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="number" data-column="snfValue">SNF (%) <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="select" data-column="testStatus">Test Status <span class="arrow">▼</span></th>
+              <th class="filterable" data-type="text" data-column="labReportId">Lab Report ID <span class="arrow">▼</span></th>
+              <th>Actions</th>
+            </tr>
+            <tr class="filter-row hidden">
+              <td>
+                <select class="filter-input" data-column="centerId">
+                  <option value="">All</option>
+                </select>
+              </td>
+              <td><input type="text" class="filter-input" data-column="sampleId" placeholder="Sample ID"></td>
+              <td><input type="date" class="filter-input" data-column="collectionDate"></td>
+              <td><input type="number" class="filter-input" data-column="fatContent" placeholder="Fat(%)"></td>
+              <td><input type="number" class="filter-input" data-column="snfValue" placeholder="SNF(%)"></td>
+              <td>
+                <select class="filter-input" data-column="testStatus">
+                  <option value="">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="passed">Passed</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </td>
+              <td><input type="text" class="filter-input" data-column="labReportId" placeholder="Lab Report Id"></td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="quality-checks-table-body"></tbody>
+        </table>
+      </div>
+      <div id="add-quality-check-modal" class="modal content-display" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeAddQualityCheckModal()">&times;</span>
+          <h4>Add New Quality Check</h4>
+          <form id="add-quality-check-form">
+              <input type="hidden" id="quality-check-id">
+              <div class="form-group">
+                  <label for="qc-center">Collection Center:</label>
+                  <select id="qc-center" required>
+                      <option value="" disabled selected hidden>-- Select Center --</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="qc-sample-id">Sample ID:</label>
+                  <input type="text" id="qc-sample-id" maxlength="20" title="Sample ID should not exceed 20 characters" placeholder="Enter Sample ID" required>
+              </div>
+              <div class="form-group">
+                  <label for="qc-collection-date">Collection Date:</label>
+                  <input type="date" id="qc-collection-date" placeholder="Select Collection Date" required>
+              </div>
+              <div class="form-group">
+                  <label for="qc-fat">Fat Content (%):</label>
+                  <input type="number" id="qc-fat" step="0.01" placeholder="Enter Fat Content (%)">
+              </div>
+              <div class="form-group">
+                  <label for="qc-snf">SNF Value (%):</label>
+                  <input type="number" id="qc-snf" step="0.01" placeholder="Enter SNF Value (%)">
+              </div>
+              <div class="form-group">
+                  <label for="qc-test-status">Test Status:</label>
+                  <select id="qc-test-status">
+                      <option value="pending">Pending</option>
+                      <option value="passed">Passed</option>
+                      <option value="failed">Failed</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="qc-lab-report-id">Lab Report ID:</label>
+                  <input type="text" id="qc-lab-report-id" maxlength="20" title="Lab Report ID should not exceed 20 characters" placeholder="Enter Lab Report ID">
+              </div>
+              <div class="form-actions">
+                  <button type="submit" class="action-button">
+                      Add Check
+                  </button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="milkcol.js"></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Control Dashboard</title>
+    <link rel="stylesheet" href="quality-control.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div class="content">
+        <h2>Quality Control Dashboard <span class="material-symbols-outlined">verified_user</span></h2>
+
+        <div class="qc-navigation">
+            <button class="nav-button active" data-section="test-management">Test Management</button>
+            <button class="nav-button" data-section="standards-compliance">Standards & Compliance</button>
+            <button class="nav-button" data-section="issue-management">Issue Management</button>
+            <button class="nav-button" data-section="reporting-analytics">Reporting & Analytics</button>
+            <button class="nav-button" data-section="supplier-quality">Supplier Quality</button>
+        </div>
+
+        <div id="quality-control-content">
+            <section id="test-management-section" class="qc-section active">
+                <h3><span class="material-symbols-outlined">science</span> Test Management</h3>
+                <div class="controls">
+                    <div class="test-management-grid">
+                        <div class="timeline-calendar-container">
+                            <h4>Test Schedule</h4>
+                            <div id="draggable-tests">
+                                <h4>Drag to Schedule</h4>
+                            </div>
+                            <div id="timeline-calendar">
+                            </div>
+                            <div>
+                                <label for="test-type-filter">Test Type:</label>
+                                <select id="test-type-filter">
+                                    <option value="all">All</option>
+                                    <option value="raw-milk">Raw Milk</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="finished-product">Finished Product</option>
+                                </select>
+                            </div>
+                            </div>
+                        <div class="test-analysis-sidebar">
+                            <h4>Analysis</h4>
+                            <div id="calendar-suggestions">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-list">
+                    <h4>Recent Tests</h4>
+                    <ul id="recent-tests-list">
+                        </ul>
+                </div>
+
+                <div class="input-tools">
+                    <h4>Quick Log Result</h4>
+                    <button class="voice-input-button"><span class="material-symbols-outlined">mic</span> Voice Input</button>
+                    <button class="qr-scan-button"><span class="material-symbols-outlined">qr_code_scanner</span> Scan QR Code</button>
+                    <textarea id="quick-result-log" placeholder="Log test result..."></textarea>
+                    <button class="action-button"><span class="material-symbols-outlined">save</span> Save Result</button>
+                </div>
+            </section>
+
+            <section id="standards-compliance-section" class="qc-section">
+                <h3><span class="material-symbols-outlined">verified</span> Standards & Compliance</h3>
+                <div class="compliance-overview">
+                    <h4>Real-time Compliance Status</h4>
+                    <div class="compliance-cards-container">
+                        <div class="compliance-card">
+                            <div class="card-header">
+                                <span class="card-title">FSSAI Regulations</span>
+                                <span class="status-indicator compliant"></span>
+                            </div>
+                            <div class="card-body">
+                                <div class="compliance-metric">
+                                    <span class="metric-label">Overall Compliance:</span>
+                                    <span class="metric-value">95%</span>
+                                </div>
+                                <div class="compliance-details">
+                                    <div class="detail-item compliant">Hygiene Standards <span class="material-symbols-outlined">check_circle</span></div>
+                                    <div class="detail-item compliant">Labeling Requirements <span class="material-symbols-outlined">check_circle</span></div>
+                                    <div class="detail-item pending">Testing Protocols <span class="material-symbols-outlined">warning</span></div>
+                                </div>
+                                <button class="view-details-button">View Details</button>
+                            </div>
+                        </div>
+            
+                        <div class="compliance-card">
+                            <div class="card-header">
+                                <span class="card-title">ISO 22000:2018</span>
+                                <span class="status-indicator non-compliant"></span>
+                            </div>
+                            <div class="card-body">
+                                <div class="compliance-metric">
+                                    <span class="metric-label">Overall Compliance:</span>
+                                    <span class="metric-value">78%</span>
+                                </div>
+                                <div class="compliance-details">
+                                    <div class="detail-item compliant">Food Safety Management System <span class="material-symbols-outlined">check_circle</span></div>
+                                    <div class="detail-item non-compliant">Hazard Analysis <span class="material-symbols-outlined">error</span></div>
+                                    <div class="detail-item non-compliant">Preventive Measures <span class="material-symbols-outlined">error</span></div>
+                                </div>
+                                <button class="view-details-button">View Details</button>
+                            </div>
+                        </div>
+            
+                        <div class="compliance-card">
+                            <div class="card-header">
+                                <span class="card-title">HACCP Guidelines</span>
+                                <span class="status-indicator pending"></span>
+                            </div>
+                            <div class="card-body">
+                                <div class="compliance-metric">
+                                    <span class="metric-label">Overall Compliance:</span>
+                                    <span class="metric-value">65%</span>
+                                </div>
+                                <div class="compliance-details">
+                                    <div class="detail-item pending">Conducting Hazard Analysis <span class="material-symbols-outlined">warning</span></div>
+                                    <div class="detail-item pending">Establishing CCPs <span class="material-symbols-outlined">warning</span></div>
+                                    <div class="detail-item compliant">Monitoring Procedures <span class="material-symbols-outlined">check_circle</span></div>
+                                </div>
+                                <button class="view-details-button">View Details</button>
+                            </div>
+                        </div>
+                        </div>
+            
+                        <div class="quick-compliance-actions">
+                            <h4>Quick Actions</h4>
+                            <button class="action-button" id="initiate-compliance-check-button"><span class="material-symbols-outlined">assignment_turned_in</span> Initiate Compliance Check</button>
+                            <button class="action-button" id="upload-compliance-document-button"><span class="material-symbols-outlined">upload_file</span> Upload Compliance Document</button>
+                            <button class="action-button" id="configure-auto-audits-button"><span class="material-symbols-outlined">settings_suggest</span> Configure Auto-Audits</button>
+                        </div>
+                </div>
+            
+                <div class="standards-overview-charts">
+                    <h4>Compliance Trends</h4>
+                    <div class="chart-container">
+                        <canvas id="compliance-trend-line-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="non-compliance-reasons-bar-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="issue-management-section" class="qc-section">
+                <h3><span class="material-symbols-outlined">report_problem</span> Issue Management</h3>
+                <div class="issue-controls">
+                    <label for="severity-slider">Issue Severity:</label>
+                    <select id="severity-slider">
+                        <option value="1">Low</option>
+                        <option value="2">Minor</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Critical</option>
+                    </select>
+                    <button class="action-button"><span class="material-symbols-outlined">add_alert</span> Report New Issue</button>
+                </div>
+
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <h4>Open</h4>
+                        <ul id="open-issues-list" class="issue-list">
+                            </ul>
+                    </div>
+                    <div class="kanban-column">
+                        <h4>Investigating</h4>
+                        <ul id="investigating-issues-list" class="issue-list">
+                            </ul>
+                    </div>
+                    <div class="kanban-column">
+                        <h4>Resolved</h4>
+                        <ul id="resolved-issues-list" class="issue-list">
+                            </ul>
+                    </div>
+                </div>
+
+                <div class="issue-insights">
+                    <h4>Frequent Issues Heatmap</h4>
+                    <div id="frequent-issues-heatmap">
+                        </div>
+                    <button class="action-button"><span class="material-symbols-outlined">lightbulb</span> AI CAPA Recommendations</button>
+                </div>
+
+                <div id="capa-wizard-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button"><span class="material-symbols-outlined">close</span></span>
+                        <h4>CAPA Wizard</h4>
+                        </div>
+                </div>
+            </section>
+
+            <section id="reporting-analytics-section" class="qc-section">
+                <h3><span class="material-symbols-outlined">analytics</span> Reporting & Analytics</h3>
+                <div class="analytics-controls">
+                    <label for="time-filter">Time Period:</label>
+                    <select id="time-filter">
+                        <option value="all">All Time</option>
+                        <option value="last-month">Last Month</option>
+                        <option value="this-week">This Week</option>
+                    </select>
+                    <label for="product-filter">Filter by Product:</label>
+                    <select id="product-filter">
+                        <option value="">All</option>
+                        <option value="whole-milk">Whole Milk</option>
+                        <option value="toned-milk">Toned Milk</option>
+                        <option value="skimmed-milk">Skimmed Milk</option>
+                    </select>
+                    <label for="region-filter">Filter by Region:</label>
+                    <select id="region-filter">
+                        <option value="">All</option>
+                        <option value="region-a">Region A</option>
+                        <option value="region-b">Region B</option>
+                    </select>
+                    <button class="action-button"><span class="material-symbols-outlined">filter_alt</span> Apply Filters</button>
+                </div>
+
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <h4>Avg Quality Score</h4>
+                        <span id="avg-quality-score" class="stat-value">N/A</span>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Tests This Week</h4>
+                        <span id="tests-this-week" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Compliance Rate</h4>
+                        <span id="compliance-rate" class="stat-value">N/A</span>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Issues Raised</h4>
+                        <span id="total-issues" class="stat-value">0</span>
+                    </div>
+                </div>
+
+                <div class="analytics-charts">
+                    <div class="chart-card">
+                        <h4>Quality Score Trend</h4>
+                        <canvas id="quality-score-trend-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4>Compliance Breakdown</h4>
+                        <canvas id="compliance-breakdown-chart"></canvas>
+                    </div>
+                </div>
+
+                <button class="export-button"><span class="material-symbols-outlined">download</span> Export Report</button>
+            </section>
+
+            <section id="supplier-quality-section" class="qc-section">
+                <h3><span class="material-symbols-outlined">local_shipping</span> Supplier Quality Monitoring</h3>
+                <div class="supplier-controls">
+                    <label for="supplier-filter">Filter by Supplier:</label>
+                    <select id="supplier-filter">
+                        <option value="">All</option>
+                        </select>
+                    <label for="rating-filter">Filter by Rating:</label>
+                    <select id="rating-filter">
+                        <option value="">All</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="poor">Poor</option>
+                    </select>
+                    <button class="action-button"><span class="material-symbols-outlined">filter_alt</span> Apply Filters</button>
+                </div>
+
+                <div class="supplier-grid-view" id="supplier-grid">
+                    </div>
+
+                <div class="supplier-map-view">
+                    <h4>Supplier Quality Map</h4>
+                    <div id="supplier-quality-map">
+                        </div>
+                </div>
+            </section>
+        </div>
+
+        <button class="fab"><span class="material-symbols-outlined">add</span></button>
+
+        <div id="notification-container">
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="quality-control.js"></script>
+</body>
+</html>

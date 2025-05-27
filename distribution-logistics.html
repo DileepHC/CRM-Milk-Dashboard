@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution & Logistics Hub</title>
+    <link rel="stylesheet" href="distribution-logistics.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2><span class="material-symbols-outlined">local_shipping</span> Distribution & Logistics Hub</h2>
+            <div class="qc-navigation">
+                <button class="nav-button active" data-section="order-management">
+                    <span class="material-symbols-outlined">receipt_long</span> Order Management
+                </button>
+                <button class="nav-button" data-section="route-optimization">
+                    <span class="material-symbols-outlined">route</span> Route Optimization
+                </button>
+                <button class="nav-button" data-section="delivery-tracking">
+                    <span class="material-symbols-outlined">local_shipping</span> Delivery Tracking
+                </button>
+                <button class="nav-button" data-section="distributor-management">
+                    <span class="material-symbols-outlined">group</span> Distributors & Retailers
+                </button>
+                <button class="nav-button" data-section="fleet-management">
+                    <span class="material-symbols-outlined">directions_car</span> Fleet Management
+                </button>
+            </div>
+
+            <section id="order-management-section" class="module-section active">
+                <h3><span class="material-symbols-outlined">receipt_long</span> Order Management</h3>
+                <div class="dashboard-cards">
+                    <div class="card new-orders">
+                        <h4><span class="material-symbols-outlined">new_releases</span> New Orders</h4>
+                        <div class="order-count">...</div>
+                    </div>
+                    <div class="card processing-orders">
+                        <h4><span class="material-symbols-outlined">hourglass_top</span> Processing</h4>
+                        <div class="order-count">...</div>
+                    </div>
+                    <div class="card allocated-orders">
+                        <h4><span class="material-symbols-outlined">inventory_2</span> Allocated</h4>
+                        <div class="order-count">...</div>
+                    </div>
+                    <div class="card in-transit-orders">
+                        <h4><span class="material-symbols-outlined">directions_bus</span> In-Transit</h4>
+                        <div class="order-count">...</div>
+                    </div>
+                    <div class="card delivered-orders">
+                        <h4><span class="material-symbols-outlined">done_all</span> Delivered</h4>
+                        <div class="order-count">...</div>
+                    </div>
+                </div>
+            
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">shopping_cart</span> Orders</h4>
+                    <button class="inline-add-button" id="add-order-button">
+                        <span class="material-symbols-outlined">add_shopping_cart</span> Add Order
+                    </button>
+                </div>
+            
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="orderId" data-type="number">Order ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="source">Source <span class="arrow"></span></th>
+                                <th class="filterable" data-column="orderDate">Order Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="customer">Customer <span class="arrow"></span></th>
+                                <th class="filterable" data-column="deliveryDate">Delivery Date <span class="arrow"></span></th>
+                                <th class="filterable" data-column="status">Status <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="orderId" placeholder="Filter ID"></td>
+                                <td><input type="text" class="filter-input" data-column="source" placeholder="Filter Source"></td>
+                                <td><input type="text" class="filter-input" data-column="orderDate" placeholder="Filter Date"></td>
+                                <td><input type="text" class="filter-input" data-column="customer" placeholder="Filter Customer"></td>
+                                <td><input type="text" class="filter-input" data-column="deliveryDate" placeholder="Filter Date"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Filter Status"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="order-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="route-optimization-section" class="module-section active">
+                <h3><span class="material-symbols-outlined">route</span> Route Optimization & Driver Management</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">settings</span> Optimization Options</h4>
+                    <button id="open-optimize-form-button" class="inline-add-button"><span class="material-symbols-outlined">alt_route</span> Optimize Routes</button>
+                </div>
+
+                <div id="optimize-route-form-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h4><span class="material-symbols-outlined">alt_route</span> Optimize Route</h4>
+                        <form id="optimize-route-form">
+                            <div id="destination-inputs-container">
+                                <div class="form-group">
+                                    <label for="latitude-0">Latitude 1</label>
+                                    <input type="number" id="latitude-0" name="latitude[]" placeholder="Latitude" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="longitude-0">Longitude 1</label>
+                                    <input type="number" id="longitude-0" name="longitude[]" placeholder="Longitude" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="destination-address-0">Address 1 (Optional)</label>
+                                    <input type="text" id="destination-address-0" name="address[]" placeholder="Address">
+                                </div>
+                                </div>
+                            <button type="button" id="add-destination-button" class="inline-add-button small"><span class="material-symbols-outlined">add_location</span> Add Destination</button>
+                            <div class="form-actions">
+                                <button type="submit" class="action-button"><span class="material-symbols-outlined">search</span> Optimize</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="map-container" id="route-map">
+                </div>
+
+                <div class="driver-panel">
+                    <h4><span class="material-symbols-outlined">person</span> Driver Schedules</h4>
+                    <div class="controls">
+                        <h4><span class="material-symbols-outlined">person_add</span> Manage Drivers</h4>
+                        <button id="add-driver-button" class="inline-add-button"><span class="material-symbols-outlined">add</span> Add Driver</button>
+                    </div>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="driverName">Driver Name <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="schedule">Schedule <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="vehicle">Assigned Vehicle <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="driverName" placeholder="Filter Name"></td>
+                                    <td><input type="text" class="filter-input" data-column="schedule" placeholder="Filter Schedule"></td>
+                                    <td><input type="text" class="filter-input" data-column="vehicle" placeholder="Filter Vehicle"></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody id="driver-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add-driver-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h4><span class="material-symbols-outlined">person_add</span> Add/Edit Driver</h4>
+                        <form id="add-driver-form">
+                            <div class="form-group">
+                                <label for="driver-name">Driver Name</label>
+                                <input type="text" id="driver-name" name="driverName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-schedule">Schedule</label>
+                                <input type="text" id="driver-schedule" name="schedule">
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-vehicle">Assigned Vehicle</label>
+                                <select id="driver-vehicle" name="vehicle">
+                                    </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="action-button">Save Driver</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="delivery-tracking-section" class="module-section">
+                <h3><span class="material-symbols-outlined">local_shipping</span> Real-Time Delivery Tracking</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">location_on</span> Track Deliveries</h4>
+                    <button id="track-all-deliveries-button" class="inline-add-button"><span class="material-symbols-outlined">map</span> Track All Deliveries</button>
+                </div>
+                
+                <div class="map-container" id="delivery-map">
+                </div>
+
+                <div class="delivery-logs">
+                    <h4><span class="material-symbols-outlined">history</span> Delivery Logs</h4>
+                    <div class="controls">
+                        <h4><span class="material-symbols-outlined">add</span> Add Delivery Log</h4>
+                        <button id="add-delivery-log-button" class="inline-add-button"><span class="material-symbols-outlined">add</span> Add Log</button>
+                    </div>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="orderId">Order ID <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="driver">Driver <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="vehicle">Vehicle <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="deliveryTime">Delivery Time <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="deliveryLocation">Delivery Location <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="status">Status <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="confirmation">Confirmation <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="orderId" placeholder="Filter ID"></td>
+                                    <td><input type="text" class="filter-input" data-column="driver" placeholder="Filter Driver"></td>
+                                    <td><input type="text" class="filter-input" data-column="vehicle" placeholder="Filter Vehicle"></td>
+                                    <td><input type="text" class="filter-input" data-column="deliveryTime" placeholder="Filter Time"></td>
+                                    <td><input type="text" class="filter-input" data-column="deliveryLocation" placeholder="Filter Location"></td>
+                                    <td><input type="text" class="filter-input" data-column="status" placeholder="Filter Status"></td>
+                                    <td><input type="text" class="filter-input" data-column="confirmation" placeholder="Filter Confirmation"></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody id="delivery-log-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="add-delivery-log-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h4><span class="material-symbols-outlined">add</span> Add Delivery Log</h4>
+                        <form id="add-delivery-log-form">
+                            <div class="form-group">
+                                <label for="delivery-order-id">Order ID</label>
+                                <input type="text" id="delivery-order-id" name="orderId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-driver">Driver</label>
+                                <select id="delivery-driver" name="driver">
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-vehicle">Vehicle</label>
+                                <select id="delivery-vehicle" name="vehicle">
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-time">Delivery Time</label>
+                                <input type="datetime-local" id="delivery-time" name="deliveryTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-location">Delivery Location</label>
+                                <input type="text" id="delivery-location" name="deliveryLocation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-status">Status</label>
+                                <select id="delivery-status" name="status">
+                                    <option value="Pending">Pending</option>
+                                    <option value="In Transit">In Transit</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Failed">Failed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="delivery-confirmation">Confirmation Details</label>
+                                <input type="text" id="delivery-confirmation" name="confirmation">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="action-button">Add Log</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="distributor-management-section" class="module-section">
+                <h3><span class="material-symbols-outlined">group</span> Distributor & Retailer Management</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">person_add</span> Add New Partner</h4>
+                    <button class="inline-add-button"><span class="material-symbols-outlined">add</span> Add Partner</button>
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="name">Name <span class="arrow"></span></th>
+                                <th class="filterable" data-column="type">Type <span class="arrow"></span></th> <th class="filterable" data-column="territory">Territory <span class="arrow"></span></th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="name" placeholder="Filter Name"></td>
+                                <td><input type="text" class="filter-input" data-column="type" placeholder="Filter Type"></td>
+                                <td><input type="text" class="filter-input" data-column="territory" placeholder="Filter Territory"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="partner-table-body">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="heatmap-container">
+                    <h4><span class="material-symbols-outlined">map</span> Sales Performance Heatmap (Conceptual)</h4>
+                    <p>This section will eventually display a heatmap of sales performance by region or partner.</p>
+                </div>
+            </section>
+
+            <section id="fleet-management-section" class="module-section">
+                <h3><span class="material-symbols-outlined">directions_car</span> Fleet & Maintenance Management</h3>
+                <div class="controls">
+                    <h4><span class="material-symbols-outlined">add_circle</span> Add Vehicle</h4>
+                    <button class="inline-add-button"><span class="material-symbols-outlined">add</span> Add Vehicle</button>
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th class="filterable" data-column="vehicleId">Vehicle ID <span class="arrow"></span></th>
+                                <th class="filterable" data-column="model">Model <span class="arrow"></span></th>
+                                <th class="filterable" data-column="capacity">Capacity <span class="arrow"></span></th> <th class="filterable" data-column="status">Status <span class="arrow"></span></th> <th>Actions</th>
+                            </tr>
+                            <tr class="filter-row">
+                                <td><input type="text" class="filter-input" data-column="vehicleId" placeholder="Filter ID"></td>
+                                <td><input type="text" class="filter-input" data-column="model" placeholder="Filter Model"></td>
+                                <td><input type="text" class="filter-input" data-column="capacity" placeholder="Filter Capacity"></td>
+                                <td><input type="text" class="filter-input" data-column="status" placeholder="Filter Status"></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="fleet-table-body">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="maintenance-logs">
+                    <h4><span class="material-symbols-outlined">build</span> Maintenance Logs</h4>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="filterable" data-column="vehicleId">Vehicle ID <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="serviceDate">Service Date <span class="arrow"></span></th>
+                                    <th class="filterable" data-column="description">Description <span class="arrow"></span></th>
+                                    <th>Actions</th>
+                                    </tr>
+                                <tr class="filter-row">
+                                    <td><input type="text" class="filter-input" data-column="vehicleId" placeholder="Filter ID"></td>
+                                    <td><input type="text" class="filter-input" data-column="serviceDate" placeholder="Filter Date"></td>
+                                    <td><input type="text" class="filter-input" data-column="description" placeholder="Filter Description"></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody id="maintenance-log-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <div id="add-order-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h4><span class="material-symbols-outlined">add_shopping_cart</span> Add New Order</h4>
+                    <form id="add-order-form">
+                        <div class="form-group">
+                            <label for="order-source">Source</label>
+                            <input type="text" id="order-source" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-date">Order Date</label>
+                            <input type="date" id="order-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-customer">Customer</label>
+                            <input type="text" id="order-customer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="delivery-date">Delivery Date</label>
+                            <input type="date" id="delivery-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-status">Status</label>
+                            <select id="order-status" required>
+                                <option value="Processing">Processing</option>
+                                <option value="Allocated">Allocated</option>
+                                <option value="In-Transit">In-Transit</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button">Add Order</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-partner-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h4><span class="material-symbols-outlined">person_add</span> Add New Distributor/Retailer</h4>
+                    <form id="add-partner-form">
+                        <div class="form-group">
+                            <label for="partner-name">Name</label>
+                            <input type="text" id="partner-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner-type">Type</label>
+                            <select id="partner-type">
+                                <option value="distributor">Distributor</option>
+                                <option value="retailer">Retailer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner-territory">Territory</label>
+                            <input type="text" id="partner-territory">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="action-button primary">Save Partner</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="add-vehicle-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h4><span class="material-symbols-outlined">add_circle</span> Add New Vehicle</h4>
+                    <form id="add-vehicle-form">
+                        <div class="form-group">
+                            <label for="vehicle-id">Vehicle ID</label>
+                            <input type="text" id="vehicle-id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-model">Model</label>
+                            <input type="text" id="vehicle-model">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-capacity">Capacity</label>
+                            <input type="number" id="vehicle-capacity" placeholder="e.g., in liters or product units">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicle-status">Status</label>
+                            <select id="vehicle-status">
+                                <option value="Operational">Operational</option>
+                                <option value="Maintenance">Maintenance</option>
+                                <option value="Out of Service">Out of Service</option>
+                            </select>
+                        </div>
+            
+                        <div id="maintenance-details" style="display: none;">
+                            <h4>Maintenance Details</h4>
+                            <div class="form-group">
+                                <label for="service-date">Service Date</label>
+                                <input type="date" id="service-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="maintenance-description">Description</label>
+                                <textarea id="maintenance-description" rows="3"></textarea>
+                            </div>
+                        </div>
+            
+                        <div class="form-actions">
+                            <button type="submit" class="action-button primary">Add Vehicle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="distribution-logistics.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>
