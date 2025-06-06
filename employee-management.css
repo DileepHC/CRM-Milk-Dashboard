@@ -1,0 +1,1020 @@
+/* employee-management.css */
+
+/* Enhanced Global Styles for Full View - Employee Management */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+body {
+    background-color: #f3f7f9; /* Light, fresh background */
+    color: #555e6c; /* Professional, readable text */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.container {
+    display: flex;
+    width: 100vw; /* Full viewport width */
+    margin-top: 0;
+}
+
+/* Navigation */
+.qc-navigation {
+    display: flex;
+    gap: 8px; /* Slightly reduced gap */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0; /* More visible border */
+    padding-bottom: 15px;
+    overflow-x: auto; /* Keep horizontal scrolling for smaller screens */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    justify-content: flex-start; /* Align buttons to the start */
+}
+
+@media (min-width: 769px) { /* Apply these styles for larger screens */
+    .qc-navigation {
+        overflow-x: auto; /* Keep horizontal scrolling even on larger screens if needed */
+        justify-content: center; /* Center the buttons if they all fit */
+    }
+}
+
+.qc-navigation .nav-button {
+    background-color: #f0f0f0; /* Light background for buttons */
+    color: #34495e; /* Dark text color */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.95em;
+    cursor: pointer;
+    display: flex; /* Use flexbox for icon alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); /* Subtle shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.qc-navigation .nav-button:hover {
+    background-color: #3498db; /* Blue on hover */
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.qc-navigation .nav-button:active {
+    background-color: #2980b9; /* Darker blue on active */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.qc-navigation .nav-button .material-symbols-outlined {
+    font-size: 1.2em; /* Icon size */
+}
+
+/* Style for the active/selected button */
+.qc-navigation .nav-button.active {
+    background-color: #2c3e50; /* Darker background for active state */
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 40px 60px; /* Comfortable padding */
+    min-height: 100vh;
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Subtle, modern shadow */
+    width: 100vw;
+}
+
+.content:hover,
+.content:focus-within {
+    transform: scale(1.002); /* Gentle interaction feedback */
+}
+
+h2,
+h3,
+h4 {
+    color: #34495e; /* Strong heading color */
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e6e9ed; /* Light, clean divider */
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h2 .material-symbols-outlined {
+    font-size: 2.6em; /* Slightly larger main heading icon */
+    color: #2980b9; /* Professional blue */
+}
+
+h3 .material-symbols-outlined {
+    font-size: 2em;
+    color: #3498db; /* Brighter blue for subheadings */
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.2em;
+}
+
+h4 {
+    font-size: 1.4em;
+    color: #7f8c8d; /* Secondary heading color */
+    margin-bottom: 20px;
+}
+
+/* Controls Section - General */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.controls h4 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: #555e6c;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls h4 .material-symbols-outlined {
+    font-size: 1.3em;
+    color: #95a5a6;
+}
+
+.controls h4:hover .material-symbols-outlined {
+    transform: translateX(5px);
+}
+
+.inline-add-button {
+    background-color: #2ecc71; /* Positive green */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inline-add-button:hover {
+    background-color: #27ae60;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.inline-add-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Data Table - General */
+.data-table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+    border: 1px solid #e6e9ed;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: #555e6c;
+}
+
+.data-table thead th {
+    background-color: #f9f9f9;
+    color: #34495e;
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #e6e9ed;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.data-table thead th .arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #95a5a6;
+    opacity: 0.6;
+}
+
+/* Sorting indicators */
+.data-table thead th.asc .arrow {
+    transform: translateY(-50%) rotate(180deg);
+    opacity: 1;
+}
+
+.data-table thead th.desc .arrow {
+    transform: translateY(-50%) rotate(0deg);
+    opacity: 1;
+}
+
+.data-table thead th:hover {
+    background-color: #eee;
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.data-table tbody td {
+    padding: 15px 20px;
+}
+
+.data-table .filter-row td {
+    padding: 10px 20px;
+}
+
+.data-table .filter-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d2d6de;
+    border-radius: 6px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.data-table .filter-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.data-table .action-button-container {
+    display: flex;
+    gap: 4px;
+    align-items: center; /* Vertically align icons */
+}
+
+.data-table .action-button {
+    background-color: #3498db; /* Primary action blue */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-width: 28px;
+    min-height: 28px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    margin-right: 0;
+}
+
+.data-table .action-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.data-table .action-button.edit-button {
+    background-color: #f39c12; /* Warning/Edit color */
+}
+
+.data-table .action-button.edit-button:hover {
+    background-color: #e67e22; /* Darker shade for hover */
+}
+
+.data-table .action-button.delete-button {
+    background-color: #e74c3c; /* Danger/Delete color */
+}
+
+.data-table .action-button.delete-button:hover {
+    background-color: #c0392b; /* Darker shade for hover */
+}
+
+.data-table .action-button .material-symbols-outlined {
+    font-size: 0.85em;
+    margin-right: 0;
+}
+
+.data-table .action-button.small {
+    padding: 6px;
+    font-size: 0.85em;
+    min-width: 25px;
+    min-height: 25px;
+}
+
+/* Modal - General */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 700px; /* Max width for modals for better aesthetics */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes slideIn {
+    from {opacity: 0; transform: translateY(-30px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h4 {
+    margin-top: 0;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group select[multiple] {
+    height: 150px; /* Adjust as needed */
+}
+
+.form-section-label {
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1.1em;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.form-actions .action-button {
+    padding: 12px 24px;
+    font-size: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: none;
+    background-color: #3498db; /* Primary form action */
+    color: white;
+}
+
+.form-actions .action-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* File input styling */
+.form-group input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden; /* Hide default browser button for Chrome/Safari */
+}
+
+.form-group input[type="file"]::before {
+    content: 'Choose File(s)'; /* Custom button text */
+    display: inline-block;
+    background: #3498db; /* Primary blue background for the button */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 8px 12px; /* Padding inside the button */
+    outline: none; /* Remove outline on focus */
+    white-space: nowrap; /* Prevent text wrapping */
+  /*  -webkit-user-select: none; /* Prevent text selection */
+    cursor: pointer; /* Indicate it's clickable */
+    font-weight: 500; /* Medium font weight */
+    font-size: 0.9em; /* Slightly smaller font size */
+    transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.form-group input[type="file"]:hover::before {
+    background: #2980b9; /* Darker blue on hover */
+}
+
+.form-group input[type="file"]:active::before {
+    background: #2471a3; /* Even darker blue on active/click */
+}
+
+/* For Firefox and other browsers that use ::file-selector-button */
+.form-group input[type="file"]::file-selector-button {
+    background-color: #3498db; /* Primary blue background for the button */
+    color: white; /* White text color */
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 8px 12px; /* Padding inside the button */
+    cursor: pointer; /* Indicate it's clickable */
+    font-size: 0.9em; /* Slightly smaller font size */
+    transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+.form-group input[type="file"]::file-selector-button:active {
+    background-color: #2471a3; /* Even darker blue on active/click */
+}
+
+/* Style for the file upload container */
+#receipt-upload-container,
+#file-upload-container { /* Apply to both if they use similar structures */
+    margin-bottom: 20px;
+}
+
+#receipt-upload-container label,
+#file-upload-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+#payment-receipt,
+#file-upload { /* Apply to both file inputs */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light background for better visibility */
+}
+
+#payment-receipt::-webkit-file-upload-button,
+#file-upload::-webkit-file-upload-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::-webkit-file-upload-button:hover,
+#file-upload::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#payment-receipt::file-selector-button, /* For Firefox and other browsers */
+#file-upload::file-selector-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::file-selector-button:hover,
+#file-upload::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+/* Styling for action buttons within the Global Features Options */
+.global-features-options .action-button {
+    background-color: #9b59b6; /* Purple for global tools */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease; /* Ensure smooth transitions */
+    white-space: nowrap; /* Prevent text wrapping */
+    margin-bottom: 20px;
+}
+
+.global-features-options .action-button:hover {
+    background-color: #8e44ad; /* Darker purple on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+.global-features-options .action-button .material-symbols-outlined {
+    font-size: 1.2em; /* Consistent icon size */
+}
+
+/* Responsive adjustments for these buttons */
+@media (max-width: 768px) {
+    .global-features-options {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px; /* Adjust gap when stacked */
+    }
+
+    .global-features-options .action-button {
+        width: 100%; /* Make buttons full width on small screens */
+        justify-content: center; /* Center content within button */
+    }
+}
+
+/* System Usage Overview Placeholder */
+.system-usage-overview-placeholder {
+    background-color: #f9f9f9; /* Light background for the placeholder */
+    border: 1px solid #e6e9ed; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Internal padding */
+    margin-top: 20px; /* Space above */
+}
+
+.system-usage-overview-placeholder p {
+    font-weight: 500; /* Slightly bolder text for emphasis */
+    margin-bottom: 15px; /* Space below the paragraph */
+    color: #34495e; /* Darker text color consistent with headings */
+}
+
+.system-usage-overview-placeholder ul {
+    list-style-type: disc; /* Standard bullet points */
+    margin-left: 20px; /* Indentation for the list */
+}
+
+.system-usage-overview-placeholder li {
+    margin-bottom: 8px; /* Space between list items */
+    color: #555e6c; /* Standard text color */
+}
+
+
+/* Message Display */
+.message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeInOut 4s forwards; /* Adjust duration as needed */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message.success {
+    background-color: #e6ffe6; /* Light green */
+    color: #28a745; /* Dark green */
+    border: 1px solid #28a745;
+}
+
+.message.error {
+    background-color: #ffe6e6; /* Light red */
+    color: #dc3545; /* Dark red */
+    border: 1px solid #dc3545;
+}
+
+.message.info {
+    background-color: #e6f7ff; /* Light blue */
+    color: #007bff; /* Dark blue */
+    border: 1px solid #007bff;
+}
+
+.message .material-symbols-outlined {
+    font-size: 1.5em;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(100%); }
+    10% { opacity: 1; transform: translateX(0); }
+    90% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(100%); }
+}
+
+.no-data {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 20px;
+    font-style: italic;
+}
+
+.bank-details {
+    padding: 15px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.bank-details legend {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555e6c;
+}
+
+/* Chart Container Styles */
+.chart-container {
+    margin-bottom: 30px;
+    padding:20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+}
+
+.chart-container h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #34495e;
+    font-size: 1.4em;
+}
+
+.chart-container canvas {
+    height: 250px !important;
+    width: 100% !important;
+}
+
+/* Style for the bulk entry container */
+.bulk-entry-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start; /* Align button to the left */
+}
+
+/* Style for the bulk entry button */
+.bulk-entry-button {
+    background-color: #4CAF50; /* Green color for emphasis */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.bulk-entry-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+.bulk-entry-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Responsive adjustment for smaller screens if needed */
+@media (max-width: 768px) {
+    .bulk-entry-container {
+        justify-content: center; /* Center the button on smaller screens */
+    }
+
+    .bulk-entry-button {
+        width: 100%; /* Make the button full width on smaller screens */
+    }
+}
+
+/* Communication Tools Section */
+.communication-tools {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.communication-tools .action-button {
+    background-color: #8e44ad; /* Purple for communication actions */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.communication-tools .action-button:hover {
+    background-color: #7a3c9d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.communication-tools .action-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Message Log Styles */
+.message-log {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.message-log h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-log ul {
+    list-style: none;
+    padding: 0;
+}
+
+.message-log li.message-item { /* Specific class for message items */
+    padding: 15px 0; /* Increased padding */
+    border-bottom: 1px solid #e6e9ed;
+    margin-bottom: 10px; /* Space between messages */
+}
+
+.message-log li.message-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.message-log .message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.message-log .message-type {
+    font-weight: bold;
+    color: #2c3e50; /* Darker, more prominent type */
+    background-color: #e9eff5; /* Light background for type tag */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+}
+
+.message-log .message-timestamp {
+    font-size: 0.8em;
+    color: #7f8c8d;
+}
+
+.message-log .message-body p {
+    margin-bottom: 5px;
+    color: #555e6c;
+}
+
+.message-log .message-body p:last-child {
+    margin-bottom: 0;
+}
+
+.message-log .feedback-status {
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: white;
+}
+
+.message-log .feedback-status-pending {
+    background-color: #f39c12; /* Orange for pending */
+}
+
+.message-log .feedback-status-resolved {
+    background-color: #2ecc71; /* Green for resolved */
+}
+
+.message-log .feedback-status-in-progress {
+    background-color: #3498db; /* Blue for in progress */
+}
+
+
+/* Analytics Dashboards */
+.analytics-dashboards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Farmer Leaderboard Table - Renamed to performance-leaderboard for clarity */
+#performance-leaderboard-section { /* Assuming a section for this */
+    margin-top: 30px;
+}
+
+#performance-leaderboard-section h3 {
+    margin-bottom: 20px;
+}
+
+#performance-leaderboard-chart {
+    height: 350px; /* Adjust height for the chart */
+    width: 100%;
+}
+
+
+/* Responsive Adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .content {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    h3 {
+        font-size: 1.9em;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .inline-add-button {
+        width: 100%;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        margin: 15% auto;
+        padding: 25px;
+        width: 90%; /* Wider modal on small screens */
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .communication-tools {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .analytics-dashboards {
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust specific chart sizes for smaller screens if needed */
+    .chart-container canvas {
+        height: 200px !important; /* Smaller chart height */
+    }
+
+    #performance-leaderboard-chart {
+        height: 300px; /* Adjust height for the chart */
+    }
+
+    #stock-management-section .action-buttons,
+    .integration-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

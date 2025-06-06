@@ -269,7 +269,7 @@ h4 {
 }
 .data-table .action-button-container {
     display: flex;
-    gap: 5px;
+    gap: 2px;
     align-items: center; /* Vertically align icons */
 }
 

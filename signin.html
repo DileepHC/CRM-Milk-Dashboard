@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign In to DairyNet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        /* Global Reset and Body Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #f8f8ff; /* Light background */
+            background-image: url('5.jpg'); /* Your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height for better adaptability */
+            animation: fadeIn 1.5s ease-out; /* Smoother fade-in */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 480px; /* Slightly wider container */
+            width: 90%; /* Responsive width */
+            padding: 35px 40px; /* Increased padding */
+            border-radius: 25px; /* More rounded corners */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 255, 0.98)); /* Stronger gradient */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.08); /* Enhanced shadow */
+            position: relative;
+            overflow: hidden; /* Keep overflow hidden for container to maintain animation */
+            animation: slideUpScale 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); /* Bouncier animation */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Subtle glass-like border */
+            backdrop-filter: blur(5px); /* Add slight blur behind content */
+        }
+
+        @keyframes slideUpScale {
+            from { transform: translateY(80px) scale(0.92); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Pseudo-element for background blur effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            background: linear-gradient(135deg, #d8bfd8, #e6e6fa); /* Matching background gradient */
+            z-index: -1;
+            border-radius: 30px; /* Match container border-radius */
+            filter: blur(40px); /* Increased blur */
+            opacity: 0.7; /* Slightly less opaque */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .container:hover::before {
+            opacity: 0.9;
+            transform: scale(1.05); /* Slight expansion on hover */
+        }
+
+        /* Heading Styles */
+        h1 {
+            text-align: center;
+            font-size: 32px; /* Larger heading */
+            margin-bottom: 30px; /* More space below heading */
+            color: #6a5acd; /* Royal purple */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15); /* Stronger text shadow */
+            letter-spacing: 1.5px;
+            animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #6a5acd;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 25px; /* More vertical space */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px; /* Space between label and input */
+            font-weight: 700; /* Bolder label */
+            color: #483d8b; /* Darker purple for labels */
+            font-size: 17px; /* Slightly larger label font */
+        }
+
+        .input-icon-group {
+            position: relative;
+            display: flex; /* Added flex for alignment */
+            align-items: center; /* Vertically center items */
+        }
+
+        .input-icon-group .material-symbols-outlined.left-icon { /* Specific class for left icon */
+            position: absolute;
+            left: 15px;
+            color: #8c7bbd;
+            font-size: 22px;
+            pointer-events: none; /* Make icon unclickable */
+            transition: color 0.3s ease;
+            z-index: 2; /* Ensure it's above the input */
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            flex-grow: 1; /* Allow input to take available space */
+            padding: 18px 55px 18px 55px; /* Adjusted padding: left for mail/lock icon, right for password toggle */
+            border: 1px solid #d1d8e0;
+            border-radius: 12px;
+            font-size: 18px; /* Larger input text */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background-color: #ffffff; /* White background for inputs */
+            color: #333;
+            width: 100%; /* Ensure input fills flex container */
+            outline: none; /* Remove default outline */
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #8a2be2;
+            box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.25); /* More prominent focus shadow */
+            background-color: #fbfaff; /* Very slight change on focus */
+        }
+
+        input[type="email"]:focus + .left-icon, /* Target left icon when input is focused */
+        input[type="password"]:focus + .left-icon { /* Target left icon when input is focused */
+            color: #8a2be2; /* Change icon color on focus */
+        }
+
+        /* Password Toggle Button */
+        .password-toggle {
+            position: absolute; /* Position relative to .input-icon-group */
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #8c7bbd;
+            font-size: 22px;
+            transition: color 0.3s ease;
+            padding: 0; /* Remove default button padding */
+            line-height: 1; /* Align icon vertically */
+            z-index: 2; /* Ensure it's above the input */
+        }
+
+        .password-toggle:hover {
+            color: #6a5acd;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: #e74c3c; /* Red for errors */
+            font-size: 14px; /* Smaller font for errors */
+            margin-top: 8px; /* Space above error message */
+            display: block; /* Ensure it takes full width */
+            font-weight: 600;
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px; /* Adjust spacing */
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+            color: #6a5acd;
+        }
+
+        /* Submit Button */
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px; /* Increased padding */
+            background: linear-gradient(135deg, #8a2be2, #9370db); /* Purple gradient */
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px; /* Larger font */
+            font-weight: 700; /* Bolder text */
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow */
+            letter-spacing: 0.8px;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-7px); /* More pronounced lift */
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35); /* Even stronger shadow */
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(-2px); /* Slight press effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sign Up Link */
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .signup-link a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: #6a5acd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign In</h1>
+        <form id="signInForm" onsubmit="return validateSignIn(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-icon-group">
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required
+                           title="e.g., username@example.com">
+                    <span class="material-symbols-outlined left-icon">mail</span> </div>
+                <span class="error-message" id="email-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-icon-group">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required
+                           title="Password must be 8-12 characters with specific symbols">
+                    <span class="material-symbols-outlined left-icon">lock</span> <button type="button" class="password-toggle" onclick="togglePasswordVisibility('password')">
+                        <span class="material-symbols-outlined" id="togglePasswordIcon">visibility_off</span>
+                    </button>
+                </div>
+                <span class="error-message" id="password-error"></span>
+            </div>
+            <div class="forgot-password">
+                <a href="#" role="button" onclick="handleForgotPassword(event)">Forgot Password?</a>
+            </div>
+            <input type="submit" value="Sign In">
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            // Real-time validation for email
+            emailInput.addEventListener('input', function() {
+                validateEmail(emailInput);
+            });
+
+            // Real-time validation for password
+            passwordInput.addEventListener('input', function() {
+                validatePassword(passwordInput);
+            });
+        });
+
+        function loadUsers() {
+            const users = localStorage.getItem('users');
+            return users ? JSON.parse(users) : [];
+        }
+
+        function displayError(inputElement, message) {
+            const errorSpan = document.getElementById(inputElement.id + '-error');
+            if (errorSpan) {
+                errorSpan.textContent = message;
+                inputElement.style.borderColor = '#e74c3c'; // Red border for error
+                inputElement.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)'; // Red shadow
+
+                // Find the left icon within the same input-icon-group
+                const parentGroup = inputElement.closest('.input-icon-group');
+                if (parentGroup) {
+                    const leftIcon = parentGroup.querySelector('.left-icon');
+                    if(leftIcon) {
+                        leftIcon.style.color = '#e74c3c'; // Red icon
+                    }
+                }
+            }
+        }
+
+        function clearError(inputElement) {
+            const errorSpan = document.getElementById(inputElement.id + '-error');
+            if (errorSpan) {
+                errorSpan.textContent = '';
+                inputElement.style.borderColor = '#d1d8e0'; // Reset border color
+                inputElement.style.boxShadow = 'none'; // Clear shadow
+
+                // Find the left icon within the same input-icon-group
+                const parentGroup = inputElement.closest('.input-icon-group');
+                if (parentGroup) {
+                    const leftIcon = parentGroup.querySelector('.left-icon');
+                    if(leftIcon) {
+                        leftIcon.style.color = '#8c7bbd'; // Reset icon color
+                    }
+                }
+            }
+        }
+
+        function validateEmail(emailInput) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailInput.value.trim()) {
+                displayError(emailInput, 'Email cannot be empty.');
+                return false;
+            } else if (!emailPattern.test(emailInput.value)) {
+                displayError(emailInput, 'Invalid email format (e.g., example@domain.com)');
+                return false;
+            } else {
+                clearError(emailInput);
+                return true;
+            }
+        }
+
+        function validatePassword(passwordInput) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+            if (!passwordInput.value.trim()) {
+                displayError(passwordInput, 'Password cannot be empty.');
+                return false;
+            } else if (!passwordPattern.test(passwordInput.value)) {
+                displayError(passwordInput, 'Password must be 8-12 chars, incl. uppercase, lowercase, number, and special char (@$!%*?&).');
+                return false;
+            } else {
+                clearError(passwordInput);
+                return true;
+            }
+        }
+
+        function validateSignIn(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+
+            // Perform all validations
+            const isEmailValid = validateEmail(emailInput);
+            const isPasswordValid = validatePassword(passwordInput);
+
+            if (!isEmailValid || !isPasswordValid) {
+                // If any validation fails, stop here. Error messages are already displayed.
+                return false;
+            }
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            const users = loadUsers();
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                alert("Sign-in successful! Welcome to DairyNet.");
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                // Generic error for invalid credentials
+                displayError(emailInput, 'Invalid email or password.');
+                displayError(passwordInput, ''); // Clear password error if it was a format error
+                alert("Invalid email or password. Please try again or sign up.");
+            }
+
+            return false; // Always return false to prevent default form submission after custom handling
+        }
+
+        function handleForgotPassword(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const emailInput = document.getElementById("email");
+            const email = prompt("Please enter your registered email address to reset your password:");
+
+            if (email) {
+                const users = loadUsers();
+                const userIndex = users.findIndex(user => user.email === email);
+
+                if (userIndex !== -1) {
+                    const newPassword = prompt("A reset link would typically be sent to your email. For this demo, please enter your new password:");
+                    if (newPassword) {
+                        // Validate new password format
+                        const tempPasswordInput = document.createElement('input');
+                        tempPasswordInput.id = 'temp-password-for-validation';
+                        tempPasswordInput.value = newPassword;
+                        if (!validatePassword(tempPasswordInput)) {
+                            alert("New password does not meet the requirements.");
+                            return;
+                        }
+
+                        users[userIndex].password = newPassword; // In a real app, hash and store securely
+                        localStorage.setItem('users', JSON.stringify(users));
+                        alert("Your password has been successfully reset. Please sign in with your new password.");
+                    } else {
+                        alert("Password reset cancelled.");
+                    }
+                } else {
+                    alert("Email not found. Please ensure you have registered.");
+                }
+            } else {
+                alert("Password reset cancelled. Email not provided.");
+            }
+        }
+
+        // --- Password Visibility Toggle ---
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            // Get the specific toggle icon based on the inputId
+            const iconId = 'toggle' + inputId.charAt(0).toUpperCase() + inputId.slice(1) + 'Icon';
+            const icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "visibility"; // Change icon to visible
+            } else {
+                input.type = "password";
+                icon.textContent = "visibility_off"; // Change icon to hidden
+            }
+        }
+    </script>
+</body>
+</html>

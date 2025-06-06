@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Relations - Advanced CRM Dashboard</title>
+    <title>Customer Relations</title>
     <link rel="stylesheet" href="customer-relations.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -11,25 +11,25 @@
 <body>
     <div class="container">
         <div class="content">
-            <h2><span class="material-symbols-outlined">support_agent</span> Customer Relations (Advanced CRM Dashboard)</h2>
+            <h2><span class="material-symbols-outlined">support_agent</span> Customer Relations</h2>
             <div class="qc-navigation">
                 <button class="nav-button active" data-section="customer-database-section">
-                    <span class="material-symbols-outlined">person_search</span> Customer Database & Segmentation
+                    <span class="material-symbols-outlined">person_search</span>Customer Database
                 </button>
                 <button class="nav-button" data-section="interaction-tracking-section">
-                    <span class="material-symbols-outlined">timeline</span> Customer Interaction Tracking
+                    <span class="material-symbols-outlined">timeline</span>Customer Interaction Tracking
                 </button>
                 <button class="nav-button" data-section="support-help-desk-section">
-                    <span class="material-symbols-outlined">headset_mic</span> Customer Support & Help Desk
+                    <span class="material-symbols-outlined">headset_mic</span>Customer Support
                 </button>
                 <button class="nav-button" data-section="feedback-analytics-section">
-                    <span class="material-symbols-outlined">reviews</span> Feedback & Satisfaction Analytics
+                    <span class="material-symbols-outlined">reviews</span>Feedback & Satisfaction Analytics
                 </button>
                 <button class="nav-button" data-section="loyalty-retention-section">
-                    <span class="material-symbols-outlined">loyalty</span> Loyalty & Retention Programs
+                    <span class="material-symbols-outlined">loyalty</span>Loyalty & Retention Programs
                 </button>
                  <button class="nav-button" data-section="crm-wide-features-section">
-                    <span class="material-symbols-outlined">settings</span> CRM-Wide Features
+                    <span class="material-symbols-outlined">settings</span>CRM-Wide Features
                 </button>
             </div>
 
@@ -211,10 +211,6 @@
                     <h4>Feedback Trends</h4>
                     <canvas id="feedback-trend-chart"></canvas>
                 </div>
-                <div class="chart-container">
-                    <h4>CSAT Heatmap (Placeholder)</h4>
-                    <div class="heatmap-placeholder"></div>
-                </div>
             </section>
 
             <section id="loyalty-retention-section" style="display: none;">
@@ -272,10 +268,10 @@
                     <button class="action-button" onclick="openDataImportExportModal()">
                         <span class="material-symbols-outlined">upload_file</span> Data Import/Export
                     </button>
-                    <div class="chart-container">
+                </div>
+                <div class="chart-container">
                         <h4>Real-Time KPI Dashboard</h4>
                         <canvas id="kpi-dashboard-chart"></canvas>
-                    </div>
                 </div>
             </section>
 

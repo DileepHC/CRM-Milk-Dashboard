@@ -411,8 +411,8 @@ h4:hover .material-symbols-outlined {
 }
 
 #sales-overview-chart {
-    max-width: 100%;
-    height: auto;
+    max-width: 100% !important;
+    height: 250px !important;
 }
 
 /* Inventory Sync Specific Styles */
@@ -646,6 +646,132 @@ h4:hover .material-symbols-outlined {
     gap: 10px;
 }
 
+/* Style for the "Choose File" button within the Message Attachment input */
+#message-attachment::-webkit-file-upload-button {
+    background-color: #3498db; /* Primary button color, consistent with others */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Consistent rounded corners */
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#message-attachment::-webkit-file-upload-button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+/* For Firefox and other browsers that support the standard ::file-selector-button pseudo-element */
+#message-attachment::file-selector-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Consistent rounded corners */
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#message-attachment::file-selector-button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+/* Style for the "Choose File" button within the Store Photo/Logo input */
+#store-photo::-webkit-file-upload-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#store-photo::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#store-photo::file-selector-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#store-photo::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+/* Style for the "Choose File" button within the Contract Copy input */
+#contract-copy::-webkit-file-upload-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#contract-copy::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#contract-copy::file-selector-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#contract-copy::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+/* Style for the "Choose File" button within the Inventory Sheet File input */
+#inventory-sheet-file::-webkit-file-upload-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#inventory-sheet-file::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#inventory-sheet-file::file-selector-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#inventory-sheet-file::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+
 /* Modal - General */
 .modal {
     display: none;
@@ -774,8 +900,6 @@ h4:hover .material-symbols-outlined {
 .form-actions .action-button.primary:hover {
     background-color: #27ae60;
 }
-
-/* Add these styles to retail-franchise.css */
 
 /* Consistent styling for specific input types in forms (modal) */
 .form-group input[type="tel"],

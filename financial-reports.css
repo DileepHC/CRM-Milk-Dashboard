@@ -50,12 +50,12 @@ body {
     color: #34495e; /* Dark text color */
     border: none;
     border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 1em;
+    padding: 12px 12px;
+    font-size: 0.9em;
     cursor: pointer;
     display: flex; /* Use flexbox for icon alignment */
     align-items: center;
-    gap: 8px; /* Space between icon and text */
+    gap: 5px; /* Space between icon and text */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); /* Subtle shadow */
     white-space: nowrap; /* Prevent text wrapping */
 }
@@ -401,6 +401,7 @@ h4 {
 .form-group input[type="tel"],
 .form-group input[type="date"],
 .form-group input[type="number"],
+.form-group input[type="email"],
 .form-group select,
 .form-group textarea,
 .form-group input[type="file"] {
@@ -416,6 +417,7 @@ h4 {
 .form-group input[type="tel"]:focus,
 .form-group input[type="date"]:focus,
 .form-group input[type="number"]:focus,
+.form-group input[type="email"]:focus,
 .form-group select:focus,
 .form-group textarea:focus,
 .form-group input[type="file"]:focus {
@@ -534,6 +536,53 @@ h4 {
 .chart-container canvas {
     height: 250px !important;
     width: 100% !important;
+}
+
+/* Styling for action buttons specifically within the 'controls' div */
+.controls .action-button {
+    background-color: #3498db; /* Primary action blue */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Consistent rounded corners */
+    padding: 12px 20px; /* Generous padding like other main buttons */
+    font-size: 1em; /* Standard font size */
+    cursor: pointer;
+    display: flex; /* For icon alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.controls .action-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.controls .action-button .material-symbols-outlined {
+    font-size: 1.2em; /* Icon size consistent with other similar buttons */
+}
+
+/* Ensure the inline-add-button (green) retains its specific style */
+.controls .inline-add-button {
+    background-color: #2ecc71; /* Positive green */
+    color: #fff;
+    /* Other properties already defined in .inline-add-button will apply */
+}
+
+.controls .inline-add-button:hover {
+    background-color: #27ae60;
+    /* Other properties already defined in .inline-add-button:hover will apply */
+}
+
+/* Responsive adjustment for buttons within controls on smaller screens */
+@media (max-width: 768px) {
+    .controls .action-button {
+        width: 100%; /* Make buttons full width on small screens */
+        justify-content: center; /* Center content within button */
+    }
 }
 
 /* Integration Options */

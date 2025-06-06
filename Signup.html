@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up for DairyNet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        /* Global Reset and Body Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #f8f8ff; /* Light background */
+            background-image: url('6.jpg'); /* Your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            animation: fadeIn 1.5s ease-out; /* Smoother fade-in */
+            /* Removed overflow: hidden from body, as it can sometimes hide necessary content */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 480px; /* Consistent width with sign-in */
+            width: 90%; /* Responsive width */
+            padding: 35px 40px; /* Matched padding to sign-in page */
+            border-radius: 25px; /* More rounded corners */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 255, 0.98)); /* Stronger gradient */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.08); /* Enhanced shadow */
+            position: relative;
+            overflow: hidden; /* Re-added overflow: hidden for consistency with sign-in */
+            max-height: 98vh; /* Slightly increased max-height to give more room if needed */
+            animation: slideUpScale 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); /* Bouncier animation */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Subtle glass-like border */
+            backdrop-filter: blur(5px); /* Add slight blur behind content */
+            display: flex; /* Use flexbox for inner layout */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: space-between; /* Distribute space */
+        }
+
+        @keyframes slideUpScale {
+            from { transform: translateY(80px) scale(0.92); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Pseudo-element for background blur effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            background: linear-gradient(135deg, #d8bfd8, #e6e6fa); /* Matching background gradient */
+            z-index: -1;
+            border-radius: 30px; /* Match container border-radius */
+            filter: blur(40px); /* Increased blur */
+            opacity: 0.7; /* Slightly less opaque */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .container:hover::before {
+            opacity: 0.9;
+            transform: scale(1.05); /* Slight expansion on hover */
+        }
+
+        /* Heading Styles */
+        h1 {
+            text-align: center;
+            font-size: 32px; /* Larger heading */
+            margin-top: -30px;
+            margin-bottom: 10px; /* Matched margin to sign-in page */
+            color: #6a5acd; /* Royal purple */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15); /* Stronger text shadow */
+            letter-spacing: 1.5px;
+            animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #6a5acd;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 10px; /* Matched vertical space to sign-in page */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* Matched space between label and input to sign-in page */
+            font-weight: 700; /* Bolder label */
+            color: #483d8b; /* Darker purple for labels */
+            font-size: 17px; /* Slightly larger label font */
+        }
+
+        .input-icon-group {
+            position: relative;
+            display: flex; /* Use flexbox to align input and button */
+            align-items: center; /* Vertically center items */
+        }
+
+        .input-icon-group .material-symbols-outlined.left-icon {
+            position: absolute;
+            left: 15px;
+            color: #8c7bbd;
+            font-size: 22px;
+            pointer-events: none; /* Make icon unclickable */
+            transition: color 0.3s ease;
+            z-index: 2; /* Ensure it's above the input */
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            flex-grow: 1; /* Allow input to take available space */
+            padding: 18px 55px 18px 55px; /* Matched padding to sign-in page */
+            border: 1px solid #d1d8e0;
+            border-radius: 12px;
+            font-size: 17px; /* Larger input text */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background-color: #ffffff; /* White background for inputs */
+            color: #333;
+            width: 100%; /* Important for flex-grow to work as expected */
+            outline: none; /* Remove default outline */
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #8a2be2;
+            box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.25); /* More prominent focus shadow */
+            background-color: #fbfaff; /* Very slight change on focus */
+        }
+
+        input[type="email"]:focus + .left-icon,
+        input[type="text"]:focus + .left-icon,
+        input[type="password"]:focus + .left-icon {
+            color: #8a2be2; /* Change icon color on focus */
+        }
+
+        /* Password Toggle Button */
+        .password-toggle {
+            position: absolute; /* Position relative to .input-icon-group */
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #8c7bbd;
+            font-size: 22px;
+            transition: color 0.3s ease;
+            padding: 0; /* Remove default button padding */
+            line-height: 1; /* Align icon vertically */
+            z-index: 2; /* Ensure it's above the input */
+        }
+
+        .password-toggle:hover {
+            color: #6a5acd;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: #e74c3c; /* Red for errors */
+            font-size: 14px; /* Matched font size to sign-in page */
+            margin-top: 8px; /* Matched space above error message to sign-in page */
+            display: block; /* Ensure it takes full width */
+            font-weight: 600;
+        }
+
+        /* Submit Button */
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px; /* Matched padding to sign-in page */
+            background: linear-gradient(135deg, #8a2be2, #9370db); /* Purple gradient */
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px; /* Larger font */
+            font-weight: 700; /* Bolder text */
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow */
+            letter-spacing: 0.8px;
+            margin-top: 5px; /* Space above button */
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-7px); /* More pronounced lift */
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35); /* Even stronger shadow */
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(-2px); /* Slight press effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sign In Link */
+        .signin-link {
+            text-align: center;
+            margin-top: 5px; /* Matched margin to sign-in page */
+            margin-bottom: -15px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .signin-link a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+            color: #6a5acd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form id="registrationForm" onsubmit="return validateForm(event)">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <div class="input-icon-group">
+                    <input type="text" id="firstName" name="firstName" placeholder="Your first name" required>
+                    <span class="material-symbols-outlined left-icon">person</span>
+                </div>
+                <span class="error-message" id="firstName-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <div class="input-icon-group">
+                    <input type="text" id="lastName" name="lastName" placeholder="Your last name" required>
+                    <span class="material-symbols-outlined left-icon">person</span>
+                </div>
+                <span class="error-message" id="lastName-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-icon-group">
+                    <input type="email" id="email" name="email" placeholder="Your email address" required>
+                    <span class="material-symbols-outlined left-icon">mail</span>
+                </div>
+                <span class="error-message" id="email-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-icon-group">
+                    <input type="password" id="password" name="password" placeholder="Create your password" required>
+                    <span class="material-symbols-outlined left-icon">lock</span>
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('password')">
+                        <span class="material-symbols-outlined" id="togglePasswordIcon">visibility_off</span>
+                    </button>
+                </div>
+                <span class="error-message" id="password-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-icon-group">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                    <span class="material-symbols-outlined left-icon">lock</span>
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('confirmPassword')">
+                        <span class="material-symbols-outlined" id="toggleConfirmPasswordIcon">visibility_off</span>
+                    </button>
+                </div>
+                <span class="error-message" id="confirmPassword-error"></span>
+            </div>
+            <input type="submit" value="Sign Up">
+        </form>
+        <div class="signin-link">
+            <p>Already have an account? <a href="signin.html">Sign In</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+
+            firstNameInput.addEventListener('input', () => validateName(firstNameInput, 'First Name'));
+            lastNameInput.addEventListener('input', () => validateName(lastNameInput, 'Last Name'));
+            emailInput.addEventListener('input', () => validateEmail(emailInput));
+            passwordInput.addEventListener('input', () => {
+                validatePassword(passwordInput);
+                if (confirmPasswordInput.value !== '') {
+                    validateConfirmPassword(passwordInput, confirmPasswordInput);
+                }
+            });
+            confirmPasswordInput.addEventListener('input', () => validateConfirmPassword(passwordInput, confirmPasswordInput));
+        });
+
+        // --- Utility Functions ---
+        function loadUsers() {
+            const users = localStorage.getItem('users');
+            return users ? JSON.parse(users) : [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function displayError(inputElement, message) {
+            const errorSpan = document.getElementById(inputElement.id + '-error');
+            if (errorSpan) {
+                errorSpan.textContent = message;
+                inputElement.style.borderColor = '#e74c3c';
+                inputElement.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+
+                // Adjust icon color based on its position
+                const parentGroup = inputElement.closest('.input-icon-group');
+                if (parentGroup) {
+                    const leftIcon = parentGroup.querySelector('.left-icon');
+                    if (leftIcon) {
+                        leftIcon.style.color = '#e74c3c';
+                    }
+                }
+            }
+        }
+
+        function clearError(inputElement) {
+            const errorSpan = document.getElementById(inputElement.id + '-error');
+            if (errorSpan) {
+                errorSpan.textContent = '';
+                inputElement.style.borderColor = '#d1d8e0';
+                inputElement.style.boxShadow = 'none';
+
+                // Adjust icon color based on its position
+                const parentGroup = inputElement.closest('.input-icon-group');
+                if (parentGroup) {
+                    const leftIcon = parentGroup.querySelector('.left-icon');
+                    if (leftIcon) {
+                        leftIcon.style.color = '#8c7bbd';
+                    }
+                }
+            }
+        }
+
+        // --- Validation Functions for Each Field ---
+        function validateName(inputElement, fieldName) {
+            const namePattern = /^[a-zA-Z]{3,15}$/;
+            if (!inputElement.value.trim()) {
+                displayError(inputElement, `${fieldName} cannot be empty.`);
+                return false;
+            } else if (!namePattern.test(inputElement.value)) {
+                displayError(inputElement, `${fieldName} must be 3-15 alphabetic characters.`);
+                return false;
+            } else {
+                clearError(inputElement);
+                return true;
+            }
+        }
+
+        function validateEmail(emailInput) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailInput.value.trim()) {
+                displayError(emailInput, 'Email cannot be empty.');
+                return false;
+            } else if (!emailPattern.test(emailInput.value)) {
+                displayError(emailInput, 'Invalid email format (e.g., example@domain.com)');
+                return false;
+            } else {
+                clearError(emailInput);
+                return true;
+            }
+        }
+
+        function validatePassword(passwordInput) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+            if (!passwordInput.value.trim()) {
+                displayError(passwordInput, 'Password cannot be empty.');
+                return false;
+            } else if (!passwordPattern.test(passwordInput.value)) {
+                displayError(passwordInput, 'Password must be 8-12 chars, incl. uppercase, lowercase, number, and special char (@$!%*?&).');
+                return false;
+            } else {
+                clearError(passwordInput);
+                return true;
+            }
+        }
+
+        function validateConfirmPassword(passwordInput, confirmPasswordInput) {
+            if (!confirmPasswordInput.value.trim()) {
+                displayError(confirmPasswordInput, 'Confirm password cannot be empty.');
+                return false;
+            } else if (passwordInput.value !== confirmPasswordInput.value) {
+                displayError(confirmPasswordInput, 'Passwords do not match.');
+                return false;
+            } else {
+                clearError(confirmPasswordInput);
+                return true;
+            }
+        }
+
+        // --- Form Submission Handler ---
+        function validateForm(event) {
+            event.preventDefault();
+
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+
+            const isFirstNameValid = validateName(firstNameInput, 'First Name');
+            const isLastNameValid = validateName(lastNameInput, 'Last Name');
+            const isEmailValid = validateEmail(emailInput);
+            const isPasswordValid = validatePassword(passwordInput);
+            const isConfirmPasswordValid = validateConfirmPassword(passwordInput, confirmPasswordInput);
+
+            if (!isFirstNameValid || !isLastNameValid || !isEmailValid || !isPasswordValid || !isConfirmPasswordValid) {
+                alert("Please correct the errors in the form.");
+                return false;
+            }
+
+            const users = loadUsers();
+            const userExists = users.some(user => user.email === emailInput.value);
+            if (userExists) {
+                displayError(emailInput, "This email is already registered. Please sign in.");
+                alert("This email is already registered. Please sign in.");
+                return false;
+            }
+
+            const newUser = {
+                firstName: firstNameInput.value,
+                lastName: lastNameInput.value,
+                email: emailInput.value,
+                password: passwordInput.value
+            };
+            users.push(newUser);
+            saveUsers(users);
+
+            alert("Registration successful! You can now sign in.");
+            window.location.href = "signin.html";
+            return true;
+        }
+
+        // --- Password Visibility Toggle ---
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            // Get the specific toggle icon based on the inputId
+            const iconId = 'toggle' + inputId.charAt(0).toUpperCase() + inputId.slice(1) + 'Icon';
+            const icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "visibility"; // Change icon to visible
+            } else {
+                input.type = "password";
+                icon.textContent = "visibility_off"; // Change icon to hidden
+            }
+        }
+    </script>
+</body>
+</html>

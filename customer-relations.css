@@ -1,0 +1,1063 @@
+/* customer-relations.css */
+
+/* Enhanced Global Styles for CRM Dashboard */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif; /* Modern and clean font */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+body {
+    background-color: #f3f7f9; /* Light, fresh background */
+    color: #555e6c; /* Professional, readable text */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.container {
+    display: flex;
+    width: 100vw; /* Full viewport width */
+    margin-top: 0;
+}
+
+/* Navigation */
+.qc-navigation {
+    display: flex;
+    gap: 8px; /* Slightly increased gap for better touch targets */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0; /* More visible border */
+    padding-bottom: 15px;
+    overflow-x: auto; /* Keep horizontal scrolling for smaller screens */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    justify-content: flex-start; /* Align buttons to the start */
+    padding-left: 15px; /* Add some padding for better alignment */
+    padding-right: 20px;
+}
+
+@media (min-width: 769px) { /* Apply these styles for larger screens */
+    .qc-navigation {
+        overflow-x: auto; /* Keep horizontal scrolling even on larger screens if needed */
+        justify-content: center; /* Center the buttons if they all fit */
+    }
+}
+
+.qc-navigation .nav-button {
+    background-color: #f0f0f0; /* Light background for buttons */
+    color: #34495e; /* Dark text color */
+    border: none;
+    border-radius: 12px; /* More rounded corners */
+    padding: 12px 12px; /* Increased padding */
+    font-size: 0.9em; /* Slightly larger font */
+    cursor: pointer;
+    display: flex; /* Use flexbox for icon alignment */
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* More prominent subtle shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+    transition: all 0.3s ease;
+}
+
+.qc-navigation .nav-button:hover {
+    background-color: #3498db; /* Blue on hover */
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.qc-navigation .nav-button:active {
+    background-color: #2980b9; /* Darker blue on active */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+}
+
+.qc-navigation .nav-button .material-symbols-outlined {
+    font-size: 1.0em; /* Icon size */
+}
+
+/* Style for the active/selected button */
+.qc-navigation .nav-button.active {
+    background-color: #2c3e50; /* Darker background for active state */
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 40px 60px; /* Comfortable padding */
+    min-height: 100vh;
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Subtle, modern shadow */
+    width: 100vw;
+}
+
+.content:hover,
+.content:focus-within {
+    transform: scale(1.002); /* Gentle interaction feedback */
+}
+
+h2,
+h3,
+h4 {
+    color: #34495e; /* Strong heading color */
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e6e9ed; /* Light, clean divider */
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h2 .material-symbols-outlined {
+    font-size: 2.6em; /* Slightly larger main heading icon */
+    color: #2980b9; /* Professional blue */
+}
+
+h3 .material-symbols-outlined {
+    font-size: 2em;
+    color: #3498db; /* Brighter blue for subheadings */
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.2em;
+}
+
+h4 {
+    font-size: 1.4em;
+    color: #7f8c8d; /* Secondary heading color */
+    margin-bottom: 20px;
+}
+
+/* Controls Section - General */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.controls h4 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: #555e6c;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls h4 .material-symbols-outlined {
+    font-size: 1.3em;
+    color: #95a5a6;
+}
+
+.controls h4:hover .material-symbols-outlined {
+    transform: translateX(5px);
+}
+
+.inline-add-button {
+    background-color: #2ecc71; /* Positive green */
+    color: #fff;
+    border: none;
+    border-radius: 12px; /* Consistent rounded corners */
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+    transition: all 0.3s ease;
+}
+
+.inline-add-button:hover {
+    background-color: #27ae60;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.inline-add-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Data Table - General */
+.data-table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+    border: 1px solid #e6e9ed;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    color: #555e6c;
+}
+
+.data-table thead th {
+    background-color: #f9f9f9;
+    color: #34495e;
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #e6e9ed;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.data-table thead th .arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #95a5a6;
+    opacity: 0.6;
+}
+
+.data-table thead th:hover {
+    background-color: #eee;
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.data-table tbody td {
+    padding: 15px 20px;
+}
+
+.data-table .filter-row td {
+    padding: 10px 20px;
+}
+
+.data-table .filter-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px; /* Consistent rounded corners */
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.data-table .filter-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.25);
+}
+
+.data-table .action-button-container {
+    display: flex;
+    gap: 5px;
+    align-items: center; /* Vertically align icons */
+}
+
+.data-table .action-button {
+    background-color: #3498db; /* Primary action blue */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-width: 26px;
+    min-height: 26px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    margin-right: 0;
+}
+
+.data-table .action-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.data-table .action-button.edit-button {
+    background-color: #f39c12; /* Warning/Edit color */
+}
+
+.data-table .action-button.edit-button:hover {
+    background-color: #e67e22; /* Darker shade for hover */
+}
+
+.data-table .action-button.delete-button {
+    background-color: #e74c3c; /* Danger/Delete color */
+}
+
+.data-table .action-button.delete-button:hover {
+    background-color: #c0392b; /* Darker shade for hover */
+}
+
+.data-table .action-button .material-symbols-outlined {
+    font-size: 1em;
+    margin-right: 0;
+}
+
+.data-table .action-button.small {
+    padding: 6px;
+    font-size: 0.85em;
+    min-width: 25px;
+    min-height: 25px;
+}
+
+/* Modal - General */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+    backdrop-filter: blur(3px); /* Subtle blur effect */
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto; /* Centered with more top margin */
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 16px; /* More rounded */
+    width: 90%; /* Wider on smaller screens */
+    max-width: 600px; /* Max width for larger screens */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+    animation: slideIn 0.4s ease-out forwards; /* Slightly slower animation */
+    position: relative;
+}
+
+@keyframes slideIn {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close-button {
+    color: #888; /* Softer close button color */
+    float: right;
+    font-size: 32px; /* Larger close button */
+    font-weight: bold;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #555;
+    transform: rotate(90deg); /* Spin effect on hover */
+    text-decoration: none;
+}
+
+.modal h4 {
+    margin-top: 0;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 1.6em; /* Larger modal title */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 600; /* Bolder labels */
+    font-size: 1.05em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px; /* Consistent rounded corners */
+    font-size: 1em; /* Slightly larger font in inputs */
+    box-sizing: border-box;
+    background-color: #fcfcfc; /* Light background for inputs */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.3); /* Stronger focus shadow */
+}
+
+.form-group select[multiple] {
+    height: 150px; /* Adjust as needed */
+}
+
+.form-section-label {
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-weight: 600;
+    font-size: 1.2em;
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px; /* Increased gap between buttons */
+    margin-top: 30px;
+}
+
+.form-actions .action-button {
+    padding: 14px 28px; /* Larger buttons */
+    font-size: 1.05em;
+    border-radius: 10px; /* Slightly more rounded */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    cursor: pointer;
+    border: none;
+    background-color: #3498db; /* Primary form action */
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.form-actions .action-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom Message Box Specific Styles */
+#custom-message-box .modal-content {
+    max-width: 450px; /* Smaller width for message box */
+    text-align: center;
+    padding-bottom: 20px; /* Adjust padding for buttons */
+}
+
+#custom-message-box #message-box-title {
+    font-size: 1.5em;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 15px;
+}
+
+#custom-message-box #message-box-text {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#custom-message-box .form-actions {
+    justify-content: center; /* Center buttons in message box */
+    margin-top: 0;
+}
+
+#custom-message-box .action-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+}
+
+#custom-message-box .action-button.confirm-yes {
+    background-color: #2ecc71; /* Green for Yes/OK */
+}
+
+#custom-message-box .action-button.confirm-yes:hover {
+    background-color: #27ae60;
+}
+
+#custom-message-box .action-button.confirm-no {
+    background-color: #e74c3c; /* Red for No */
+}
+
+#custom-message-box .action-button.confirm-no:hover {
+    background-color: #c0392b;
+}
+
+
+/* Style for the file upload container */
+#receipt-upload-container {
+    margin-bottom: 20px;
+}
+
+#receipt-upload-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+#payment-receipt {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light background for better visibility */
+}
+
+#payment-receipt::-webkit-file-upload-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::-webkit-file-upload-button:hover {
+    background-color: #2980b9;
+}
+
+#payment-receipt::file-selector-button { /* For Firefox and other browsers */
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#payment-receipt::file-selector-button:hover {
+    background-color: #2980b9;
+}
+/* Style for the "Choose File" button within the KYC/Proof Uploads input */
+#customer-kyc-uploads::-webkit-file-upload-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Consistent rounded corners */
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#customer-kyc-uploads::-webkit-file-upload-button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+/* For Firefox and other browsers that support the standard ::file-selector-button pseudo-element */
+#customer-kyc-uploads::file-selector-button {
+    background-color: #3498db; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Consistent rounded corners */
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#customer-kyc-uploads::file-selector-button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
+
+.bank-details {
+    padding: 15px;
+    border: 1px solid #d2d6de;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.bank-details legend {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555e6c;
+}
+
+/* Chart Container Styles */
+.chart-container {
+    margin-bottom: 30px;
+    padding:20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    display: flex; /* Use flexbox for chart and title alignment */
+    flex-direction: column;
+    align-items: center; /* Center chart content */
+}
+
+.chart-container h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #34495e;
+    font-size: 1.4em;
+    width: 100%; /* Ensure title spans full width */
+    justify-content: center; /* Center the title */
+}
+
+.chart-container canvas {
+    height: 300px !important; /* Increased height for better visibility */
+    width: 100% !important;
+    max-width: 500px; /* Max width for charts to prevent stretching */
+}
+
+/* Style for the bulk entry container */
+.bulk-entry-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start; /* Align button to the left */
+}
+
+/* Style for the bulk entry button */
+.bulk-entry-button {
+    background-color: #4CAF50; /* Green color for emphasis */
+    color: white;
+    border: none;
+    border-radius: 12px; /* Consistent rounded corners */
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    white-space: nowrap; /* Prevent text wrapping */
+    transition: all 0.3s ease;
+}
+
+.bulk-entry-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.bulk-entry-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Communication Tools Section */
+.communication-tools {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    justify-content: center; /* Center buttons on smaller screens */
+}
+
+.communication-tools .action-button {
+    background-color: #8e44ad; /* Purple for communication actions */
+    color: white;
+    border: none;
+    border-radius: 12px; /* Consistent rounded corners */
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    transition: all 0.3s ease;
+    flex-grow: 1; /* Allow buttons to grow and fill space */
+    max-width: 200px; /* Limit individual button width */
+}
+
+.communication-tools .action-button:hover {
+    background-color: #7a3c9d;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.communication-tools .action-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Message Log Styles */
+.message-log {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.message-log h4 {
+    border-bottom: 2px solid #e6e9ed;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-log ul {
+    list-style: none;
+    padding: 0;
+}
+
+.message-log li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e6e9ed;
+}
+
+.message-log li:last-child {
+    border-bottom: none;
+}
+
+.message-log .message-sender {
+    font-weight: bold;
+    color: #2980b9;
+    margin-right: 5px;
+}
+
+.message-log .message-timestamp {
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-left: 5px;
+}
+
+/* Analytics Dashboards */
+.analytics-dashboards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Farmer Leaderboard Table (Renamed to be generic for CRM) */
+#leaderboard-table { /* Consider renaming this ID in HTML for CRM context */
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    overflow: hidden;
+}
+
+#heatmap-container {
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    color: #777;
+}
+
+/* Tab Styles for Customer Interaction Modal */
+.tab-buttons {
+    display: flex;
+    justify-content: center; /* Center the tab buttons */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e6e9ed; /* Consistent with other dividers */
+    padding-bottom: 10px;
+    gap: 10px; /* Space between buttons */
+}
+
+.tab-button {
+    background-color: #f0f0f0; /* Light background for tabs */
+    color: #555e6c; /* Default text color */
+    border: none;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    padding: 10px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-grow: 1; /* Allow buttons to grow */
+    max-width: 200px; /* Max width for individual tab buttons */
+    text-align: center;
+}
+
+.tab-button:hover {
+    background-color: #e2e8f0; /* Lighter hover background */
+    color: #34495e;
+}
+
+.tab-button.active {
+    background-color: #3498db; /* Blue for active tab */
+    color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on active tab */
+    position: relative; /* For the bottom border effect */
+    z-index: 1; /* Bring active tab slightly forward */
+    border-bottom: 2px solid #3498db; /* Match the active tab color */
+}
+
+/* Tab Content Styles */
+.tab-content {
+    display: none; /* Hidden by default */
+    padding-top: 10px; /* Space between tabs and content */
+    border-top: none; /* No top border if tabs have one */
+}
+
+.tab-content.active {
+    display: block; /* Shown when active */
+}
+/* CRM-Wide Features Section Specific Styles */
+.crm-wide-options {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e6e9ed;
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap */
+    gap: 15px; /* Space between buttons */
+    justify-content: flex-start; /* Align buttons to the start */
+    align-items: center;
+}
+
+.crm-wide-options h4 {
+    flex-basis: 100%; /* Ensure heading takes full width */
+    margin-bottom: 15px; /* Adjust spacing */
+    border-bottom: 2px solid #e6e9ed; /* Consistent divider */
+    padding-bottom: 10px;
+    text-align: left; /* Align title to the left */
+    font-size: 1.4em; /* Match chart container h4 */
+}
+
+.crm-wide-options .action-button {
+    background-color: #3498db; /* Primary action blue, consistent with other general action buttons */
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    flex-grow: 1; /* Allow buttons to grow and fill available space */
+    max-width: 250px; /* Max width for individual buttons */
+    justify-content: center; /* Center content within buttons */
+}
+
+.crm-wide-options .action-button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.crm-wide-options .action-button .material-symbols-outlined {
+    font-size: 1.2em;
+}
+
+/* Responsive Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .crm-wide-options {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+        align-items: stretch; /* Stretch buttons to full width */
+    }
+
+    .crm-wide-options .action-button {
+        max-width: none; /* Remove max-width so they can stretch */
+    }
+}
+
+/* Responsive adjustments for tabs */
+@media (max-width: 768px) {
+    .tab-buttons {
+        flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+        justify-content: center; /* Center them when wrapped */
+    }
+
+    .tab-button {
+        flex-basis: 48%; /* Two buttons per row on smaller screens */
+        margin-bottom: 5px; /* Space between wrapped buttons */
+        max-width: none; /* Remove max-width on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-button {
+        flex-basis: 100%; /* Full width for tabs on very small screens */
+    }
+}
+
+/* Responsive Adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .content {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    h3 {
+        font-size: 1.9em;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .inline-add-button {
+        width: 100%;
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        margin: 15% auto;
+        padding: 25px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .communication-tools {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .analytics-dashboards {
+        grid-template-columns: 1fr;
+    }
+
+    #stock-management-section .action-buttons,
+    .integration-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .qc-navigation {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .qc-navigation .nav-button {
+        padding: 10px 15px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    .modal-content {
+        margin: 20% auto;
+        padding: 20px;
+    }
+
+    .form-actions .action-button {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}
